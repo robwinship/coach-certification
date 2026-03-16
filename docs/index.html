@@ -273,6 +273,36 @@
       line-height: 1.5;
     }
 
+    .date-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .date-item {
+      border: 1px solid rgba(16, 33, 46, 0.14);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #fff;
+    }
+
+    .date-label {
+      font-family: "Chivo", sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      margin-bottom: 4px;
+    }
+
+    .date-value {
+      font-family: "Chivo", sans-serif;
+      font-size: 1rem;
+      color: #0f4e66;
+      font-weight: 700;
+    }
+
     .status-empty {
       margin: 0;
       font-style: italic;
@@ -343,11 +373,28 @@
       </article>
 
       <article class="card col-5" style="--delay: 140ms;">
-        <h2>Monitored Sources</h2>
+        <h2>OBA Update Dates</h2>
+        <p class="status-meta" id="cert-status-note">Loading certification status dates...</p>
+        <div class="date-grid">
+          <div class="date-item">
+            <div class="date-label">Date Updated</div>
+            <div class="date-value" id="cert-date-updated">Unknown</div>
+          </div>
+          <div class="date-item">
+            <div class="date-label">Next Scheduled Update</div>
+            <div class="date-value" id="cert-next-update">Unknown</div>
+          </div>
+        </div>
+        <div class="status-links">
+          <a class="status-link" id="cert-status-source" href="https://www.registeroba.ca/coach-certification-status" target="_blank" rel="noreferrer">Open Source Page</a>
+        </div>
+
+        <h2 style="margin-top: 16px;">Monitored Sources</h2>
         <div class="source-links">
           <ul>
             <li><a href="https://www.registeroba.ca/certified-coaches" target="_blank" rel="noreferrer">registeroba.ca/certified-coaches</a></li>
             <li><a href="https://www.registeroba.ca/certification-inprogress-by-local" target="_blank" rel="noreferrer">registeroba.ca/certification-inprogress-by-local</a></li>
+            <li><a href="https://www.registeroba.ca/coach-certification-status" target="_blank" rel="noreferrer">registeroba.ca/coach-certification-status</a></li>
           </ul>
         </div>
       </article>
@@ -453,6 +500,10 @@
       const updated = document.getElementById("status-updated");
       const certifiedCount = document.getElementById("certified-count");
       const inProgressCount = document.getElementById("inprogress-count");
+      const certDateUpdated = document.getElementById("cert-date-updated");
+      const certNextUpdate = document.getElementById("cert-next-update");
+      const certStatusNote = document.getElementById("cert-status-note");
+      const certStatusSource = document.getElementById("cert-status-source");
 
       try {
         const response = await fetch("./status.json", { cache: "no-store" });
@@ -464,6 +515,7 @@
         const certified = Array.isArray(data.certified) ? data.certified : [];
         const inProgress = Array.isArray(data.inProgress) ? data.inProgress : [];
         const transitions = Array.isArray(data.transitions) ? data.transitions : [];
+        const certificationStatus = data.certificationStatus || {};
 
         certifiedCount.textContent = String(certified.length);
         inProgressCount.textContent = String(inProgress.length);
@@ -472,6 +524,11 @@
         renderStatusList("inprogress-list", "inprogress-empty", inProgress);
         renderTransitions(transitions);
 
+        certDateUpdated.textContent = certificationStatus.dateUpdated || "Unknown";
+        certNextUpdate.textContent = certificationStatus.nextScheduledUpdate || "Unknown";
+        certStatusNote.textContent = certificationStatus.note || "Certification status dates are tracked from source.";
+        certStatusSource.href = certificationStatus.source || "https://www.registeroba.ca/coach-certification-status";
+
         const timestamp = data.queriedAtLocal || data.asOf || "unknown";
         updated.textContent = `Last query: ${timestamp}`;
       } catch (error) {
@@ -479,6 +536,9 @@
         renderStatusList("certified-list", "certified-empty", []);
         renderStatusList("inprogress-list", "inprogress-empty", []);
         renderTransitions([]);
+        certDateUpdated.textContent = "Unknown";
+        certNextUpdate.textContent = "Unknown";
+        certStatusNote.textContent = "Unable to load certification status dates.";
       }
     }
 

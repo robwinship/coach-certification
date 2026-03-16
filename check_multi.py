@@ -14,6 +14,7 @@ from playwright.sync_api import sync_playwright
 
 CERTIFIED_URL = "https://www.registeroba.ca/certified-coaches"
 IN_PROGRESS_URL = "https://www.registeroba.ca/certification-inprogress-by-local"
+COACH_STATUS_URL = "https://www.registeroba.ca/coach-certification-status"
 STATUS_PATH = Path("docs/status.json")
 SUMMARY_PATH = Path("docs/current-summary.html")
 
@@ -112,7 +113,10 @@ def fetch_cloud_data_items(url: str) -> List[dict]:
         page.on("response", on_response)
         page.goto(url, wait_until="domcontentloaded", timeout=60000)
         page.wait_for_timeout(6000)
-        page.wait_for_load_state("networkidle", timeout=30000)
+        try:
+            page.wait_for_load_state("networkidle", timeout=30000)
+        except PlaywrightTimeoutError:
+            pass
         page.wait_for_timeout(3000)
         browser.close()
 
@@ -248,6 +252,35 @@ def query_timestamps() -> tuple[str, str, str]:
     )
 
 
+def fetch_certification_status_dates() -> dict:
+    html = get_rendered_html(COACH_STATUS_URL)
+    text = BeautifulSoup(html, "html.parser").get_text(" ", strip=True)
+    compact = re.sub(r"\s+", " ", text)
+
+    date_updated_match = re.search(
+        r"Date Updated\s*:\s*([A-Za-z]+\s+\d{1,2},\s*\d{4})",
+        compact,
+        flags=re.IGNORECASE,
+    )
+    next_update_match = re.search(
+        r"Next Scheduled Update\s*:\s*([A-Za-z]+\s+\d{1,2},\s*\d{4})",
+        compact,
+        flags=re.IGNORECASE,
+    )
+    note_match = re.search(
+        r"Courses after this date will be on the next update\.",
+        compact,
+        flags=re.IGNORECASE,
+    )
+
+    return {
+        "source": COACH_STATUS_URL,
+        "dateUpdated": date_updated_match.group(1) if date_updated_match else "Unknown",
+        "nextScheduledUpdate": next_update_match.group(1) if next_update_match else "Unknown",
+        "note": note_match.group(0) if note_match else "",
+    }
+
+
 def render_rows_table(rows: Sequence[CoachRow]) -> str:
     if not rows:
         return "<p class=\"empty\">No rows found.</p>"
@@ -279,6 +312,7 @@ def write_summary_page(
     in_progress: Sequence[CoachRow],
     transitions: Sequence[dict],
     queried_at_local: str,
+    certification_status: dict,
 ) -> None:
     transition_items = "".join(
         "<li>"
@@ -374,6 +408,14 @@ def write_summary_page(
         </section>
 
         <section class=\"card\">
+            <h2>Certification Status Dates</h2>
+            <p><strong>Date Updated:</strong> {escape(certification_status.get("dateUpdated", "Unknown"))}</p>
+            <p><strong>Next Scheduled Update:</strong> {escape(certification_status.get("nextScheduledUpdate", "Unknown"))}</p>
+            <p>{escape(certification_status.get("note", ""))}</p>
+            <p><a href=\"{escape(certification_status.get("source", COACH_STATUS_URL))}\" target=\"_blank\" rel=\"noreferrer\">Open Coach Certification Status Source</a></p>
+        </section>
+
+        <section class=\"card\">
             <h2>Certified Coaches</h2>
             {render_rows_table(certified)}
         </section>
@@ -393,6 +435,7 @@ def write_summary_page(
 def main() -> None:
     certified_all = fetch_rows(CERTIFIED_URL)
     in_progress_all = fetch_rows(IN_PROGRESS_URL)
+    certification_status = fetch_certification_status_dates()
 
     as_of_date, queried_at_local, queried_at_utc = query_timestamps()
 
@@ -410,7 +453,9 @@ def main() -> None:
         "sources": {
             "certified": CERTIFIED_URL,
             "inProgress": IN_PROGRESS_URL,
+            "coachCertificationStatus": COACH_STATUS_URL,
         },
+        "certificationStatus": certification_status,
         "certified": [asdict(r) for r in certified],
         "inProgress": [asdict(r) for r in in_progress],
         "transitions": transitions,
@@ -422,7 +467,7 @@ def main() -> None:
 
     STATUS_PATH.parent.mkdir(parents=True, exist_ok=True)
     STATUS_PATH.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-    write_summary_page(certified, in_progress, transitions, queried_at_local)
+    write_summary_page(certified, in_progress, transitions, queried_at_local, certification_status)
     print(
         f"Updated {STATUS_PATH} with {len(certified)} certified and {len(in_progress)} in-progress rows. "
         f"Raw rows: certified={len(certified_all)}, in-progress={len(in_progress_all)}"
