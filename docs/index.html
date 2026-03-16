@@ -472,8 +472,8 @@
         renderStatusList("inprogress-list", "inprogress-empty", inProgress);
         renderTransitions(transitions);
 
-        const asOf = data.asOf ? `Last updated: ${data.asOf}` : "Last updated: unknown";
-        updated.textContent = asOf;
+        const timestamp = data.queriedAtLocal || data.asOf || "unknown";
+        updated.textContent = `Last query: ${timestamp}`;
       } catch (error) {
         updated.textContent = "Unable to load status.json. Add data to show Certified and In Progress results.";
         renderStatusList("certified-list", "certified-empty", []);

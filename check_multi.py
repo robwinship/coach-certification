@@ -1,10 +1,11 @@
 import json
 import re
 from dataclasses import dataclass, asdict
-from datetime import date
+from datetime import date, datetime, timezone
 from html import escape
 from pathlib import Path
 from typing import Dict, List, Sequence
+from zoneinfo import ZoneInfo
 
 import requests
 from bs4 import BeautifulSoup
@@ -234,6 +235,19 @@ def sort_rows(rows: Sequence[CoachRow]) -> List[CoachRow]:
     return sorted(rows, key=lambda r: (normalize(r.name), normalize(r.level), normalize(r.position)))
 
 
+def query_timestamps() -> tuple[str, str, str]:
+    now_utc = datetime.now(timezone.utc)
+    try:
+        now_local = now_utc.astimezone(ZoneInfo("America/Toronto"))
+    except Exception:
+        now_local = now_utc.astimezone()
+    return (
+        now_local.strftime("%Y-%m-%d"),
+        now_local.strftime("%Y-%m-%d %H:%M:%S %Z"),
+        now_utc.isoformat().replace("+00:00", "Z"),
+    )
+
+
 def render_rows_table(rows: Sequence[CoachRow]) -> str:
     if not rows:
         return "<p class=\"empty\">No rows found.</p>"
@@ -260,7 +274,12 @@ def render_rows_table(rows: Sequence[CoachRow]) -> str:
     )
 
 
-def write_summary_page(certified: Sequence[CoachRow], in_progress: Sequence[CoachRow], transitions: Sequence[dict]) -> None:
+def write_summary_page(
+    certified: Sequence[CoachRow],
+    in_progress: Sequence[CoachRow],
+    transitions: Sequence[dict],
+    queried_at_local: str,
+) -> None:
     transition_items = "".join(
         "<li>"
         f"{escape(item.get('name', 'Unknown'))} moved to Certified "
@@ -347,7 +366,7 @@ def write_summary_page(certified: Sequence[CoachRow], in_progress: Sequence[Coac
             <h1>Current Summary</h1>
             <a href=\"./index.html\">Back to dashboard</a>
         </div>
-        <p class=\"meta\">As of {date.today()} | Certified: {len(certified)} | In Progress: {len(in_progress)}</p>
+        <p class=\"meta\">Last query: {queried_at_local} | Certified: {len(certified)} | In Progress: {len(in_progress)}</p>
 
         <section class=\"card\">
             <h2>Detected Transitions</h2>
@@ -375,6 +394,8 @@ def main() -> None:
     certified_all = fetch_rows(CERTIFIED_URL)
     in_progress_all = fetch_rows(IN_PROGRESS_URL)
 
+    as_of_date, queried_at_local, queried_at_utc = query_timestamps()
+
     certified = sort_rows(filter_sarnia(certified_all))
     in_progress = sort_rows(filter_sarnia(in_progress_all))
 
@@ -383,7 +404,9 @@ def main() -> None:
     transitions = compute_transitions(prev_in_progress, certified)
 
     payload = {
-        "asOf": str(date.today()),
+        "asOf": as_of_date,
+        "queriedAtLocal": queried_at_local,
+        "queriedAtUtc": queried_at_utc,
         "sources": {
             "certified": CERTIFIED_URL,
             "inProgress": IN_PROGRESS_URL,
@@ -399,7 +422,7 @@ def main() -> None:
 
     STATUS_PATH.parent.mkdir(parents=True, exist_ok=True)
     STATUS_PATH.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-    write_summary_page(certified, in_progress, transitions)
+    write_summary_page(certified, in_progress, transitions, queried_at_local)
     print(
         f"Updated {STATUS_PATH} with {len(certified)} certified and {len(in_progress)} in-progress rows. "
         f"Raw rows: certified={len(certified_all)}, in-progress={len(in_progress_all)}"

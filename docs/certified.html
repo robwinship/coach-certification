@@ -96,7 +96,8 @@
         const data = await response.json();
         const items = Array.isArray(data.certified) ? data.certified : [];
 
-        meta.textContent = `Last updated: ${data.asOf || "unknown"} | Rows: ${items.length}`;
+        const timestamp = data.queriedAtLocal || data.asOf || "unknown";
+        meta.textContent = `Last query: ${timestamp} | Rows: ${items.length}`;
 
         tbody.innerHTML = "";
         items.forEach((row) => {
