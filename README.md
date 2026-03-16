@@ -94,6 +94,12 @@ If you want Slack notifications:
 3. Name: `SLACK_WEBHOOK_URL`
 4. Value: your Slack incoming webhook URL.
 
+Behavior:
+
+- The refresh job posts to Slack only when meaningful changes are detected.
+- Notifications can include added or removed Certified rows, added or removed In Progress rows, transitions to Certified, and OBA certification date changes.
+- If no changes are detected, no Slack message is sent.
+
 ## Test Locally
 
 1. Create virtual environment:

@@ -1,4 +1,5 @@
 import json
+import os
 import re
 from dataclasses import dataclass, asdict
 from datetime import date, datetime, timezone
@@ -218,6 +219,15 @@ def as_rows(records: Sequence[dict]) -> List[CoachRow]:
     return output
 
 
+def diff_rows(previous: Sequence[CoachRow], current: Sequence[CoachRow]) -> tuple[List[CoachRow], List[CoachRow]]:
+    previous_map = {row.key(): row for row in previous}
+    current_map = {row.key(): row for row in current}
+
+    added = [current_map[key] for key in current_map.keys() - previous_map.keys()]
+    removed = [previous_map[key] for key in previous_map.keys() - current_map.keys()]
+    return sort_rows(added), sort_rows(removed)
+
+
 def compute_transitions(prev_in_progress: Sequence[CoachRow], new_certified: Sequence[CoachRow]) -> List[dict]:
     prev_map = {row.key(): row for row in prev_in_progress}
     moved = [row for row in new_certified if row.key() in prev_map]
@@ -305,6 +315,138 @@ def render_rows_table(rows: Sequence[CoachRow]) -> str:
         "</table>"
         "</div>"
     )
+
+
+def format_row_brief(row: CoachRow) -> str:
+    return f"{row.name} | {row.level} | {row.position} | {row.association}"
+
+
+def append_row_section(lines: List[str], heading: str, rows: Sequence[CoachRow], limit: int = 5) -> None:
+    if not rows:
+        return
+
+    lines.append(f"{heading} ({len(rows)}):")
+    for row in list(rows)[:limit]:
+        lines.append(f"- {format_row_brief(row)}")
+    if len(rows) > limit:
+        lines.append(f"- ...and {len(rows) - limit} more")
+
+
+def build_slack_message(
+    queried_at_local: str,
+    previous_status: dict,
+    certification_status: dict,
+    added_certified: Sequence[CoachRow],
+    removed_certified: Sequence[CoachRow],
+    added_in_progress: Sequence[CoachRow],
+    removed_in_progress: Sequence[CoachRow],
+    transitions: Sequence[dict],
+    certified_count: int,
+    in_progress_count: int,
+) -> str:
+    lines = [
+        "Sarnia Coaches Checker update",
+        f"Last query: {queried_at_local}",
+        f"Current counts: Certified {certified_count} | In Progress {in_progress_count}",
+        "",
+    ]
+
+    append_row_section(lines, "Certified added", added_certified)
+    append_row_section(lines, "Certified removed", removed_certified)
+    append_row_section(lines, "In Progress added", added_in_progress)
+    append_row_section(lines, "In Progress removed", removed_in_progress)
+
+    if transitions:
+        lines.append(f"Transitions to Certified ({len(transitions)}):")
+        for item in list(transitions)[:5]:
+            lines.append(
+                f"- {item.get('name', 'Unknown')} | {item.get('level', 'N/A')} | {item.get('position', 'N/A')} | {item.get('association', 'N/A')}"
+            )
+        if len(transitions) > 5:
+            lines.append(f"- ...and {len(transitions) - 5} more")
+
+    prev_cert_status = previous_status.get("certificationStatus", {})
+    prev_date_updated = prev_cert_status.get("dateUpdated")
+    prev_next_update = prev_cert_status.get("nextScheduledUpdate")
+
+    if prev_date_updated and prev_date_updated != certification_status.get("dateUpdated"):
+        lines.append(
+            f"OBA Date Updated changed: {prev_date_updated} -> {certification_status.get('dateUpdated', 'Unknown')}"
+        )
+    if prev_next_update and prev_next_update != certification_status.get("nextScheduledUpdate"):
+        lines.append(
+            f"OBA Next Scheduled Update changed: {prev_next_update} -> {certification_status.get('nextScheduledUpdate', 'Unknown')}"
+        )
+
+    return "\n".join(line for line in lines if line is not None)
+
+
+def send_slack_notification(message: str) -> None:
+    webhook_url = os.environ.get("SLACK_WEBHOOK_URL", "").strip()
+    if not webhook_url:
+        print("Slack webhook not configured; skipping Slack notification.")
+        return
+
+    response = requests.post(webhook_url, json={"text": message}, timeout=20)
+    response.raise_for_status()
+    print("Slack notification sent.")
+
+
+def maybe_notify_slack(
+    previous: dict,
+    queried_at_local: str,
+    certification_status: dict,
+    certified: Sequence[CoachRow],
+    in_progress: Sequence[CoachRow],
+    transitions: Sequence[dict],
+) -> None:
+    if not previous:
+        print("No previous baseline found; skipping Slack notification for initial dataset.")
+        return
+
+    previous_certified = as_rows(previous.get("certified", []))
+    previous_in_progress = as_rows(previous.get("inProgress", []))
+
+    added_certified, removed_certified = diff_rows(previous_certified, certified)
+    added_in_progress, removed_in_progress = diff_rows(previous_in_progress, in_progress)
+
+    prev_cert_status = previous.get("certificationStatus", {})
+    date_changed = prev_cert_status.get("dateUpdated") not in {None, certification_status.get("dateUpdated")}
+    next_update_changed = prev_cert_status.get("nextScheduledUpdate") not in {None, certification_status.get("nextScheduledUpdate")}
+
+    has_changes = any(
+        [
+            added_certified,
+            removed_certified,
+            added_in_progress,
+            removed_in_progress,
+            transitions,
+            date_changed,
+            next_update_changed,
+        ]
+    )
+
+    if not has_changes:
+        print("No meaningful changes detected; skipping Slack notification.")
+        return
+
+    message = build_slack_message(
+        queried_at_local=queried_at_local,
+        previous_status=previous,
+        certification_status=certification_status,
+        added_certified=added_certified,
+        removed_certified=removed_certified,
+        added_in_progress=added_in_progress,
+        removed_in_progress=removed_in_progress,
+        transitions=transitions,
+        certified_count=len(certified),
+        in_progress_count=len(in_progress),
+    )
+
+    try:
+        send_slack_notification(message)
+    except Exception as exc:
+        print(f"Slack notification failed: {exc}")
 
 
 def write_summary_page(
@@ -468,6 +610,7 @@ def main() -> None:
     STATUS_PATH.parent.mkdir(parents=True, exist_ok=True)
     STATUS_PATH.write_text(json.dumps(payload, indent=2), encoding="utf-8")
     write_summary_page(certified, in_progress, transitions, queried_at_local, certification_status)
+    maybe_notify_slack(previous, queried_at_local, certification_status, certified, in_progress, transitions)
     print(
         f"Updated {STATUS_PATH} with {len(certified)} certified and {len(in_progress)} in-progress rows. "
         f"Raw rows: certified={len(certified_all)}, in-progress={len(in_progress_all)}"

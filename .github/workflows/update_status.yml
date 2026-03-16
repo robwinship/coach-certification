@@ -30,6 +30,8 @@ jobs:
         run: python -m playwright install --with-deps chromium
 
       - name: Regenerate status data
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: python check_multi.py
 
       - name: Commit and push if changed
