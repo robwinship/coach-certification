@@ -392,6 +392,28 @@ def send_slack_notification(message: str) -> None:
     print("Slack notification sent.")
 
 
+def force_slack_test_requested() -> bool:
+    return os.environ.get("FORCE_SLACK_TEST", "false").strip().lower() in {"1", "true", "yes", "on"}
+
+
+def build_slack_test_message(
+    queried_at_local: str,
+    certified_count: int,
+    in_progress_count: int,
+    certification_status: dict,
+) -> str:
+    return "\n".join(
+        [
+            "Sarnia Coaches Checker test notification",
+            f"Last query: {queried_at_local}",
+            f"Current counts: Certified {certified_count} | In Progress {in_progress_count}",
+            f"OBA Date Updated: {certification_status.get('dateUpdated', 'Unknown')}",
+            f"OBA Next Scheduled Update: {certification_status.get('nextScheduledUpdate', 'Unknown')}",
+            "This is a temporary manual test message from GitHub Actions workflow_dispatch.",
+        ]
+    )
+
+
 def maybe_notify_slack(
     previous: dict,
     queried_at_local: str,
@@ -400,6 +422,20 @@ def maybe_notify_slack(
     in_progress: Sequence[CoachRow],
     transitions: Sequence[dict],
 ) -> None:
+    if force_slack_test_requested():
+        try:
+            send_slack_notification(
+                build_slack_test_message(
+                    queried_at_local=queried_at_local,
+                    certified_count=len(certified),
+                    in_progress_count=len(in_progress),
+                    certification_status=certification_status,
+                )
+            )
+        except Exception as exc:
+            print(f"Slack test notification failed: {exc}")
+        return
+
     if not previous:
         print("No previous baseline found; skipping Slack notification for initial dataset.")
         return

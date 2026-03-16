@@ -6,6 +6,12 @@ on:
     - cron: "0 16 * * *"
     - cron: "0 22 * * *"
   workflow_dispatch:
+    inputs:
+      send_test_notification:
+        description: "Send a temporary Slack test notification"
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -32,6 +38,7 @@ jobs:
       - name: Regenerate status data
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          FORCE_SLACK_TEST: ${{ github.event.inputs.send_test_notification || 'false' }}
         run: python check_multi.py
 
       - name: Commit and push if changed
