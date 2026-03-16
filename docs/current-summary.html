@@ -64,6 +64,21 @@
             opacity: 0.75;
             font-style: italic;
         }
+        .actions {
+            margin: 10px 0 18px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .action-link {
+            display: inline-block;
+            padding: 7px 11px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: #ffffff;
+            text-decoration: none;
+            font-size: 0.92rem;
+        }
         a { color: var(--accent); }
     </style>
 </head>
@@ -73,7 +88,10 @@
             <h1>Current Summary</h1>
             <a href="./index.html">Back to dashboard</a>
         </div>
-        <p class="meta">Last query: 2026-03-15 23:43:34 Eastern Daylight Time | Certified: 49 | In Progress: 43</p>
+        <p class="meta">Last query: 2026-03-16 00:41:15 Eastern Daylight Time | Certified: 49 | In Progress: 43</p>
+        <div class="actions">
+            <a class="action-link" href="https://github.com/robwinship/coach-certification/actions/workflows/manual_slack_test.yml" target="_blank" rel="noreferrer">Run Slack Test Notification</a>
+        </div>
 
         <section class="card">
             <h2>Detected Transitions</h2>
