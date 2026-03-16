@@ -569,21 +569,6 @@ def write_summary_page(
             opacity: 0.75;
             font-style: italic;
         }}
-        .actions {{
-            margin: 10px 0 18px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }}
-        .action-link {{
-            display: inline-block;
-            padding: 7px 11px;
-            border: 1px solid var(--line);
-            border-radius: 10px;
-            background: #ffffff;
-            text-decoration: none;
-            font-size: 0.92rem;
-        }}
         a {{ color: var(--accent); }}
     </style>
 </head>
@@ -594,9 +579,7 @@ def write_summary_page(
             <a href=\"./index.html\">Back to dashboard</a>
         </div>
         <p class=\"meta\">Last query: {queried_at_local} | Certified: {len(certified)} | In Progress: {len(in_progress)}</p>
-        <div class=\"actions\">
-            <a class=\"action-link\" href=\"https://github.com/robwinship/coach-certification/actions/workflows/manual_slack_test.yml\" target=\"_blank\" rel=\"noreferrer\">Run Slack Test Notification</a>
-        </div>
+
 
         <section class=\"card\">
             <h2>Detected Transitions</h2>
