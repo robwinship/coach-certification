@@ -192,6 +192,68 @@
       opacity: 0.82;
     }
 
+    .status-board {
+      display: grid;
+      gap: 14px;
+    }
+
+    .status-meta {
+      font-family: "Chivo", sans-serif;
+      font-size: 0.86rem;
+      opacity: 0.75;
+    }
+
+    .status-columns {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr;
+    }
+
+    .status-column {
+      border: 1px solid rgba(16, 33, 46, 0.14);
+      border-radius: 14px;
+      padding: 14px;
+      background: #ffffff;
+    }
+
+    .status-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .status-header h3 {
+      margin: 0;
+      font-family: "Chivo", sans-serif;
+      font-size: 1rem;
+    }
+
+    .count-chip {
+      font-family: "Chivo", sans-serif;
+      font-size: 0.78rem;
+      border-radius: 999px;
+      padding: 4px 9px;
+      border: 1px solid rgba(16, 33, 46, 0.2);
+      background: rgba(111, 182, 201, 0.14);
+    }
+
+    .status-list {
+      margin: 0;
+      padding-left: 18px;
+      line-height: 1.5;
+    }
+
+    .status-list li + li {
+      margin-top: 4px;
+    }
+
+    .status-empty {
+      margin: 0;
+      font-style: italic;
+      opacity: 0.7;
+    }
+
     @media (min-width: 840px) {
       .card.col-7 {
         grid-column: span 7;
@@ -202,6 +264,10 @@
       }
 
       .split {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .status-columns {
         grid-template-columns: 1fr 1fr;
       }
     }
@@ -261,15 +327,85 @@
       </article>
 
       <article class="card" style="--delay: 220ms;">
-        <h2>Deployment Model</h2>
-        <p>
-          GitHub Pages hosts this documentation interface. The Python checker runs via GitHub Actions
-          or your local environment, and snapshot outputs are stored in the repository workflow path.
-        </p>
+        <h2>Current Status</h2>
+        <div class="status-board">
+          <p class="status-meta" id="status-updated">Loading status data...</p>
+          <div class="status-columns">
+            <section class="status-column">
+              <div class="status-header">
+                <h3>Certified</h3>
+                <span class="count-chip" id="certified-count">0</span>
+              </div>
+              <ul class="status-list" id="certified-list"></ul>
+              <p class="status-empty" id="certified-empty" hidden>No certified matches yet.</p>
+            </section>
+
+            <section class="status-column">
+              <div class="status-header">
+                <h3>In Progress</h3>
+                <span class="count-chip" id="inprogress-count">0</span>
+              </div>
+              <ul class="status-list" id="inprogress-list"></ul>
+              <p class="status-empty" id="inprogress-empty" hidden>No in-progress matches yet.</p>
+            </section>
+          </div>
+        </div>
       </article>
     </section>
 
     <p class="foot">Built for robwinship · Coach Certification Monitoring</p>
   </main>
+
+  <script>
+    function renderStatusList(targetId, emptyId, items) {
+      const list = document.getElementById(targetId);
+      const empty = document.getElementById(emptyId);
+      list.innerHTML = "";
+
+      if (!items || items.length === 0) {
+        empty.hidden = false;
+        return;
+      }
+
+      empty.hidden = true;
+      items.forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        list.appendChild(li);
+      });
+    }
+
+    async function loadStatusData() {
+      const updated = document.getElementById("status-updated");
+      const certifiedCount = document.getElementById("certified-count");
+      const inProgressCount = document.getElementById("inprogress-count");
+
+      try {
+        const response = await fetch("./status.json", { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error("Status data unavailable");
+        }
+
+        const data = await response.json();
+        const certified = Array.isArray(data.certified) ? data.certified : [];
+        const inProgress = Array.isArray(data.inProgress) ? data.inProgress : [];
+
+        certifiedCount.textContent = String(certified.length);
+        inProgressCount.textContent = String(inProgress.length);
+
+        renderStatusList("certified-list", "certified-empty", certified);
+        renderStatusList("inprogress-list", "inprogress-empty", inProgress);
+
+        const asOf = data.asOf ? `Last updated: ${data.asOf}` : "Last updated: unknown";
+        updated.textContent = asOf;
+      } catch (error) {
+        updated.textContent = "Unable to load status.json. Add data to show Certified and In Progress results.";
+        renderStatusList("certified-list", "certified-empty", []);
+        renderStatusList("inprogress-list", "inprogress-empty", []);
+      }
+    }
+
+    loadStatusData();
+  </script>
 </body>
 </html>
