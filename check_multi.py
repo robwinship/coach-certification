@@ -2,8 +2,9 @@ import json
 import re
 from dataclasses import dataclass, asdict
 from datetime import date
+from html import escape
 from pathlib import Path
-from typing import List, Optional, Sequence
+from typing import List, Sequence
 
 import requests
 from bs4 import BeautifulSoup
@@ -11,6 +12,7 @@ from bs4 import BeautifulSoup
 CERTIFIED_URL = "https://www.registeroba.ca/certified-coaches"
 IN_PROGRESS_URL = "https://www.registeroba.ca/certification-inprogress-by-local"
 STATUS_PATH = Path("docs/status.json")
+SUMMARY_PATH = Path("docs/current-summary.html")
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -137,6 +139,143 @@ def sort_rows(rows: Sequence[CoachRow]) -> List[CoachRow]:
     return sorted(rows, key=lambda r: (normalize(r.name), normalize(r.level), normalize(r.position)))
 
 
+def render_rows_table(rows: Sequence[CoachRow]) -> str:
+        if not rows:
+                return "<p class=\"empty\">No rows found.</p>"
+
+        table_rows = []
+        for row in rows:
+                table_rows.append(
+                        "<tr>"
+                        f"<td>{escape(row.name)}</td>"
+                        f"<td>{escape(row.level)}</td>"
+                        f"<td>{escape(row.position)}</td>"
+                        f"<td>{escape(row.association)}</td>"
+                        f"<td><a href=\"{escape(row.source_url)}\" target=\"_blank\" rel=\"noreferrer\">View</a></td>"
+                        "</tr>"
+                )
+
+        return (
+                "<div class=\"panel\">"
+                "<table>"
+                "<thead><tr><th>Name</th><th>Level</th><th>Position</th><th>Association</th><th>Source</th></tr></thead>"
+                f"<tbody>{''.join(table_rows)}</tbody>"
+                "</table>"
+                "</div>"
+        )
+
+
+def write_summary_page(certified: Sequence[CoachRow], in_progress: Sequence[CoachRow], transitions: Sequence[dict]) -> None:
+        transition_items = "".join(
+                "<li>"
+                f"{escape(item.get('name', 'Unknown'))} moved to Certified "
+                f"({escape(item.get('level', 'N/A'))} - {escape(item.get('position', 'N/A'))})"
+                "</li>"
+                for item in transitions
+        )
+        transition_html = (
+                f"<ul>{transition_items}</ul>" if transition_items else "<p class=\"empty\">No new in-progress to certified transitions detected.</p>"
+        )
+
+        html = f"""<!doctype html>
+<html lang=\"en\">
+<head>
+    <meta charset=\"utf-8\">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
+    <title>Current Summary | Sarnia Coaches Checker</title>
+    <style>
+        :root {{
+            --ink: #10212e;
+            --paper: #f6f5ef;
+            --card: #ffffff;
+            --line: #d7dee4;
+            --accent: #0f4e66;
+        }}
+        body {{
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+        }}
+        .wrap {{
+            width: min(1200px, 95vw);
+            margin: 24px auto 40px;
+        }}
+        .top {{
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+        }}
+        h1, h2 {{ margin: 0; }}
+        .meta {{ margin: 8px 0 18px; opacity: 0.8; }}
+        .card {{
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }}
+        .panel {{
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            overflow: auto;
+            margin-top: 12px;
+        }}
+        table {{
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 760px;
+        }}
+        th, td {{
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--line);
+            vertical-align: top;
+        }}
+        th {{
+            background: #edf3f7;
+            font-size: 0.9rem;
+        }}
+        .empty {{
+            margin: 8px 0 0;
+            opacity: 0.75;
+            font-style: italic;
+        }}
+        a {{ color: var(--accent); }}
+    </style>
+</head>
+<body>
+    <main class=\"wrap\">
+        <div class=\"top\">
+            <h1>Current Summary</h1>
+            <a href=\"./index.html\">Back to dashboard</a>
+        </div>
+        <p class=\"meta\">As of {date.today()} | Certified: {len(certified)} | In Progress: {len(in_progress)}</p>
+
+        <section class=\"card\">
+            <h2>Detected Transitions</h2>
+            {transition_html}
+        </section>
+
+        <section class=\"card\">
+            <h2>Certified Coaches</h2>
+            {render_rows_table(certified)}
+        </section>
+
+        <section class=\"card\">
+            <h2>In Progress Coaches</h2>
+            {render_rows_table(in_progress)}
+        </section>
+    </main>
+</body>
+</html>
+"""
+
+        SUMMARY_PATH.write_text(html, encoding="utf-8")
+
+
 def main() -> None:
     certified_all = fetch_rows(CERTIFIED_URL)
     in_progress_all = fetch_rows(IN_PROGRESS_URL)
@@ -165,6 +304,7 @@ def main() -> None:
 
     STATUS_PATH.parent.mkdir(parents=True, exist_ok=True)
     STATUS_PATH.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    write_summary_page(certified, in_progress, transitions)
     print(f"Updated {STATUS_PATH} with {len(certified)} certified and {len(in_progress)} in-progress rows.")
 
 

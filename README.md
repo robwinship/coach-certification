@@ -19,6 +19,7 @@ GitHub Pages reads data from docs/status.json and renders:
 - Dashboard summary on docs/index.html
 - Detailed Certified list on docs/certified.html
 - Detailed In Progress list on docs/in-progress.html
+- Compiled static summary on docs/current-summary.html
 
 Each coach row includes name, level, position, and association.
 
@@ -37,6 +38,8 @@ Run locally:
 2. python check_multi.py
 
 This regenerates docs/status.json.
+
+It also regenerates docs/current-summary.html, which is a static snapshot page containing both status tables.
 
 ## GitHub Repository Setup (robwinship)
 
