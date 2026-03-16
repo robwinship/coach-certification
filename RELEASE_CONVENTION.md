@@ -2,10 +2,10 @@
 
 ## Versioning
 
-- Use Semantic Versioning: MAJOR.MINOR.PATCH.
-- MAJOR: Breaking changes.
-- MINOR: Backward-compatible features.
-- PATCH: Backward-compatible fixes.
+- Custom project versioning is used.
+- Baseline release starts at v1.101.
+- Subtle changes increment by 0.001 (example: v1.101 -> v1.102).
+- Major release bumps happen only when explicitly instructed.
 
 ## Commit Message Pattern
 
@@ -42,10 +42,10 @@ Use Conventional Commit style where practical:
 ## Suggested Cadence
 
 - Create a release after each meaningful milestone.
-- Use PATCH for data/scraper reliability fixes.
-- Use MINOR for new tracker capabilities and UI sections.
+- Use 0.001 increments for subtle updates.
+- Use larger jumps only when a milestone or major release is requested.
 
 ## Initial Baseline
 
-- Current baseline version: 0.1.0
+- Current baseline version: 1.101
 - Date: 2026-03-15

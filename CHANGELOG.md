@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog.
-This project uses Semantic Versioning.
+This project uses a custom release numbering convention.
 
 ## Unreleased
 
@@ -16,7 +16,7 @@ This project uses Semantic Versioning.
 ### Fixed
 - Placeholder for upcoming fixes.
 
-## 0.1.0 - 2026-03-15
+## 1.101 - 2026-03-15
 
 ### Added
 - GitHub Pages tracker site with dashboard and detail pages.
