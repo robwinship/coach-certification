@@ -248,6 +248,31 @@
       margin-top: 4px;
     }
 
+    .status-links {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .status-link {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(16, 33, 46, 0.22);
+      text-decoration: none;
+      color: #0f4e66;
+      font-family: "Chivo", sans-serif;
+      font-size: 0.82rem;
+      background: rgba(111, 182, 201, 0.12);
+    }
+
+    .transition-list {
+      margin: 10px 0 0;
+      padding-left: 18px;
+      line-height: 1.5;
+    }
+
     .status-empty {
       margin: 0;
       font-style: italic;
@@ -338,6 +363,9 @@
               </div>
               <ul class="status-list" id="certified-list"></ul>
               <p class="status-empty" id="certified-empty" hidden>No certified matches yet.</p>
+              <div class="status-links">
+                <a class="status-link" href="./certified.html">Open Certified List</a>
+              </div>
             </section>
 
             <section class="status-column">
@@ -347,8 +375,20 @@
               </div>
               <ul class="status-list" id="inprogress-list"></ul>
               <p class="status-empty" id="inprogress-empty" hidden>No in-progress matches yet.</p>
+              <div class="status-links">
+                <a class="status-link" href="./in-progress.html">Open In Progress List</a>
+              </div>
             </section>
           </div>
+
+          <section class="status-column">
+            <div class="status-header">
+              <h3>Detected Transitions</h3>
+              <span class="count-chip" id="transition-count">0</span>
+            </div>
+            <ul class="transition-list" id="transition-list"></ul>
+            <p class="status-empty" id="transition-empty" hidden>No new in-progress to certified transitions detected.</p>
+          </section>
         </div>
       </article>
     </section>
@@ -357,6 +397,17 @@
   </main>
 
   <script>
+    function formatRowLabel(item) {
+      if (typeof item === "string") {
+        return item;
+      }
+
+      const name = item.name || "Unknown";
+      const level = item.level || "Level N/A";
+      const position = item.position || "Position N/A";
+      return `${name} - ${level} - ${position}`;
+    }
+
     function renderStatusList(targetId, emptyId, items) {
       const list = document.getElementById(targetId);
       const empty = document.getElementById(emptyId);
@@ -370,7 +421,28 @@
       empty.hidden = true;
       items.forEach((item) => {
         const li = document.createElement("li");
-        li.textContent = item;
+        li.textContent = formatRowLabel(item);
+        list.appendChild(li);
+      });
+    }
+
+    function renderTransitions(items) {
+      const list = document.getElementById("transition-list");
+      const empty = document.getElementById("transition-empty");
+      const count = document.getElementById("transition-count");
+
+      list.innerHTML = "";
+      count.textContent = String(items.length);
+
+      if (!items || items.length === 0) {
+        empty.hidden = false;
+        return;
+      }
+
+      empty.hidden = true;
+      items.forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = `${item.name || "Unknown"} moved to Certified (${item.level || "N/A"} - ${item.position || "N/A"})`;
         list.appendChild(li);
       });
     }
@@ -389,12 +461,14 @@
         const data = await response.json();
         const certified = Array.isArray(data.certified) ? data.certified : [];
         const inProgress = Array.isArray(data.inProgress) ? data.inProgress : [];
+        const transitions = Array.isArray(data.transitions) ? data.transitions : [];
 
         certifiedCount.textContent = String(certified.length);
         inProgressCount.textContent = String(inProgress.length);
 
         renderStatusList("certified-list", "certified-empty", certified);
         renderStatusList("inprogress-list", "inprogress-empty", inProgress);
+        renderTransitions(transitions);
 
         const asOf = data.asOf ? `Last updated: ${data.asOf}` : "Last updated: unknown";
         updated.textContent = asOf;
@@ -402,6 +476,7 @@
         updated.textContent = "Unable to load status.json. Add data to show Certified and In Progress results.";
         renderStatusList("certified-list", "certified-empty", []);
         renderStatusList("inprogress-list", "inprogress-empty", []);
+        renderTransitions([]);
       }
     }
 

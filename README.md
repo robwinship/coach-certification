@@ -2,10 +2,41 @@
 
 This project checks two RegisterOBA pages for occurrences of "Sarnia", saves snapshots, and can notify Slack when records are added or removed.
 
+The site now displays two explicit statuses and supports transition tracking:
+
+- Certified
+- In Progress
+
 ## Monitored URLs
 
 - https://www.registeroba.ca/certified-coaches
 - https://www.registeroba.ca/certification-inprogress-by-local
+
+## Data Display
+
+GitHub Pages reads data from docs/status.json and renders:
+
+- Dashboard summary on docs/index.html
+- Detailed Certified list on docs/certified.html
+- Detailed In Progress list on docs/in-progress.html
+
+Each coach row includes name, level, position, and association.
+
+## Transition Monitoring
+
+The script compares the previous in-progress set against the latest certified set.
+When a matching coach row appears in Certified, it is written to the transitions section in docs/status.json.
+
+Current generator script:
+
+- check_multi.py
+
+Run locally:
+
+1. pip install -r requirements.txt
+2. python check_multi.py
+
+This regenerates docs/status.json.
 
 ## GitHub Repository Setup (robwinship)
 

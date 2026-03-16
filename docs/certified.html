@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Certified Coaches | Sarnia Checker</title>
+  <style>
+    :root {
+      --ink: #10212e;
+      --paper: #f6f5ef;
+      --card: #fff;
+      --line: #d9e0e5;
+      --accent: #0f4e66;
+    }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+    }
+    .wrap {
+      width: min(1100px, 94vw);
+      margin: 24px auto 36px;
+    }
+    .top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+    h1 { margin: 0; }
+    a { color: var(--accent); }
+    .meta { margin-top: 8px; opacity: 0.75; }
+    .panel {
+      margin-top: 16px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    th {
+      background: #eef3f6;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="top">
+      <h1>Certified Coaches</h1>
+      <a href="./index.html">Back to dashboard</a>
+    </div>
+    <p class="meta" id="meta">Loading data...</p>
+
+    <div class="panel">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Level</th>
+            <th>Position</th>
+            <th>Association</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    function cell(text) {
+      const td = document.createElement("td");
+      td.textContent = text || "";
+      return td;
+    }
+
+    async function load() {
+      const meta = document.getElementById("meta");
+      const tbody = document.getElementById("rows");
+      try {
+        const response = await fetch("./status.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("Missing status data");
+        const data = await response.json();
+        const items = Array.isArray(data.certified) ? data.certified : [];
+
+        meta.textContent = `Last updated: ${data.asOf || "unknown"} | Rows: ${items.length}`;
+
+        tbody.innerHTML = "";
+        items.forEach((row) => {
+          const tr = document.createElement("tr");
+          tr.appendChild(cell(row.name));
+          tr.appendChild(cell(row.level));
+          tr.appendChild(cell(row.position));
+          tr.appendChild(cell(row.association));
+
+          const sourceTd = document.createElement("td");
+          const sourceA = document.createElement("a");
+          sourceA.href = row.source_url || "https://www.registeroba.ca/certified-coaches";
+          sourceA.target = "_blank";
+          sourceA.rel = "noreferrer";
+          sourceA.textContent = "View";
+          sourceTd.appendChild(sourceA);
+          tr.appendChild(sourceTd);
+
+          tbody.appendChild(tr);
+        });
+      } catch (e) {
+        meta.textContent = "Unable to load status.json";
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>

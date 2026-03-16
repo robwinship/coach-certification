@@ -1,9 +1,32 @@
 {
   "asOf": "2026-03-15",
+  "sources": {
+    "certified": "https://www.registeroba.ca/certified-coaches",
+    "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local"
+  },
   "certified": [
-    "Sample Name - Sarnia"
+    {
+      "name": "Sample Certified Coach",
+      "registration_id": "0000000",
+      "level": "13U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    }
   ],
   "inProgress": [
-    "Sample Name - Sarnia"
+    {
+      "name": "Sample In Progress Coach",
+      "registration_id": "1111111",
+      "level": "13U AA",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    }
+  ],
+  "transitions": [],
+  "notes": [
+    "Rows are filtered to associations containing Sarnia.",
+    "A transition is detected when a previously in-progress row appears in certified."
   ]
 }
