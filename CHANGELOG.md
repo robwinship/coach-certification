@@ -16,6 +16,15 @@ This project uses a custom release numbering convention.
 ### Fixed
 - Placeholder for upcoming fixes.
 
+## 1.102 - 2026-03-16
+
+### Added
+- Slack incoming webhook notification system: change-based alerts for coach additions and removals.
+- `manual_slack_test.yml` GitHub Actions workflow for on-demand Slack test messages.
+
+### Changed
+- Removed temporary "Run Slack Test" and "Open Slack Test Action" buttons from tracker webpages now that the workflow trigger location is confirmed.
+
 ## 1.101 - 2026-03-15
 
 ### Added
