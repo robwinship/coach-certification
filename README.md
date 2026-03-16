@@ -32,6 +32,11 @@ Current generator script:
 
 - check_multi.py
 
+Dynamic loading note:
+
+- RegisterOBA pages are JavaScript-rendered and load in delayed batches.
+- The script uses Playwright plus Wix cloud-data responses so it captures full result sets reliably.
+
 Run locally:
 
 1. pip install -r requirements.txt

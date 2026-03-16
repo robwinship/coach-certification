@@ -4,8 +4,746 @@
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local"
   },
-  "certified": [],
-  "inProgress": [],
+  "certified": [
+    {
+      "name": "Andrew Westlake",
+      "registration_id": "1013326",
+      "level": "10U A",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Andrew Westlake",
+      "registration_id": "1013326",
+      "level": "9U DS",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Brad Blain",
+      "registration_id": "6297234",
+      "level": "12U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Brandon Palmer",
+      "registration_id": "6169197",
+      "level": "13U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Brandon Palmer",
+      "registration_id": "6169197",
+      "level": "15U AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Brent Campbell",
+      "registration_id": "6132916",
+      "level": "14U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Brett Brydges",
+      "registration_id": "6652645",
+      "level": "22U AAA",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Bruce Dennis",
+      "registration_id": "6933595",
+      "level": "11U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Cam Gordon",
+      "registration_id": "6320660",
+      "level": "11U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Cam Gordon",
+      "registration_id": "6320660",
+      "level": "14U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Chris Garton",
+      "registration_id": "6177700",
+      "level": "11U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Chris Prozorowicz",
+      "registration_id": "6019343",
+      "level": "15U AA",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Chris Prozorowicz",
+      "registration_id": "6019343",
+      "level": "16U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Dan Sparks",
+      "registration_id": "6169286",
+      "level": "15U AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Derek Smith",
+      "registration_id": "6752767",
+      "level": "14U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Eric Mclaughlin",
+      "registration_id": "6774977",
+      "level": "11U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Greg Smith",
+      "registration_id": "6654362",
+      "level": "12U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Jake Taylor",
+      "registration_id": "7097708",
+      "level": "13U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "James Grant",
+      "registration_id": "1184214",
+      "level": "SENIOR AAA",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Jamie Downton",
+      "registration_id": "827248",
+      "level": "15U AAA",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Jamie Downton",
+      "registration_id": "827248",
+      "level": "16U AAA",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Jan Prozorowicz",
+      "registration_id": "310221",
+      "level": "16U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Jason Butler",
+      "registration_id": "5914731",
+      "level": "SENIOR AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Jason Helps",
+      "registration_id": "5669370",
+      "level": "16U AA",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Jason Hodgins",
+      "registration_id": "6449291",
+      "level": "13U AA",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Jason Polera",
+      "registration_id": "5868639",
+      "level": "13U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Jason Polera",
+      "registration_id": "5868639",
+      "level": "15U AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Jim Bigras",
+      "registration_id": "708817",
+      "level": "22U AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Jim Bigras",
+      "registration_id": "708817",
+      "level": "SENIOR AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Joe Charette",
+      "registration_id": "6860229",
+      "level": "9U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Joel Ainsworth",
+      "registration_id": "1230163",
+      "level": "14U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Joel Ainsworth",
+      "registration_id": "1230163",
+      "level": "SENIOR AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Josh Whittington",
+      "registration_id": "5685951",
+      "level": "15U DS",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Justin Randall",
+      "registration_id": "6574447",
+      "level": "10U AA",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Justin Randall",
+      "registration_id": "6574447",
+      "level": "8U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Ken Chipman",
+      "registration_id": "5782608",
+      "level": "15U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Kevin Cook",
+      "registration_id": "5619503",
+      "level": "15U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Kyle Scott",
+      "registration_id": "6467246",
+      "level": "10U A",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Kyle Scott",
+      "registration_id": "6467246",
+      "level": "9U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Marc Huyben",
+      "registration_id": "5776138",
+      "level": "10U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Matt Berglund",
+      "registration_id": "1249342",
+      "level": "12U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Matt Douglas",
+      "registration_id": "6499737",
+      "level": "11U AA",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Nick Core",
+      "registration_id": "6198142",
+      "level": "15U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Nick Lajoie",
+      "registration_id": "6769801",
+      "level": "11U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Rob Borody",
+      "registration_id": "6744739",
+      "level": "15U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Ron Perron",
+      "registration_id": "847031",
+      "level": "15U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Sean Baxter",
+      "registration_id": "6529076",
+      "level": "8U AA",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Steve Soetemans",
+      "registration_id": "6661491",
+      "level": "12U AA",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
+      "name": "Tj Struckett",
+      "registration_id": "6933596",
+      "level": "9U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    }
+  ],
+  "inProgress": [
+    {
+      "name": "Aaron Cassetta",
+      "registration_id": "6761639",
+      "level": "9U AA",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Al Hillis",
+      "registration_id": "5680913",
+      "level": "16U AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Andrew Smith",
+      "registration_id": "6797054",
+      "level": "10U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Andrew Smith",
+      "registration_id": "6797054",
+      "level": "13U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Bill Best",
+      "registration_id": "6657552",
+      "level": "11U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Brandon Palmer",
+      "registration_id": "6169197",
+      "level": "16U AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Brent Steeves",
+      "registration_id": "1226551",
+      "level": "10U A",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Brett Gray",
+      "registration_id": "1221803",
+      "level": "10U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Brooke Campbell",
+      "registration_id": "7018097",
+      "level": "8U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Bruce Gray",
+      "registration_id": "616329",
+      "level": "22U AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Bryan Deschutter",
+      "registration_id": "7073516",
+      "level": "8U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Carl Best",
+      "registration_id": "6959617",
+      "level": "11U DS",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Chris Hurst",
+      "registration_id": "6620960",
+      "level": "13U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Cody Webster",
+      "registration_id": "6099001",
+      "level": "13U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Cody Webster",
+      "registration_id": "6099001",
+      "level": "15U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Cole Randall",
+      "registration_id": "7054588",
+      "level": "10U A",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Cory Sommise",
+      "registration_id": "6851243",
+      "level": "13U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Craig Helps",
+      "registration_id": "1225857",
+      "level": "10U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Dan Sparks",
+      "registration_id": "6169286",
+      "level": "16U AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Dave Aitken",
+      "registration_id": "7032698",
+      "level": "8U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "David Kruger",
+      "registration_id": "6619569",
+      "level": "11U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Evan Ouzounis",
+      "registration_id": "7076015",
+      "level": "8U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Greg Moore",
+      "registration_id": "6369363",
+      "level": "12U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Jason Polera",
+      "registration_id": "5868639",
+      "level": "16U AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Joel Ainsworth",
+      "registration_id": "1230163",
+      "level": "9U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Joel Hoadley",
+      "registration_id": "6743083",
+      "level": "10U A",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Joel Hoadley",
+      "registration_id": "6743083",
+      "level": "9U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "John Bettridge",
+      "registration_id": "6702741",
+      "level": "9U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Mick Jackson",
+      "registration_id": "1245828",
+      "level": "13U DS",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Mike Damchuk",
+      "registration_id": "6812287",
+      "level": "9U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Owen Utley",
+      "registration_id": "6934379",
+      "level": "13U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Pete Juryn",
+      "registration_id": "6657677",
+      "level": "10U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Ryan Nutma",
+      "registration_id": "6342953",
+      "level": "15U AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Ryan Nutma",
+      "registration_id": "6342953",
+      "level": "16U AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Scott Smith",
+      "registration_id": "6487076",
+      "level": "16U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Shane Murphy",
+      "registration_id": "6789905",
+      "level": "11U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Steve Edwardson",
+      "registration_id": "6670299",
+      "level": "10U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Steve Helps",
+      "registration_id": "6235933",
+      "level": "14U AA",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Steve Mcewen",
+      "registration_id": "5992217",
+      "level": "13U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Tara Webster",
+      "registration_id": "6409903",
+      "level": "13U DS",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Tim Symington",
+      "registration_id": "1191089",
+      "level": "15U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Trevor Jamieson",
+      "registration_id": "6941236",
+      "level": "11U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    },
+    {
+      "name": "Wade Babula",
+      "registration_id": "5678639",
+      "level": "10U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+    }
+  ],
   "transitions": [],
   "notes": [
     "Rows are filtered to associations containing 'Sarnia'.",

@@ -4,10 +4,12 @@ from dataclasses import dataclass, asdict
 from datetime import date
 from html import escape
 from pathlib import Path
-from typing import List, Sequence
+from typing import Dict, List, Sequence
 
 import requests
 from bs4 import BeautifulSoup
+from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
+from playwright.sync_api import sync_playwright
 
 CERTIFIED_URL = "https://www.registeroba.ca/certified-coaches"
 IN_PROGRESS_URL = "https://www.registeroba.ca/certification-inprogress-by-local"
@@ -57,11 +59,100 @@ def parse_level_position(raw_role: str) -> tuple[str, str]:
     return role, "Unknown"
 
 
-def fetch_rows(url: str) -> List[CoachRow]:
-    response = requests.get(url, headers=HEADERS, timeout=30)
-    response.raise_for_status()
+def get_rendered_html(url: str) -> str:
+    try:
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True)
+            page = browser.new_page()
+            page.goto(url, wait_until="domcontentloaded", timeout=60000)
 
-    soup = BeautifulSoup(response.text, "html.parser")
+            # The source site appears to load rows asynchronously after initial paint.
+            page.wait_for_timeout(6000)
+            page.wait_for_load_state("networkidle", timeout=30000)
+
+            try:
+                page.wait_for_selector("tr td", timeout=15000)
+            except PlaywrightTimeoutError:
+                # Keep parsing whatever content is available.
+                pass
+
+            html = page.content()
+            browser.close()
+            return html
+    except Exception:
+        # Fallback for environments where Playwright/browser installation is unavailable.
+        response = requests.get(url, headers=HEADERS, timeout=30)
+        response.raise_for_status()
+        return response.text
+
+
+def fetch_cloud_data_items(url: str) -> List[dict]:
+    captured: Dict[str, dict] = {}
+
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page()
+
+        def on_response(resp) -> None:
+            if "/_api/cloud-data/v2/items/query" not in resp.url or resp.status != 200:
+                return
+
+            try:
+                payload = resp.json()
+            except Exception:
+                return
+
+            items = payload.get("items") or payload.get("dataItems") or []
+            for item in items:
+                item_id = item.get("id") or item.get("_id")
+                if item_id:
+                    captured[item_id] = item
+
+        page.on("response", on_response)
+        page.goto(url, wait_until="domcontentloaded", timeout=60000)
+        page.wait_for_timeout(6000)
+        page.wait_for_load_state("networkidle", timeout=30000)
+        page.wait_for_timeout(3000)
+        browser.close()
+
+    return list(captured.values())
+
+
+def rows_from_cloud_items(items: Sequence[dict], source_url: str) -> List[CoachRow]:
+    rows: List[CoachRow] = []
+    for item in items:
+        data = item.get("data", {})
+        name = str(data.get("title", "")).strip()
+        reg_id = str(data.get("nccp", "")).strip()
+        raw_role = str(data.get("position", "")).strip()
+        association = str(data.get("team", "")).strip()
+
+        if not name or not association or not raw_role:
+            continue
+
+        level, position = parse_level_position(raw_role)
+        rows.append(
+            CoachRow(
+                name=name,
+                registration_id=reg_id,
+                level=level,
+                position=position,
+                association=association,
+                source_url=source_url,
+            )
+        )
+
+    return rows
+
+
+def fetch_rows(url: str) -> List[CoachRow]:
+    cloud_items = fetch_cloud_data_items(url)
+    if cloud_items:
+        return rows_from_cloud_items(cloud_items, url)
+
+    html = get_rendered_html(url)
+
+    soup = BeautifulSoup(html, "html.parser")
     rows: List[CoachRow] = []
 
     for tr in soup.find_all("tr"):
@@ -75,6 +166,10 @@ def fetch_rows(url: str) -> List[CoachRow]:
         association = cells[3]
 
         if not name or not association:
+            continue
+
+        # Skip obvious non-data rows.
+        if normalize(name) in {"loading...", "name"}:
             continue
 
         level, position = parse_level_position(raw_role)
@@ -140,44 +235,44 @@ def sort_rows(rows: Sequence[CoachRow]) -> List[CoachRow]:
 
 
 def render_rows_table(rows: Sequence[CoachRow]) -> str:
-        if not rows:
-                return "<p class=\"empty\">No rows found.</p>"
+    if not rows:
+        return "<p class=\"empty\">No rows found.</p>"
 
-        table_rows = []
-        for row in rows:
-                table_rows.append(
-                        "<tr>"
-                        f"<td>{escape(row.name)}</td>"
-                        f"<td>{escape(row.level)}</td>"
-                        f"<td>{escape(row.position)}</td>"
-                        f"<td>{escape(row.association)}</td>"
-                        f"<td><a href=\"{escape(row.source_url)}\" target=\"_blank\" rel=\"noreferrer\">View</a></td>"
-                        "</tr>"
-                )
-
-        return (
-                "<div class=\"panel\">"
-                "<table>"
-                "<thead><tr><th>Name</th><th>Level</th><th>Position</th><th>Association</th><th>Source</th></tr></thead>"
-                f"<tbody>{''.join(table_rows)}</tbody>"
-                "</table>"
-                "</div>"
+    table_rows = []
+    for row in rows:
+        table_rows.append(
+            "<tr>"
+            f"<td>{escape(row.name)}</td>"
+            f"<td>{escape(row.level)}</td>"
+            f"<td>{escape(row.position)}</td>"
+            f"<td>{escape(row.association)}</td>"
+            f"<td><a href=\"{escape(row.source_url)}\" target=\"_blank\" rel=\"noreferrer\">View</a></td>"
+            "</tr>"
         )
+
+    return (
+        "<div class=\"panel\">"
+        "<table>"
+        "<thead><tr><th>Name</th><th>Level</th><th>Position</th><th>Association</th><th>Source</th></tr></thead>"
+        f"<tbody>{''.join(table_rows)}</tbody>"
+        "</table>"
+        "</div>"
+    )
 
 
 def write_summary_page(certified: Sequence[CoachRow], in_progress: Sequence[CoachRow], transitions: Sequence[dict]) -> None:
-        transition_items = "".join(
-                "<li>"
-                f"{escape(item.get('name', 'Unknown'))} moved to Certified "
-                f"({escape(item.get('level', 'N/A'))} - {escape(item.get('position', 'N/A'))})"
-                "</li>"
-                for item in transitions
-        )
-        transition_html = (
-                f"<ul>{transition_items}</ul>" if transition_items else "<p class=\"empty\">No new in-progress to certified transitions detected.</p>"
-        )
+    transition_items = "".join(
+        "<li>"
+        f"{escape(item.get('name', 'Unknown'))} moved to Certified "
+        f"({escape(item.get('level', 'N/A'))} - {escape(item.get('position', 'N/A'))})"
+        "</li>"
+        for item in transitions
+    )
+    transition_html = (
+        f"<ul>{transition_items}</ul>" if transition_items else "<p class=\"empty\">No new in-progress to certified transitions detected.</p>"
+    )
 
-        html = f"""<!doctype html>
+    html = f"""<!doctype html>
 <html lang=\"en\">
 <head>
     <meta charset=\"utf-8\">
@@ -273,7 +368,7 @@ def write_summary_page(certified: Sequence[CoachRow], in_progress: Sequence[Coac
 </html>
 """
 
-        SUMMARY_PATH.write_text(html, encoding="utf-8")
+    SUMMARY_PATH.write_text(html, encoding="utf-8")
 
 
 def main() -> None:
@@ -305,7 +400,10 @@ def main() -> None:
     STATUS_PATH.parent.mkdir(parents=True, exist_ok=True)
     STATUS_PATH.write_text(json.dumps(payload, indent=2), encoding="utf-8")
     write_summary_page(certified, in_progress, transitions)
-    print(f"Updated {STATUS_PATH} with {len(certified)} certified and {len(in_progress)} in-progress rows.")
+    print(
+        f"Updated {STATUS_PATH} with {len(certified)} certified and {len(in_progress)} in-progress rows. "
+        f"Raw rows: certified={len(certified_all)}, in-progress={len(in_progress_all)}"
+    )
 
 
 if __name__ == "__main__":
