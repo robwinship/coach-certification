@@ -57,7 +57,7 @@ Use this if your GitHub repo will be under the account `robwinship`.
 3. Copy project files into the repo folder:
    - `check_multi.py`
    - `requirements.txt`
-   - `.github/workflows/check_sarnia_multi.yml`
+   - `.github/workflows/update_status.yml`
    - `.gitignore`
    - `README.md`
 4. Create snapshots folder:
@@ -111,6 +111,18 @@ If `SLACK_WEBHOOK_URL` is not set, the script should still create snapshot files
 
 ## Notes
 
-- Workflow schedule can be adjusted in `.github/workflows/check_sarnia_multi.yml`.
+- Workflow schedule can be adjusted in `.github/workflows/update_status.yml`.
 - If pages are JavaScript-rendered, switch fetch logic to Playwright.
 - Review https://www.registeroba.ca/robots.txt and site terms before scraping.
+
+## Changelog And Releases
+
+- Changelog file: `CHANGELOG.md`
+- Release process convention: `RELEASE_CONVENTION.md`
+
+Recommended release flow:
+
+1. Keep ongoing entries in `CHANGELOG.md` under Unreleased.
+2. Cut a version section in `CHANGELOG.md`.
+3. Tag release as `vX.Y.Z`.
+4. Publish a matching GitHub Release.
