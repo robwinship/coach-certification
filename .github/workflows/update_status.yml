@@ -2,7 +2,9 @@ name: Update Sarnia Coach Status
 
 on:
   schedule:
-    - cron: "0 12 * * *"
+    # GitHub Actions cron is UTC. These map to 11:00 AM and 5:00 PM EST.
+    - cron: "0 16 * * *"
+    - cron: "0 22 * * *"
   workflow_dispatch:
 
 permissions:
