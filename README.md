@@ -100,6 +100,10 @@ Behavior:
 - Notifications can include added or removed Certified rows, added or removed In Progress rows, transitions to Certified, and OBA certification date changes.
 - If no changes are detected, no Slack message is sent.
 
+Manual test option:
+
+- Use the `Send Slack Test Notification` workflow in Actions for an on-demand Slack ping.
+
 ## Test Locally
 
 1. Create virtual environment:

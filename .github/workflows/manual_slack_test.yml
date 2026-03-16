@@ -1,0 +1,64 @@
+name: Send Slack Test Notification
+
+on:
+  workflow_dispatch:
+    inputs:
+      message:
+        description: "Optional custom Slack message"
+        required: false
+        default: "Manual Slack test from GitHub Actions"
+        type: string
+
+jobs:
+  send-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate webhook secret
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          if [ -z "$SLACK_WEBHOOK_URL" ]; then
+            echo "SLACK_WEBHOOK_URL is not configured in repository secrets."
+            exit 1
+          fi
+
+      - name: Send Slack test notification
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          TEST_MESSAGE: ${{ github.event.inputs.message }}
+          REPOSITORY: ${{ github.repository }}
+          BRANCH: ${{ github.ref_name }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import urllib.request
+
+          webhook = os.environ["SLACK_WEBHOOK_URL"]
+          msg = os.environ.get("TEST_MESSAGE", "Manual Slack test from GitHub Actions")
+          repo = os.environ.get("REPOSITORY", "unknown-repo")
+          branch = os.environ.get("BRANCH", "unknown-branch")
+          actor = os.environ.get("ACTOR", "unknown-user")
+
+          text = (
+              f"Sarnia Coaches Checker test notification\n"
+              f"Message: {msg}\n"
+              f"Repo: {repo}\n"
+              f"Branch: {branch}\n"
+              f"Triggered by: {actor}"
+          )
+
+          payload = json.dumps({"text": text}).encode("utf-8")
+          req = urllib.request.Request(
+              webhook,
+              data=payload,
+              headers={"Content-Type": "application/json"},
+              method="POST",
+          )
+
+          with urllib.request.urlopen(req, timeout=20) as resp:
+              status = resp.getcode()
+              body = resp.read().decode("utf-8", errors="ignore")
+              print(f"Slack response: {status} {body}")
+          PY
