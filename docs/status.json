@@ -1,7 +1,7 @@
 {
   "asOf": "2026-03-17",
-  "queriedAtLocal": "2026-03-17 13:06:18 EDT",
-  "queriedAtUtc": "2026-03-17T17:06:18.518628Z",
+  "queriedAtLocal": "2026-03-17 18:30:29 EDT",
+  "queriedAtUtc": "2026-03-17T22:30:29.580638Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -9,8 +9,8 @@
   },
   "certificationStatus": {
     "source": "https://www.registeroba.ca/coach-certification-status",
-    "dateUpdated": "March 3, 2026",
-    "nextScheduledUpdate": "March 10, 2026",
+    "dateUpdated": "March 17, 2026",
+    "nextScheduledUpdate": "March 24, 2026",
     "note": "Courses after this date will be on the next update."
   },
   "certified": [
@@ -128,7 +128,7 @@
     },
     {
       "name": "Derek Smith",
-      "registration_id": "6752767",
+      "registration_id": "6449972",
       "level": "14U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
