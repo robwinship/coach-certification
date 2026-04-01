@@ -1,7 +1,7 @@
 {
-  "asOf": "2026-03-31",
-  "queriedAtLocal": "2026-03-31 18:32:30 EDT",
-  "queriedAtUtc": "2026-03-31T22:32:30.617044Z",
+  "asOf": "2026-04-01",
+  "queriedAtLocal": "2026-04-01 09:39:54 EDT",
+  "queriedAtUtc": "2026-04-01T13:39:54.860488Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -9,8 +9,8 @@
   },
   "certificationStatus": {
     "source": "https://www.registeroba.ca/coach-certification-status",
-    "dateUpdated": "March 24, 2026",
-    "nextScheduledUpdate": "March 31, 2026",
+    "dateUpdated": "March 31, 2026",
+    "nextScheduledUpdate": "April 7, 2026",
     "note": "Courses after this date will be on the next update."
   },
   "certified": [
@@ -753,64 +753,7 @@
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
     }
   ],
-  "transitions": [
-    {
-      "name": "Brandon Palmer",
-      "registration_id": "6169197",
-      "level": "16U AAA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-03-31"
-    },
-    {
-      "name": "Brett Brydges",
-      "registration_id": "6652645",
-      "level": "22U AAA",
-      "position": "Head Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-03-31"
-    },
-    {
-      "name": "Dan Sparks",
-      "registration_id": "6169286",
-      "level": "15U AAA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-03-31"
-    },
-    {
-      "name": "Jamie Downton",
-      "registration_id": "827248",
-      "level": "15U AAA",
-      "position": "Head Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-03-31"
-    },
-    {
-      "name": "Jamie Downton",
-      "registration_id": "827248",
-      "level": "16U AAA",
-      "position": "Head Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-03-31"
-    },
-    {
-      "name": "Jason Polera",
-      "registration_id": "5868639",
-      "level": "15U AAA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-03-31"
-    },
-    {
-      "name": "Jim Bigras",
-      "registration_id": "708817",
-      "level": "22U AAA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-03-31"
-    }
-  ],
+  "transitions": [],
   "notes": [
     "Rows are filtered to associations containing 'Sarnia'.",
     "A transition is detected when a previously in-progress coach row appears in certified."
