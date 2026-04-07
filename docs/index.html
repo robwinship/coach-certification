@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -267,6 +267,31 @@
       background: rgba(111, 182, 201, 0.12);
     }
 
+    .team-filter-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .team-filter-label {
+      font-family: "Chivo", sans-serif;
+      font-size: 0.86rem;
+      font-weight: 700;
+      opacity: 0.75;
+    }
+
+    #team-filter {
+      font-family: "Chivo", sans-serif;
+      font-size: 0.88rem;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid rgba(111, 182, 201, 0.6);
+      border-radius: 10px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
     .transition-list {
       margin: 10px 0 0;
       padding-left: 18px;
@@ -403,6 +428,12 @@
         <h2>Current Status</h2>
         <div class="status-board">
           <p class="status-meta" id="status-updated">Loading status data...</p>
+          <div class="team-filter-row">
+            <label class="team-filter-label" for="team-filter">Filter by team:</label>
+            <select id="team-filter">
+              <option value="">All Teams</option>
+            </select>
+          </div>
           <div class="status-columns">
             <section class="status-column">
               <div class="status-header">
@@ -446,6 +477,9 @@
   </main>
 
   <script>
+    let allCertified = [];
+    let allInProgress = [];
+
     function formatRowLabel(item) {
       if (typeof item === "string") {
         return item;
@@ -496,10 +530,37 @@
       });
     }
 
+    function populateTeamFilter() {
+      const sel = document.getElementById("team-filter");
+      const levels = [...new Set([
+        ...allCertified.map(c => c.level),
+        ...allInProgress.map(c => c.level)
+      ])].filter(Boolean).sort();
+      while (sel.options.length > 1) sel.remove(1);
+      levels.forEach(level => {
+        const opt = document.createElement("option");
+        opt.value = level;
+        opt.textContent = level;
+        sel.appendChild(opt);
+      });
+    }
+
+    function applyFilter() {
+      const selected = document.getElementById("team-filter").value;
+      const certified = selected ? allCertified.filter(c => c.level === selected) : allCertified;
+      const inProgress = selected ? allInProgress.filter(c => c.level === selected) : allInProgress;
+
+      document.getElementById("certified-count").textContent = String(certified.length);
+      document.getElementById("inprogress-count").textContent = String(inProgress.length);
+
+      renderStatusList("certified-list", "certified-empty", certified);
+      renderStatusList("inprogress-list", "inprogress-empty", inProgress);
+    }
+
+    document.getElementById("team-filter").addEventListener("change", applyFilter);
+
     async function loadStatusData() {
       const updated = document.getElementById("status-updated");
-      const certifiedCount = document.getElementById("certified-count");
-      const inProgressCount = document.getElementById("inprogress-count");
       const certDateUpdated = document.getElementById("cert-date-updated");
       const certNextUpdate = document.getElementById("cert-next-update");
       const certStatusNote = document.getElementById("cert-status-note");
@@ -512,16 +573,14 @@
         }
 
         const data = await response.json();
-        const certified = Array.isArray(data.certified) ? data.certified : [];
-        const inProgress = Array.isArray(data.inProgress) ? data.inProgress : [];
+        allCertified = Array.isArray(data.certified) ? data.certified : [];
+        allInProgress = Array.isArray(data.inProgress) ? data.inProgress : [];
         const transitions = Array.isArray(data.transitions) ? data.transitions : [];
         const certificationStatus = data.certificationStatus || {};
 
-        certifiedCount.textContent = String(certified.length);
-        inProgressCount.textContent = String(inProgress.length);
+        populateTeamFilter();
+        applyFilter();
 
-        renderStatusList("certified-list", "certified-empty", certified);
-        renderStatusList("inprogress-list", "inprogress-empty", inProgress);
         renderTransitions(transitions);
 
         certDateUpdated.textContent = certificationStatus.dateUpdated || "Unknown";
@@ -533,12 +592,13 @@
         updated.textContent = `Last query: ${timestamp}`;
       } catch (error) {
         updated.textContent = "Unable to load status.json. Add data to show Certified and In Progress results.";
-        renderStatusList("certified-list", "certified-empty", []);
-        renderStatusList("inprogress-list", "inprogress-empty", []);
+        allCertified = [];
+        allInProgress = [];
+        applyFilter();
         renderTransitions([]);
-        certDateUpdated.textContent = "Unknown";
-        certNextUpdate.textContent = "Unknown";
-        certStatusNote.textContent = "Unable to load certification status dates.";
+        document.getElementById("cert-date-updated").textContent = "Unknown";
+        document.getElementById("cert-next-update").textContent = "Unknown";
+        document.getElementById("cert-status-note").textContent = "Unable to load certification status dates.";
       }
     }
 

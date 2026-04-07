@@ -42,3 +42,7 @@ This project uses a custom release numbering convention.
 ### Fixed
 - Resolved zero-row extraction issue caused by delayed JavaScript rendering.
 - Improved scraper resilience for network-idle timeout behavior.
+
+## [Backup 2026-04-07_16-53-50]
+### Backup Note
+- Initial backup before coach sorting
