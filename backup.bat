@@ -29,11 +29,11 @@ echo   Coach Certification -- Backup Utility
 echo ============================================================
 echo.
 
-:: ── Phase 1: Prompt for changelog note ──────────────────────────────────────
+:: ?? Phase 1: Prompt for changelog note ??????????????????????????????????????
 set /p "CHANGE_MSG=Enter changelog note: "
 if "!CHANGE_MSG!"=="" set "CHANGE_MSG=No description provided."
 
-:: ── Phase 2: Get current timestamp ──────────────────────────────────────────
+:: ?? Phase 2: Get current timestamp ??????????????????????????????????????????
 for /f "delims=" %%T in ('powershell -NoProfile -Command "Get-Date -Format 'yyyy-MM-dd_HH-mm-ss'"') do set "TIMESTAMP=%%T"
 
 set "ZIP_NAME=Coach_Certification_%TIMESTAMP%.zip"
@@ -45,7 +45,7 @@ echo  Timestamp : %TIMESTAMP%
 echo  Target    : %ZIP_PATH%
 echo.
 
-:: ── Phase 3: Create backup destination if it does not exist ─────────────────
+:: ?? Phase 3: Create backup destination if it does not exist ?????????????????
 if not exist "%BACKUP_DIR%" (
     echo  Creating backup directory...
     mkdir "%BACKUP_DIR%"
@@ -56,7 +56,7 @@ if not exist "%BACKUP_DIR%" (
     )
 )
 
-:: ── Phase 4: Append entry to CHANGELOG.md ───────────────────────────────────
+:: ?? Phase 4: Append entry to CHANGELOG.md ???????????????????????????????????
 ::  Done BEFORE staging so the zip includes the updated CHANGELOG.md.
 echo  Updating CHANGELOG.md...
 (
@@ -78,7 +78,7 @@ if errorlevel 1 (
 )
 del "%TEMP_PS%"
 
-:: ── Phase 5: Stage project files (now includes updated CHANGELOG.md) ────────
+:: ?? Phase 5: Stage project files (now includes updated CHANGELOG.md) ????????
 echo  Staging project files...
 if exist "%STAGING_BASE%" rmdir /S /Q "%STAGING_BASE%"
 mkdir "%STAGING_DIR%"
@@ -91,13 +91,13 @@ if errorlevel 1 (
 robocopy "%PROJECT_DIR%" "%STAGING_DIR%" /E /XF backup.bat /NFL /NJH /NJS > nul
 :: Note: robocopy exit codes 0-7 are all success variants; do not check errorlevel here.
 
-:: ── Phase 6: Write standalone backup_changelog .txt into the staging root ───
+:: ?? Phase 6: Write standalone backup_changelog .txt into the staging root ???
 (
 echo Backup timestamp: %TIMESTAMP%
 echo Changelog note:   !CHANGE_MSG!
 ) > "%STAGING_DIR%\backup_changelog_%TIMESTAMP%.txt"
 
-:: ── Phase 7: Create the zip archive ─────────────────────────────────────────
+:: ?? Phase 7: Create the zip archive ?????????????????????????????????????????
 ::  The zip root is Coach_Certification\ so extracting to:
 ::    C:\Users\Admin\OneDrive\Documents\Coding\
 ::  restores the full project folder.
@@ -117,7 +117,7 @@ if errorlevel 1 (
 )
 del "%TEMP_PS%"
 
-:: ── Phase 8: Clean up staging folder ────────────────────────────────────────
+:: ?? Phase 8: Clean up staging folder ????????????????????????????????????????
 echo  Cleaning up staging folder...
 rmdir /S /Q "%STAGING_BASE%"
 

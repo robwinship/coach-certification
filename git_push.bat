@@ -1,4 +1,4 @@
-﻿@echo off
+@echo off
 setlocal enabledelayedexpansion
 
 cd /d "%~dp0"
@@ -9,7 +9,7 @@ echo   Coach Certification -- Git Commit and Push
 echo ============================================================
 echo.
 
-:: ── Prompt for commit message ────────────────────────────────────────────────
+:: ?? Prompt for commit message ????????????????????????????????????????????????
 set /p "COMMIT_MSG=Enter commit message: "
 if "!COMMIT_MSG!"=="" set "COMMIT_MSG=Update project files"
 
