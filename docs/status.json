@@ -1,7 +1,7 @@
 {
   "asOf": "2026-04-14",
-  "queriedAtLocal": "2026-04-14 12:31:09 EDT",
-  "queriedAtUtc": "2026-04-14T16:31:09.492263Z",
+  "queriedAtLocal": "2026-04-14 17:12:02 EDT",
+  "queriedAtUtc": "2026-04-14T21:12:02.923407Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -9,8 +9,8 @@
   },
   "certificationStatus": {
     "source": "https://www.registeroba.ca/coach-certification-status",
-    "dateUpdated": "April 7, 2026",
-    "nextScheduledUpdate": "April 14, 2026",
+    "dateUpdated": "April 14, 2026",
+    "nextScheduledUpdate": "April 21, 2026",
     "note": "Courses after this date will be on the next update."
   },
   "certified": [
@@ -112,7 +112,7 @@
     },
     {
       "name": "Derek Smith",
-      "registration_id": "6449972",
+      "registration_id": "6752767",
       "level": "14U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
@@ -343,6 +343,14 @@
       "source_url": "https://www.registeroba.ca/certified-coaches"
     },
     {
+      "name": "Steve Helps",
+      "registration_id": "6235933",
+      "level": "14U AA",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches"
+    },
+    {
       "name": "Steve Soetemans",
       "registration_id": "6661491",
       "level": "12U AA",
@@ -364,14 +372,6 @@
       "name": "Adam Crowe",
       "registration_id": "7115890",
       "level": "11U DS",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
-    },
-    {
-      "name": "Al Hillis",
-      "registration_id": "5680913",
-      "level": "16U AAA",
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
@@ -404,14 +404,6 @@
       "name": "Brent Steeves",
       "registration_id": "1226551",
       "level": "10U A",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
-    },
-    {
-      "name": "Brett Gray",
-      "registration_id": "1221803",
-      "level": "10U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
@@ -484,14 +476,6 @@
       "name": "Cory Sommise",
       "registration_id": "6851243",
       "level": "13U DS",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
-    },
-    {
-      "name": "Craig Helps",
-      "registration_id": "1225857",
-      "level": "10U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
@@ -602,7 +586,7 @@
     },
     {
       "name": "Noah Best",
-      "registration_id": "6996171",
+      "registration_id": "6657552",
       "level": "11U DS",
       "position": "Assistant Coach",
       "association": "Sarnia",
@@ -641,14 +625,6 @@
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
     },
     {
-      "name": "Steve Helps",
-      "registration_id": "6235933",
-      "level": "14U AA",
-      "position": "Head Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
-    },
-    {
       "name": "Steve Mcewen",
       "registration_id": "5992217",
       "level": "13U DS",
@@ -681,7 +657,16 @@
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
     }
   ],
-  "transitions": [],
+  "transitions": [
+    {
+      "name": "Steve Helps",
+      "registration_id": "6235933",
+      "level": "14U AA",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "moved_on": "2026-04-14"
+    }
+  ],
   "notes": [
     "Rows are filtered to associations containing 'Sarnia'.",
     "A transition is detected when a previously in-progress coach row appears in certified."
