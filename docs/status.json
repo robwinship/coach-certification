@@ -1,7 +1,7 @@
 {
   "asOf": "2026-04-14",
-  "queriedAtLocal": "2026-04-14 17:12:02 EDT",
-  "queriedAtUtc": "2026-04-14T21:12:02.923407Z",
+  "queriedAtLocal": "2026-04-14 18:18:49 EDT",
+  "queriedAtUtc": "2026-04-14T22:18:49.652250Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -657,16 +657,7 @@
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
     }
   ],
-  "transitions": [
-    {
-      "name": "Steve Helps",
-      "registration_id": "6235933",
-      "level": "14U AA",
-      "position": "Head Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-04-14"
-    }
-  ],
+  "transitions": [],
   "notes": [
     "Rows are filtered to associations containing 'Sarnia'.",
     "A transition is detected when a previously in-progress coach row appears in certified."
