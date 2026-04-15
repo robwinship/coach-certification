@@ -1,7 +1,7 @@
 {
-  "asOf": "2026-04-14",
-  "queriedAtLocal": "2026-04-14 19:54:04 Eastern Daylight Time",
-  "queriedAtUtc": "2026-04-14T23:54:04.467479Z",
+  "asOf": "2026-04-15",
+  "queriedAtLocal": "2026-04-15 12:28:54 EDT",
+  "queriedAtUtc": "2026-04-15T16:28:54.986711Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -433,14 +433,6 @@
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
       "missing_courses_available": false
-    },
-    {
-      "name": "Steve Helps",
-      "registration_id": "6235933",
-      "level": "14U AA",
-      "position": "Head Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
     },
     {
       "name": "Steve Soetemans",
@@ -942,16 +934,7 @@
       "missing_courses_available": true
     }
   ],
-  "transitions": [
-    {
-      "name": "Steve Helps",
-      "registration_id": "6235933",
-      "level": "14U AA",
-      "position": "Head Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-04-14"
-    }
-  ],
+  "transitions": [],
   "notes": [
     "Rows are filtered to associations containing 'Sarnia'.",
     "A transition is detected when a previously in-progress coach row appears in certified.",
