@@ -244,8 +244,108 @@
       line-height: 1.5;
     }
 
+    .status-list--interactive {
+      list-style: none;
+      padding-left: 0;
+    }
+
     .status-list li + li {
       margin-top: 4px;
+    }
+
+    .status-item + .status-item {
+      margin-top: 8px;
+    }
+
+    .status-toggle {
+      width: 100%;
+      border: 1px solid rgba(16, 33, 46, 0.14);
+      border-radius: 12px;
+      background: #fffdf7;
+      color: var(--ink);
+      cursor: pointer;
+      padding: 10px 12px;
+      text-align: left;
+      font: inherit;
+    }
+
+    .status-toggle-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .status-toggle-label {
+      font-family: "Chivo", sans-serif;
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+
+    .status-pill {
+      flex-shrink: 0;
+      font-family: "Chivo", sans-serif;
+      font-size: 0.75rem;
+      border-radius: 999px;
+      padding: 4px 9px;
+      border: 1px solid rgba(16, 33, 46, 0.16);
+      background: rgba(185, 93, 47, 0.12);
+      color: #8b3a15;
+    }
+
+    .status-pill.ok {
+      background: rgba(17, 132, 86, 0.12);
+      color: #0f6f48;
+    }
+
+    .status-pill.muted {
+      background: rgba(16, 33, 46, 0.08);
+      color: rgba(16, 33, 46, 0.72);
+    }
+
+    .status-detail {
+      margin-top: 8px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(111, 182, 201, 0.09);
+      border: 1px solid rgba(111, 182, 201, 0.22);
+    }
+
+    .status-detail-title {
+      margin: 0 0 8px;
+      font-family: "Chivo", sans-serif;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.8;
+    }
+
+    .missing-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .missing-table th,
+    .missing-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid rgba(16, 33, 46, 0.1);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .missing-table th {
+      font-family: "Chivo", sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: rgba(16, 33, 46, 0.05);
+    }
+
+    .missing-table tr:last-child td {
+      border-bottom: 0;
     }
 
     .status-links {
@@ -479,6 +579,17 @@
   <script>
     let allCertified = [];
     let allInProgress = [];
+    let expandedInProgressKey = "";
+
+    function rowKey(item) {
+      return [
+        item.name || "",
+        item.registration_id || "",
+        item.level || "",
+        item.position || "",
+        item.association || ""
+      ].join("|");
+    }
 
     function formatRowLabel(item) {
       if (typeof item === "string") {
@@ -489,6 +600,22 @@
       const level = item.level || "Level N/A";
       const position = item.position || "Position N/A";
       return `${name} - ${level} - ${position}`;
+    }
+
+    function summarizeMissingCourses(item) {
+      if (!item || !item.missing_courses_available) {
+        return { text: "Details unavailable", className: "muted" };
+      }
+
+      const missingCourses = Array.isArray(item.missing_courses) ? item.missing_courses : [];
+      if (missingCourses.length === 0) {
+        return { text: "Up to date", className: "ok" };
+      }
+
+      return {
+        text: `${missingCourses.length} missing`,
+        className: ""
+      };
     }
 
     function renderStatusList(targetId, emptyId, items) {
@@ -505,6 +632,107 @@
       items.forEach((item) => {
         const li = document.createElement("li");
         li.textContent = formatRowLabel(item);
+        list.appendChild(li);
+      });
+    }
+
+    function renderInProgressList(items) {
+      const list = document.getElementById("inprogress-list");
+      const empty = document.getElementById("inprogress-empty");
+      list.innerHTML = "";
+      list.classList.add("status-list--interactive");
+
+      if (!items || items.length === 0) {
+        empty.hidden = false;
+        return;
+      }
+
+      empty.hidden = true;
+      items.forEach((item) => {
+        const key = rowKey(item);
+        const isExpanded = expandedInProgressKey === key;
+        const li = document.createElement("li");
+        li.className = "status-item";
+
+        const toggle = document.createElement("button");
+        toggle.type = "button";
+        toggle.className = "status-toggle";
+        toggle.setAttribute("aria-expanded", String(isExpanded));
+
+        const summary = document.createElement("span");
+        summary.className = "status-toggle-summary";
+
+        const label = document.createElement("span");
+        label.className = "status-toggle-label";
+        label.textContent = formatRowLabel(item);
+
+        const pill = document.createElement("span");
+        const summaryState = summarizeMissingCourses(item);
+        pill.className = `status-pill ${summaryState.className}`.trim();
+        pill.textContent = summaryState.text;
+
+        summary.appendChild(label);
+        summary.appendChild(pill);
+        toggle.appendChild(summary);
+        toggle.addEventListener("click", () => {
+          expandedInProgressKey = isExpanded ? "" : key;
+          renderInProgressList(items);
+        });
+        li.appendChild(toggle);
+
+        if (isExpanded) {
+          const detail = document.createElement("div");
+          detail.className = "status-detail";
+
+          const title = document.createElement("p");
+          title.className = "status-detail-title";
+          title.textContent = "Missing Courses";
+          detail.appendChild(title);
+
+          if (!item.missing_courses_available) {
+            const message = document.createElement("p");
+            message.textContent = "Missing-course details unavailable.";
+            detail.appendChild(message);
+          } else {
+            const missingCourses = Array.isArray(item.missing_courses) ? item.missing_courses : [];
+
+            if (missingCourses.length === 0) {
+              const message = document.createElement("p");
+              message.textContent = "No missing courses found.";
+              detail.appendChild(message);
+            } else {
+              const table = document.createElement("table");
+              table.className = "missing-table";
+
+              const thead = document.createElement("thead");
+              const headRow = document.createElement("tr");
+              ["Course", "Status"].forEach((text) => {
+                const th = document.createElement("th");
+                th.textContent = text;
+                headRow.appendChild(th);
+              });
+              thead.appendChild(headRow);
+              table.appendChild(thead);
+
+              const tbody = document.createElement("tbody");
+              missingCourses.forEach((course) => {
+                const row = document.createElement("tr");
+                const courseCell = document.createElement("td");
+                courseCell.textContent = course;
+                const statusCell = document.createElement("td");
+                statusCell.textContent = "No";
+                row.appendChild(courseCell);
+                row.appendChild(statusCell);
+                tbody.appendChild(row);
+              });
+              table.appendChild(tbody);
+              detail.appendChild(table);
+            }
+          }
+
+          li.appendChild(detail);
+        }
+
         list.appendChild(li);
       });
     }
@@ -554,7 +782,7 @@
       document.getElementById("inprogress-count").textContent = String(inProgress.length);
 
       renderStatusList("certified-list", "certified-empty", certified);
-      renderStatusList("inprogress-list", "inprogress-empty", inProgress);
+      renderInProgressList(inProgress);
     }
 
     document.getElementById("team-filter").addEventListener("change", applyFilter);

@@ -1,7 +1,7 @@
 import json
 import os
 import re
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 from datetime import date, datetime, timezone
 from html import escape
 from pathlib import Path
@@ -16,6 +16,12 @@ from playwright.sync_api import sync_playwright
 CERTIFIED_URL = "https://www.registeroba.ca/certified-coaches"
 IN_PROGRESS_URL = "https://www.registeroba.ca/certification-inprogress-by-local"
 COACH_STATUS_URL = "https://www.registeroba.ca/coach-certification-status"
+COACH_STATUS_BY_BUCKET_URLS = {
+    "A-D": "https://www.registeroba.ca/certification-in-progress-a-d",
+    "E-J": "https://www.registeroba.ca/in-progress-by-coach-e-j",
+    "K-O": "https://www.registeroba.ca/in-progress-k-o",
+    "P-Z": "https://www.registeroba.ca/in-progress-by-coach-p-z",
+}
 STATUS_PATH = Path("docs/status.json")
 SUMMARY_PATH = Path("docs/current-summary.html")
 
@@ -33,6 +39,8 @@ class CoachRow:
     position: str
     association: str
     source_url: str
+    missing_courses: List[str] = field(default_factory=list)
+    missing_courses_available: bool = False
 
     def key(self) -> str:
         return "|".join(
@@ -48,6 +56,31 @@ class CoachRow:
 
 def normalize(value: str) -> str:
     return re.sub(r"\s+", " ", value.strip().lower())
+
+
+def clean_text(value: str) -> str:
+    return re.sub(r"\s+", " ", value.replace("\xa0", " ")).strip()
+
+
+def coach_dropdown_label(row: CoachRow) -> str:
+    return f"{row.name} ({row.level})"
+
+
+def coach_role_label(row: CoachRow) -> str:
+    return clean_text(f"{row.level} {row.position}")
+
+
+def bucket_for_name(name: str) -> str:
+    first = clean_text(name).split(" ", 1)[0] if clean_text(name) else ""
+    letter = next((ch.upper() for ch in first if ch.isalpha()), "A")
+
+    if "A" <= letter <= "D":
+        return "A-D"
+    if "E" <= letter <= "J":
+        return "E-J"
+    if "K" <= letter <= "O":
+        return "K-O"
+    return "P-Z"
 
 
 def parse_level_position(raw_role: str) -> tuple[str, str]:
@@ -289,6 +322,124 @@ def fetch_certification_status_dates() -> dict:
         "nextScheduledUpdate": next_update_match.group(1) if next_update_match else "Unknown",
         "note": note_match.group(0) if note_match else "",
     }
+
+
+def wait_for_coach_status_page(page, url: str) -> None:
+    page.goto(url, wait_until="domcontentloaded", timeout=60000)
+    page.wait_for_timeout(5000)
+    try:
+        page.wait_for_load_state("networkidle", timeout=30000)
+    except PlaywrightTimeoutError:
+        pass
+    page.locator('input[role="combobox"]').first.wait_for(timeout=15000)
+
+
+def extract_missing_courses_from_page(page, row: CoachRow) -> tuple[List[str], bool]:
+    body_text = clean_text(page.locator("body").inner_text())
+    label = coach_dropdown_label(row)
+    role_label = coach_role_label(row)
+
+    if label not in body_text:
+        return [], False
+    if row.registration_id and row.registration_id not in body_text:
+        return [], False
+    if role_label not in body_text:
+        return [], False
+    if row.association and clean_text(row.association) not in body_text:
+        return [], False
+
+    missing_courses: List[str] = []
+    tables = page.locator("table")
+
+    for index in range(tables.count()):
+        rows = tables.nth(index).locator("tr")
+        if rows.count() < 2:
+            continue
+
+        headers = [clean_text(value) for value in rows.nth(0).locator("th").all_inner_texts()]
+        values = [clean_text(value) for value in rows.nth(1).locator("td").all_inner_texts()]
+
+        for header, value in zip(headers, values):
+            if header and normalize(value) == "no":
+                missing_courses.append(header)
+
+    unique_missing_courses = list(dict.fromkeys(missing_courses))
+    return unique_missing_courses, True
+
+
+def fetch_missing_courses_for_in_progress(rows: Sequence[CoachRow]) -> Dict[str, dict]:
+    if not rows:
+        return {}
+
+    grouped_rows: Dict[str, List[CoachRow]] = {bucket: [] for bucket in COACH_STATUS_BY_BUCKET_URLS}
+    for row in rows:
+        grouped_rows[bucket_for_name(row.name)].append(row)
+
+    captured: Dict[str, dict] = {}
+
+    try:
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True)
+            page = browser.new_page(viewport={"width": 1440, "height": 2400})
+
+            for bucket in ("A-D", "E-J", "K-O", "P-Z"):
+                bucket_rows = sort_rows(grouped_rows.get(bucket, []))
+                if not bucket_rows:
+                    continue
+
+                wait_for_coach_status_page(page, COACH_STATUS_BY_BUCKET_URLS[bucket])
+
+                for row in bucket_rows:
+                    label = coach_dropdown_label(row)
+                    try:
+                        combo = page.locator('input[role="combobox"]').first
+                        combo.click(timeout=10000)
+                        combo.fill(label)
+                        option = page.get_by_role("option", name=label)
+                        option.wait_for(timeout=5000)
+                        option.click(timeout=5000)
+
+                        page.wait_for_function(
+                            "({ registrationId, roleLabel }) => document.body.innerText.includes(registrationId) && document.body.innerText.includes(roleLabel)",
+                            arg={"registrationId": row.registration_id, "roleLabel": coach_role_label(row)},
+                            timeout=10000,
+                        )
+                        page.wait_for_timeout(500)
+
+                        missing_courses, available = extract_missing_courses_from_page(page, row)
+                        captured[row.key()] = {
+                            "missing_courses": missing_courses,
+                            "missing_courses_available": available,
+                        }
+                    except Exception as exc:
+                        print(f"Missing-course lookup failed for {label}: {exc}")
+
+            browser.close()
+    except Exception as exc:
+        print(f"Coach status scraping unavailable: {exc}")
+
+    return captured
+
+
+def attach_missing_courses(rows: Sequence[CoachRow], missing_courses_map: Dict[str, dict]) -> List[CoachRow]:
+    updated_rows: List[CoachRow] = []
+
+    for row in rows:
+        details = missing_courses_map.get(row.key(), {})
+        updated_rows.append(
+            CoachRow(
+                name=row.name,
+                registration_id=row.registration_id,
+                level=row.level,
+                position=row.position,
+                association=row.association,
+                source_url=row.source_url,
+                missing_courses=list(details.get("missing_courses", [])),
+                missing_courses_available=bool(details.get("missing_courses_available", False)),
+            )
+        )
+
+    return updated_rows
 
 
 def render_rows_table(rows: Sequence[CoachRow]) -> str:
@@ -620,6 +771,8 @@ def main() -> None:
 
     certified = sort_rows(filter_sarnia(certified_all))
     in_progress = sort_rows(filter_sarnia(in_progress_all))
+    in_progress_missing_courses = fetch_missing_courses_for_in_progress(in_progress)
+    in_progress = attach_missing_courses(in_progress, in_progress_missing_courses)
 
     previous = load_previous_status()
     prev_in_progress = as_rows(previous.get("inProgress", []))
@@ -641,6 +794,7 @@ def main() -> None:
         "notes": [
             "Rows are filtered to associations containing 'Sarnia'.",
             "A transition is detected when a previously in-progress coach row appears in certified.",
+            "In Progress rows may include missing_courses when coach-status extraction succeeds.",
         ],
     }
 

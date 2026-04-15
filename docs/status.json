@@ -1,7 +1,7 @@
 {
   "asOf": "2026-04-14",
-  "queriedAtLocal": "2026-04-14 18:18:49 EDT",
-  "queriedAtUtc": "2026-04-14T22:18:49.652250Z",
+  "queriedAtLocal": "2026-04-14 19:54:04 Eastern Daylight Time",
+  "queriedAtUtc": "2026-04-14T23:54:04.467479Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -20,7 +20,9 @@
       "level": "10U A",
       "position": "Head Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Brad Blain",
@@ -28,7 +30,9 @@
       "level": "12U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Brandon Palmer",
@@ -36,7 +40,9 @@
       "level": "13U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Brandon Palmer",
@@ -44,7 +50,9 @@
       "level": "16U AAA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Brent Campbell",
@@ -52,7 +60,9 @@
       "level": "14U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Brett Brydges",
@@ -60,7 +70,9 @@
       "level": "22U AAA",
       "position": "Head Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Bruce Dennis",
@@ -68,7 +80,9 @@
       "level": "11U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Cam Gordon",
@@ -76,7 +90,9 @@
       "level": "11U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Cam Gordon",
@@ -84,7 +100,9 @@
       "level": "14U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Chris Garton",
@@ -92,7 +110,9 @@
       "level": "11U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Chris Hurst",
@@ -100,7 +120,9 @@
       "level": "13U HS",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Chris Prozorowicz",
@@ -108,7 +130,9 @@
       "level": "15U AA",
       "position": "Head Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Derek Smith",
@@ -116,7 +140,9 @@
       "level": "14U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Eric Mclaughlin",
@@ -124,7 +150,9 @@
       "level": "11U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Greg Smith",
@@ -132,7 +160,9 @@
       "level": "12U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Jake Taylor",
@@ -140,7 +170,9 @@
       "level": "13U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "James Grant",
@@ -148,7 +180,9 @@
       "level": "SENIOR AAA",
       "position": "Head Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Jamie Downton",
@@ -156,7 +190,9 @@
       "level": "16U AAA",
       "position": "Head Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Jason Butler",
@@ -164,7 +200,9 @@
       "level": "SENIOR AAA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Jason Hodgins",
@@ -172,7 +210,9 @@
       "level": "13U AA",
       "position": "Head Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Jason Polera",
@@ -180,7 +220,9 @@
       "level": "13U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Jim Bigras",
@@ -188,7 +230,9 @@
       "level": "22U AAA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Jim Bigras",
@@ -196,7 +240,9 @@
       "level": "SENIOR AAA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Joe Charette",
@@ -204,7 +250,9 @@
       "level": "9U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Joel Ainsworth",
@@ -212,7 +260,9 @@
       "level": "14U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Joel Ainsworth",
@@ -220,7 +270,9 @@
       "level": "SENIOR AAA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Josh Whittington",
@@ -228,7 +280,9 @@
       "level": "15U DS",
       "position": "Head Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Justin Randall",
@@ -236,7 +290,9 @@
       "level": "10U AA",
       "position": "Head Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Justin Randall",
@@ -244,7 +300,9 @@
       "level": "8U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Ken Chipman",
@@ -252,7 +310,9 @@
       "level": "15U DS",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Kevin Cook",
@@ -260,7 +320,9 @@
       "level": "15U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Kyle Scott",
@@ -268,7 +330,9 @@
       "level": "10U A",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Marc Huyben",
@@ -276,7 +340,9 @@
       "level": "10U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Matt Berglund",
@@ -284,7 +350,9 @@
       "level": "12U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Matt Douglas",
@@ -292,7 +360,9 @@
       "level": "11U AA",
       "position": "Head Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Nick Core",
@@ -300,7 +370,9 @@
       "level": "15U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Nick Lajoie",
@@ -308,7 +380,9 @@
       "level": "11U DS",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Pete Juryn",
@@ -316,7 +390,9 @@
       "level": "10U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Rob Borody",
@@ -324,7 +400,9 @@
       "level": "15U DS",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Ron Perron",
@@ -332,7 +410,9 @@
       "level": "15U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Sean Baxter",
@@ -340,7 +420,19 @@
       "level": "8U AA",
       "position": "Head Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
+    },
+    {
+      "name": "Steve Helps",
+      "registration_id": "6235933",
+      "level": "14U AA",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Steve Helps",
@@ -356,7 +448,9 @@
       "level": "12U AA",
       "position": "Head Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certified-coaches"
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
     }
   ],
   "inProgress": [
@@ -366,7 +460,12 @@
       "level": "9U AA",
       "position": "Head Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Coach Initiation in Baseball",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Adam Crowe",
@@ -374,7 +473,16 @@
       "level": "11U DS",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Hitting",
+        "Infielding",
+        "Fundamentals of Coaching Baseball",
+        "Coach Initiation in Baseball",
+        "My First Pitch",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Andrew Smith",
@@ -382,7 +490,12 @@
       "level": "10U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "My First Pitch",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Andrew Smith",
@@ -390,7 +503,11 @@
       "level": "13U HS",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Bill Best",
@@ -398,7 +515,12 @@
       "level": "11U DS",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Infielding",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Brent Steeves",
@@ -406,7 +528,11 @@
       "level": "10U A",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Brian Walker",
@@ -414,7 +540,16 @@
       "level": "11U DS",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Hitting",
+        "Infielding",
+        "Fundamentals of Coaching Baseball",
+        "Coach Initiation in Baseball",
+        "My First Pitch",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Brooke Campbell",
@@ -422,7 +557,12 @@
       "level": "8U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "9U PCCP",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Bruce Gray",
@@ -430,7 +570,11 @@
       "level": "22U AAA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Bryan Deschutter",
@@ -438,7 +582,12 @@
       "level": "8U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Hitting",
+        "Fundamentals of Coaching Baseball"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Carl Best",
@@ -446,7 +595,11 @@
       "level": "11U DS",
       "position": "Head Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Chris Foster",
@@ -454,7 +607,12 @@
       "level": "13U HS",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Coach Initiation in Baseball",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Cody Webster",
@@ -462,7 +620,11 @@
       "level": "15U DS",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Cole Randall",
@@ -470,7 +632,13 @@
       "level": "10U A",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Coach Initiation in Sport",
+        "Coach Initiation in Baseball",
+        "My First Pitch"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Cory Sommise",
@@ -478,7 +646,15 @@
       "level": "13U DS",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Hitting",
+        "Infielding",
+        "Coach Initiation in Sport",
+        "Coach Initiation in Baseball",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Dan Sparks",
@@ -486,7 +662,11 @@
       "level": "16U AAA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Outfielding"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Dave Aitken",
@@ -494,7 +674,11 @@
       "level": "8U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "9U PCCP"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "David Kruger",
@@ -502,7 +686,11 @@
       "level": "13U HS",
       "position": "Head Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "David Kruger",
@@ -510,7 +698,11 @@
       "level": "15U DS",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Evan Ouzounis",
@@ -518,7 +710,13 @@
       "level": "8U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Hitting",
+        "Fundamentals of Coaching Baseball",
+        "9U PCCP"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Greg Moore",
@@ -526,7 +724,12 @@
       "level": "12U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Infielding",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Jason Polera",
@@ -534,7 +737,11 @@
       "level": "16U AAA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Outfielding"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Jesse Theriault",
@@ -542,7 +749,15 @@
       "level": "9U DS",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Hitting",
+        "Fundamentals of Coaching Baseball",
+        "Coach Initiation in Baseball",
+        "9U PCCP",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Joel Hoadley",
@@ -550,7 +765,13 @@
       "level": "10U A",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Infielding",
+        "My First Pitch",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "John Bettridge",
@@ -558,7 +779,11 @@
       "level": "9U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Mick Jackson",
@@ -566,7 +791,11 @@
       "level": "13U DS",
       "position": "Head Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Mike Damchuk",
@@ -574,7 +803,11 @@
       "level": "9U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Mike Perry",
@@ -582,7 +815,15 @@
       "level": "9U DS",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Hitting",
+        "Fundamentals of Coaching Baseball",
+        "Coach Initiation in Baseball",
+        "9U PCCP",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Noah Best",
@@ -590,7 +831,12 @@
       "level": "11U DS",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Infielding",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Owen Utley",
@@ -598,7 +844,14 @@
       "level": "13U DS",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Hitting",
+        "Infielding",
+        "Coach Initiation in Baseball",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Ryan Nutma",
@@ -606,7 +859,12 @@
       "level": "16U AAA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Outfielding",
+        "Skills"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Shane Murphy",
@@ -614,7 +872,11 @@
       "level": "11U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Steve Edwardson",
@@ -622,7 +884,11 @@
       "level": "10U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Infielding"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Steve Mcewen",
@@ -630,7 +896,11 @@
       "level": "13U DS",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Taylor Castrillo",
@@ -638,7 +908,12 @@
       "level": "9U DS",
       "position": "Head Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "9U PCCP",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Tim Symington",
@@ -646,7 +921,12 @@
       "level": "15U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Infielding",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     },
     {
       "name": "Wade Babula",
@@ -654,12 +934,27 @@
       "level": "10U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local"
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "My First Pitch",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true
     }
   ],
-  "transitions": [],
+  "transitions": [
+    {
+      "name": "Steve Helps",
+      "registration_id": "6235933",
+      "level": "14U AA",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "moved_on": "2026-04-14"
+    }
+  ],
   "notes": [
     "Rows are filtered to associations containing 'Sarnia'.",
-    "A transition is detected when a previously in-progress coach row appears in certified."
+    "A transition is detected when a previously in-progress coach row appears in certified.",
+    "In Progress rows may include missing_courses when coach-status extraction succeeds."
   ]
 }

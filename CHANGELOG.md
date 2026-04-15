@@ -8,10 +8,11 @@ This project uses a custom release numbering convention.
 ## Unreleased
 
 ### Added
-- Placeholder for upcoming features.
+- Missing-course extraction for In Progress coaches from the OBA coach certification status pages.
+- Inline missing-course drilldown in the dashboard In Progress column.
 
 ### Changed
-- Placeholder for upcoming changes.
+- Enriched generated status data with per-coach `missing_courses` and availability metadata for In Progress rows.
 
 ### Fixed
 - Placeholder for upcoming fixes.
@@ -46,3 +47,7 @@ This project uses a custom release numbering convention.
 ## [Backup 2026-04-07_16-53-50]
 ### Backup Note
 - Initial backup before coach sorting
+
+## [Backup 2026-04-07_19-31-09]
+### Backup Note
+- filter implemented fine - no current bugs
