@@ -1,7 +1,7 @@
 {
-  "asOf": "2026-04-16",
-  "queriedAtLocal": "2026-04-16 18:17:07 EDT",
-  "queriedAtUtc": "2026-04-16T22:17:07.175235Z",
+  "asOf": "2026-04-17",
+  "queriedAtLocal": "2026-04-17 12:25:18 EDT",
+  "queriedAtUtc": "2026-04-17T16:25:18.703153Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
