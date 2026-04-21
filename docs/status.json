@@ -1,7 +1,7 @@
 {
   "asOf": "2026-04-21",
-  "queriedAtLocal": "2026-04-21 12:30:45 EDT",
-  "queriedAtUtc": "2026-04-21T16:30:45.149052Z",
+  "queriedAtLocal": "2026-04-21 16:44:40 EDT",
+  "queriedAtUtc": "2026-04-21T20:44:40.648264Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -9,11 +9,21 @@
   },
   "certificationStatus": {
     "source": "https://www.registeroba.ca/coach-certification-status",
-    "dateUpdated": "April 14, 2026",
-    "nextScheduledUpdate": "April 21, 2026",
+    "dateUpdated": "April 21, 2026",
+    "nextScheduledUpdate": "April 28, 2026",
     "note": "Courses after this date will be on the next update."
   },
   "certified": [
+    {
+      "name": "Aaron Cassetta",
+      "registration_id": "6761639",
+      "level": "9U AA",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
+    },
     {
       "name": "Andrew Westlake",
       "registration_id": "1013326",
@@ -129,6 +139,16 @@
       "registration_id": "6019343",
       "level": "15U AA",
       "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
+    },
+    {
+      "name": "Cole Randall",
+      "registration_id": "7054588",
+      "level": "10U A",
+      "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
@@ -275,6 +295,16 @@
       "missing_courses_available": false
     },
     {
+      "name": "Joel Hoadley",
+      "registration_id": "6743083",
+      "level": "10U A",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
+    },
+    {
       "name": "Josh Whittington",
       "registration_id": "5685951",
       "level": "15U DS",
@@ -365,6 +395,16 @@
       "missing_courses_available": false
     },
     {
+      "name": "Mike Damchuk",
+      "registration_id": "6812287",
+      "level": "9U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
+    },
+    {
       "name": "Nick Core",
       "registration_id": "6198142",
       "level": "15U AA",
@@ -425,6 +465,16 @@
       "missing_courses_available": false
     },
     {
+      "name": "Steve Edwardson",
+      "registration_id": "6670299",
+      "level": "10U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false
+    },
+    {
       "name": "Steve Helps",
       "registration_id": "6235933",
       "level": "14U AA",
@@ -447,19 +497,6 @@
   ],
   "inProgress": [
     {
-      "name": "Aaron Cassetta",
-      "registration_id": "6761639",
-      "level": "9U AA",
-      "position": "Head Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Coach Initiation in Baseball",
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
-    },
-    {
       "name": "Adam Crowe",
       "registration_id": "7115890",
       "level": "11U DS",
@@ -470,9 +507,7 @@
         "Hitting",
         "Infielding",
         "Fundamentals of Coaching Baseball",
-        "Coach Initiation in Baseball",
-        "My First Pitch",
-        "Safe Sport"
+        "My First Pitch"
       ],
       "missing_courses_available": true
     },
@@ -484,7 +519,6 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
       "missing_courses": [
-        "My First Pitch",
         "Safe Sport"
       ],
       "missing_courses_available": true
@@ -538,8 +572,7 @@
         "Infielding",
         "Fundamentals of Coaching Baseball",
         "Coach Initiation in Baseball",
-        "My First Pitch",
-        "Safe Sport"
+        "My First Pitch"
       ],
       "missing_courses_available": true
     },
@@ -576,8 +609,7 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
       "missing_courses": [
-        "Hitting",
-        "Fundamentals of Coaching Baseball"
+        "Hitting"
       ],
       "missing_courses_available": true
     },
@@ -615,20 +647,6 @@
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
       "missing_courses": [
         "Safe Sport"
-      ],
-      "missing_courses_available": true
-    },
-    {
-      "name": "Cole Randall",
-      "registration_id": "7054588",
-      "level": "10U A",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Coach Initiation in Sport",
-        "Coach Initiation in Baseball",
-        "My First Pitch"
       ],
       "missing_courses_available": true
     },
@@ -752,20 +770,6 @@
       "missing_courses_available": true
     },
     {
-      "name": "Joel Hoadley",
-      "registration_id": "6743083",
-      "level": "10U A",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Infielding",
-        "My First Pitch",
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
-    },
-    {
       "name": "John Bettridge",
       "registration_id": "6702741",
       "level": "9U AA",
@@ -782,18 +786,6 @@
       "registration_id": "1245828",
       "level": "13U DS",
       "position": "Head Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
-    },
-    {
-      "name": "Mike Damchuk",
-      "registration_id": "6812287",
-      "level": "9U AA",
-      "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
       "missing_courses": [
@@ -871,18 +863,6 @@
       "missing_courses_available": true
     },
     {
-      "name": "Steve Edwardson",
-      "registration_id": "6670299",
-      "level": "10U AA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Infielding"
-      ],
-      "missing_courses_available": true
-    },
-    {
       "name": "Steve Mcewen",
       "registration_id": "5992217",
       "level": "13U DS",
@@ -915,7 +895,6 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
       "missing_courses": [
-        "Infielding",
         "Safe Sport"
       ],
       "missing_courses_available": true
@@ -934,7 +913,48 @@
       "missing_courses_available": true
     }
   ],
-  "transitions": [],
+  "transitions": [
+    {
+      "name": "Aaron Cassetta",
+      "registration_id": "6761639",
+      "level": "9U AA",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "moved_on": "2026-04-21"
+    },
+    {
+      "name": "Cole Randall",
+      "registration_id": "7054588",
+      "level": "10U A",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "moved_on": "2026-04-21"
+    },
+    {
+      "name": "Joel Hoadley",
+      "registration_id": "6743083",
+      "level": "10U A",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "moved_on": "2026-04-21"
+    },
+    {
+      "name": "Mike Damchuk",
+      "registration_id": "6812287",
+      "level": "9U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "moved_on": "2026-04-21"
+    },
+    {
+      "name": "Steve Edwardson",
+      "registration_id": "6670299",
+      "level": "10U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "moved_on": "2026-04-21"
+    }
+  ],
   "notes": [
     "Rows are filtered to associations containing 'Sarnia'.",
     "A transition is detected when a previously in-progress coach row appears in certified.",
