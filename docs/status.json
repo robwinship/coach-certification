@@ -1,7 +1,7 @@
 {
   "asOf": "2026-04-21",
-  "queriedAtLocal": "2026-04-21 16:44:40 EDT",
-  "queriedAtUtc": "2026-04-21T20:44:40.648264Z",
+  "queriedAtLocal": "2026-04-21 18:17:58 EDT",
+  "queriedAtUtc": "2026-04-21T22:17:58.092634Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -913,48 +913,7 @@
       "missing_courses_available": true
     }
   ],
-  "transitions": [
-    {
-      "name": "Aaron Cassetta",
-      "registration_id": "6761639",
-      "level": "9U AA",
-      "position": "Head Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-04-21"
-    },
-    {
-      "name": "Cole Randall",
-      "registration_id": "7054588",
-      "level": "10U A",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-04-21"
-    },
-    {
-      "name": "Joel Hoadley",
-      "registration_id": "6743083",
-      "level": "10U A",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-04-21"
-    },
-    {
-      "name": "Mike Damchuk",
-      "registration_id": "6812287",
-      "level": "9U AA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-04-21"
-    },
-    {
-      "name": "Steve Edwardson",
-      "registration_id": "6670299",
-      "level": "10U AA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-04-21"
-    }
-  ],
+  "transitions": [],
   "notes": [
     "Rows are filtered to associations containing 'Sarnia'.",
     "A transition is detected when a previously in-progress coach row appears in certified.",
