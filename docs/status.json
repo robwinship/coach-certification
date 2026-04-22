@@ -1,7 +1,7 @@
 {
-  "asOf": "2026-04-21",
-  "queriedAtLocal": "2026-04-21 18:17:58 EDT",
-  "queriedAtUtc": "2026-04-21T22:17:58.092634Z",
+  "asOf": "2026-04-22",
+  "queriedAtLocal": "2026-04-22 12:29:43 EDT",
+  "queriedAtUtc": "2026-04-22T16:29:43.104961Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -9,8 +9,8 @@
   },
   "certificationStatus": {
     "source": "https://www.registeroba.ca/coach-certification-status",
-    "dateUpdated": "April 21, 2026",
-    "nextScheduledUpdate": "April 28, 2026",
+    "dateUpdated": "April 14, 2026",
+    "nextScheduledUpdate": "April 21, 2026",
     "note": "Courses after this date will be on the next update."
   },
   "certified": [
@@ -503,13 +503,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Hitting",
-        "Infielding",
-        "Fundamentals of Coaching Baseball",
-        "My First Pitch"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Andrew Smith",
@@ -518,10 +513,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Andrew Smith",
@@ -530,10 +523,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Bill Best",
@@ -542,11 +533,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Infielding",
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Brent Steeves",
@@ -555,10 +543,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Brian Walker",
@@ -567,14 +553,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Hitting",
-        "Infielding",
-        "Fundamentals of Coaching Baseball",
-        "Coach Initiation in Baseball",
-        "My First Pitch"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Brooke Campbell",
@@ -583,11 +563,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "9U PCCP",
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Bruce Gray",
@@ -596,10 +573,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Bryan Deschutter",
@@ -608,10 +583,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Hitting"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Carl Best",
@@ -620,10 +593,8 @@
       "position": "Head Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Chris Foster",
@@ -632,11 +603,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Coach Initiation in Baseball",
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Cody Webster",
@@ -645,10 +613,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Cory Sommise",
@@ -657,14 +623,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Hitting",
-        "Infielding",
-        "Coach Initiation in Sport",
-        "Coach Initiation in Baseball",
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Dan Sparks",
@@ -673,10 +633,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Outfielding"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Dave Aitken",
@@ -685,10 +643,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "9U PCCP"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "David Kruger",
@@ -697,10 +653,8 @@
       "position": "Head Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "David Kruger",
@@ -709,10 +663,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Evan Ouzounis",
@@ -721,12 +673,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Hitting",
-        "Fundamentals of Coaching Baseball",
-        "9U PCCP"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Greg Moore",
@@ -735,11 +683,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Infielding",
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Jason Polera",
@@ -748,10 +693,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Outfielding"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Jesse Theriault",
@@ -760,14 +703,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Hitting",
-        "Fundamentals of Coaching Baseball",
-        "Coach Initiation in Baseball",
-        "9U PCCP",
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "John Bettridge",
@@ -776,10 +713,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Mick Jackson",
@@ -788,10 +723,8 @@
       "position": "Head Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Mike Perry",
@@ -800,14 +733,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Hitting",
-        "Fundamentals of Coaching Baseball",
-        "Coach Initiation in Baseball",
-        "9U PCCP",
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Noah Best",
@@ -816,11 +743,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Infielding",
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Owen Utley",
@@ -829,13 +753,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Hitting",
-        "Infielding",
-        "Coach Initiation in Baseball",
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Ryan Nutma",
@@ -844,11 +763,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Outfielding",
-        "Skills"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Shane Murphy",
@@ -857,10 +773,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Steve Mcewen",
@@ -869,10 +783,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Taylor Castrillo",
@@ -881,11 +793,8 @@
       "position": "Head Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "9U PCCP",
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Tim Symington",
@@ -894,10 +803,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     },
     {
       "name": "Wade Babula",
@@ -906,11 +813,8 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "My First Pitch",
-        "Safe Sport"
-      ],
-      "missing_courses_available": true
+      "missing_courses": [],
+      "missing_courses_available": false
     }
   ],
   "transitions": [],
