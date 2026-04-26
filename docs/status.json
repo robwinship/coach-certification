@@ -1,7 +1,7 @@
 {
-  "asOf": "2026-04-25",
-  "queriedAtLocal": "2026-04-25 18:12:25 EDT",
-  "queriedAtUtc": "2026-04-25T22:12:25.071818Z",
+  "asOf": "2026-04-26",
+  "queriedAtLocal": "2026-04-26 12:19:02 EDT",
+  "queriedAtUtc": "2026-04-26T16:19:02.910546Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -800,16 +800,6 @@
       "name": "Tim Symington",
       "registration_id": "1191089",
       "level": "15U AA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [],
-      "missing_courses_available": false
-    },
-    {
-      "name": "Wade Babula",
-      "registration_id": "5678639",
-      "level": "10U AA",
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
