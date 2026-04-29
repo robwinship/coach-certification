@@ -1,7 +1,7 @@
 {
   "asOf": "2026-04-29",
-  "queriedAtLocal": "2026-04-29 12:38:59 EDT",
-  "queriedAtUtc": "2026-04-29T16:38:59.688730Z",
+  "queriedAtLocal": "2026-04-29 18:22:35 EDT",
+  "queriedAtUtc": "2026-04-29T22:22:35.947108Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -9,8 +9,8 @@
   },
   "certificationStatus": {
     "source": "https://www.registeroba.ca/coach-certification-status",
-    "dateUpdated": "April 21, 2026",
-    "nextScheduledUpdate": "April 28, 2026",
+    "dateUpdated": "April 28, 2026",
+    "nextScheduledUpdate": "May 5, 2026",
     "note": "Courses after this date will be on the next update."
   },
   "certified": [
