@@ -1,7 +1,7 @@
 {
-  "asOf": "2026-04-28",
-  "queriedAtLocal": "2026-04-28 18:23:12 EDT",
-  "queriedAtUtc": "2026-04-28T22:23:12.487300Z",
+  "asOf": "2026-04-29",
+  "queriedAtLocal": "2026-04-29 12:38:59 EDT",
+  "queriedAtUtc": "2026-04-29T16:38:59.688730Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -9,8 +9,8 @@
   },
   "certificationStatus": {
     "source": "https://www.registeroba.ca/coach-certification-status",
-    "dateUpdated": "April 28, 2026",
-    "nextScheduledUpdate": "May 5, 2026",
+    "dateUpdated": "April 21, 2026",
+    "nextScheduledUpdate": "April 28, 2026",
     "note": "Courses after this date will be on the next update."
   },
   "certified": [
@@ -903,88 +903,7 @@
       "missing_courses_available": true
     }
   ],
-  "transitions": [
-    {
-      "name": "Andrew Smith",
-      "registration_id": "6797054",
-      "level": "10U AA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-04-28"
-    },
-    {
-      "name": "Andrew Smith",
-      "registration_id": "6797054",
-      "level": "13U HS",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-04-28"
-    },
-    {
-      "name": "Brooke Campbell",
-      "registration_id": "7018097",
-      "level": "8U AA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-04-28"
-    },
-    {
-      "name": "Bryan Deschutter",
-      "registration_id": "7073516",
-      "level": "8U AA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-04-28"
-    },
-    {
-      "name": "Carl Best",
-      "registration_id": "6959617",
-      "level": "11U DS",
-      "position": "Head Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-04-28"
-    },
-    {
-      "name": "Cody Webster",
-      "registration_id": "6099001",
-      "level": "15U DS",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-04-28"
-    },
-    {
-      "name": "Greg Moore",
-      "registration_id": "6369363",
-      "level": "12U AA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-04-28"
-    },
-    {
-      "name": "John Bettridge",
-      "registration_id": "6702741",
-      "level": "9U AA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-04-28"
-    },
-    {
-      "name": "Shane Murphy",
-      "registration_id": "6789905",
-      "level": "11U AA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-04-28"
-    },
-    {
-      "name": "Wade Babula",
-      "registration_id": "5678639",
-      "level": "10U AA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-04-28"
-    }
-  ],
+  "transitions": [],
   "notes": [
     "Rows are filtered to associations containing 'Sarnia'.",
     "A transition is detected when a previously in-progress coach row appears in certified.",
