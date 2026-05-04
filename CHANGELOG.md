@@ -51,3 +51,7 @@ This project uses a custom release numbering convention.
 ## [Backup 2026-04-07_19-31-09]
 ### Backup Note
 - filter implemented fine - no current bugs
+
+## [Backup 2026-04-14_20-53-26]
+### Backup Note
+- Created a visualization to show what courses a coach is missing

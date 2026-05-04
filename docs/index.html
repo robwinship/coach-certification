@@ -452,6 +452,50 @@
       }
     }
 
+    .course-item + .course-item {
+      margin-top: 8px;
+    }
+
+    .course-toggle {
+      width: 100%;
+      border: 1px solid rgba(16, 33, 46, 0.14);
+      border-radius: 12px;
+      background: #fffdf7;
+      color: var(--ink);
+      cursor: pointer;
+      padding: 10px 12px;
+      text-align: left;
+      font: inherit;
+    }
+
+    .course-toggle-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .course-toggle-label {
+      font-family: "Chivo", sans-serif;
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+
+    .course-detail {
+      margin-top: 8px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(111, 182, 201, 0.09);
+      border: 1px solid rgba(111, 182, 201, 0.22);
+    }
+
+    .course-coaches-list {
+      margin: 0;
+      padding-left: 18px;
+      line-height: 1.7;
+      font-size: 0.9rem;
+    }
+
     @keyframes rise {
       from {
         opacity: 0;
@@ -573,6 +617,20 @@
       </article>
     </section>
 
+      <article class="card" style="--delay: 300ms;">
+        <h2>Outstanding Courses</h2>
+        <div class="status-board">
+          <p class="status-meta">Courses not yet completed across all in-progress coaches. Coaches with unavailable course data are excluded.</p>
+          <div class="status-header">
+            <h3>Courses with outstanding requirements</h3>
+            <span class="count-chip" id="courses-summary-count">0</span>
+          </div>
+          <ul class="status-list status-list--interactive" id="courses-summary-list"></ul>
+          <p class="status-empty" id="courses-summary-empty" hidden>No outstanding course data available.</p>
+        </div>
+      </article>
+    </section>
+
     <p class="foot">Built for robwinship · Coach Certification Monitoring</p>
   </main>
 
@@ -580,6 +638,7 @@
     let allCertified = [];
     let allInProgress = [];
     let expandedInProgressKey = "";
+    let expandedCourseKey = "";
 
     function rowKey(item) {
       return [
@@ -787,6 +846,90 @@
 
     document.getElementById("team-filter").addEventListener("change", applyFilter);
 
+    function buildCoursesSummary(coaches) {
+      const map = new Map();
+      coaches.forEach((coach) => {
+        if (!coach.missing_courses_available) return;
+        const courses = Array.isArray(coach.missing_courses) ? coach.missing_courses : [];
+        courses.forEach((course) => {
+          if (!map.has(course)) map.set(course, []);
+          map.get(course).push(formatRowLabel(coach));
+        });
+      });
+      return Array.from(map.entries())
+        .map(([course, coachList]) => ({ course, coaches: coachList }))
+        .sort((a, b) => b.coaches.length - a.coaches.length);
+    }
+
+    function renderCoursesSummary(coaches) {
+      const list = document.getElementById("courses-summary-list");
+      const empty = document.getElementById("courses-summary-empty");
+      const countChip = document.getElementById("courses-summary-count");
+      list.innerHTML = "";
+
+      const summary = buildCoursesSummary(coaches);
+      countChip.textContent = String(summary.length);
+
+      if (summary.length === 0) {
+        empty.hidden = false;
+        return;
+      }
+
+      empty.hidden = true;
+      summary.forEach(({ course, coaches: coachList }) => {
+        const isExpanded = expandedCourseKey === course;
+        const li = document.createElement("li");
+        li.className = "course-item";
+
+        const toggle = document.createElement("button");
+        toggle.type = "button";
+        toggle.className = "course-toggle";
+        toggle.setAttribute("aria-expanded", String(isExpanded));
+
+        const toggleSummary = document.createElement("span");
+        toggleSummary.className = "course-toggle-summary";
+
+        const label = document.createElement("span");
+        label.className = "course-toggle-label";
+        label.textContent = course;
+
+        const chip = document.createElement("span");
+        chip.className = "count-chip";
+        chip.textContent = `${coachList.length} coach${coachList.length !== 1 ? "es" : ""}`;
+
+        toggleSummary.appendChild(label);
+        toggleSummary.appendChild(chip);
+        toggle.appendChild(toggleSummary);
+        toggle.addEventListener("click", () => {
+          expandedCourseKey = isExpanded ? "" : course;
+          renderCoursesSummary(coaches);
+        });
+        li.appendChild(toggle);
+
+        if (isExpanded) {
+          const detail = document.createElement("div");
+          detail.className = "course-detail";
+
+          const title = document.createElement("p");
+          title.className = "status-detail-title";
+          title.textContent = "Coaches with this course outstanding";
+          detail.appendChild(title);
+
+          const ul = document.createElement("ul");
+          ul.className = "course-coaches-list";
+          coachList.forEach((name) => {
+            const item = document.createElement("li");
+            item.textContent = name;
+            ul.appendChild(item);
+          });
+          detail.appendChild(ul);
+          li.appendChild(detail);
+        }
+
+        list.appendChild(li);
+      });
+    }
+
     async function loadStatusData() {
       const updated = document.getElementById("status-updated");
       const certDateUpdated = document.getElementById("cert-date-updated");
@@ -808,6 +951,7 @@
 
         populateTeamFilter();
         applyFilter();
+        renderCoursesSummary(allInProgress);
 
         renderTransitions(transitions);
 
@@ -823,6 +967,7 @@
         allCertified = [];
         allInProgress = [];
         applyFilter();
+        renderCoursesSummary([]);
         renderTransitions([]);
         document.getElementById("cert-date-updated").textContent = "Unknown";
         document.getElementById("cert-next-update").textContent = "Unknown";
