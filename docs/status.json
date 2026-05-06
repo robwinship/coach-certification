@@ -1,7 +1,7 @@
 {
-  "asOf": "2026-05-05",
-  "queriedAtLocal": "2026-05-05 18:27:40 EDT",
-  "queriedAtUtc": "2026-05-05T22:27:40.921438Z",
+  "asOf": "2026-05-06",
+  "queriedAtLocal": "2026-05-06 12:38:00 EDT",
+  "queriedAtUtc": "2026-05-06T16:38:00.578431Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -789,80 +789,7 @@
       "missing_courses_available": true
     }
   ],
-  "transitions": [
-    {
-      "name": "Bill Best",
-      "registration_id": "6657552",
-      "level": "11U DS",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-05-05"
-    },
-    {
-      "name": "Brent Steeves",
-      "registration_id": "1226551",
-      "level": "10U A",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-05-05"
-    },
-    {
-      "name": "Brian Walker",
-      "registration_id": "7115649",
-      "level": "11U DS",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-05-05"
-    },
-    {
-      "name": "Dave Aitken",
-      "registration_id": "7032698",
-      "level": "8U AA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-05-05"
-    },
-    {
-      "name": "David Kruger",
-      "registration_id": "6619569",
-      "level": "13U HS",
-      "position": "Head Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-05-05"
-    },
-    {
-      "name": "David Kruger",
-      "registration_id": "6619569",
-      "level": "15U DS",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-05-05"
-    },
-    {
-      "name": "Evan Ouzounis",
-      "registration_id": "7076015",
-      "level": "8U AA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-05-05"
-    },
-    {
-      "name": "Mick Jackson",
-      "registration_id": "1245828",
-      "level": "13U DS",
-      "position": "Head Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-05-05"
-    },
-    {
-      "name": "Noah Best",
-      "registration_id": "6657552",
-      "level": "11U DS",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-05-05"
-    }
-  ],
+  "transitions": [],
   "notes": [
     "Rows are filtered to associations containing 'Sarnia'.",
     "A transition is detected when a previously in-progress coach row appears in certified.",
