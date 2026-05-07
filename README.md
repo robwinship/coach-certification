@@ -44,6 +44,29 @@ Run locally:
 
 This regenerates docs/status.json.
 
+## Missing-Course Extraction Strict Gate
+
+The update run fails intentionally when missing-course extraction quality drops below the required coverage threshold.
+
+- Default threshold: `MIN_MISSING_COURSE_COVERAGE=0.20` (20%).
+- Strict mode in CI: `ALLOW_LOW_MISSING_COURSE_COVERAGE=false`.
+- On failure, the script now includes diagnostics in the error message: available/unavailable counts, reason counts, sample unavailable coach labels, and lookup retry/timeout values.
+
+### Tuning Reliability (without lowering quality gate)
+
+These environment variables tune scraping resilience while preserving fail-hard behavior:
+
+- `MISSING_COURSE_LOOKUP_RETRIES` (default `2`)
+- `MISSING_COURSE_RETRY_BACKOFF_MS` (default `600`)
+- `MISSING_COURSE_LOOKUP_TIMEOUT_MS` (default `10000`)
+- `MISSING_COURSE_COMBO_TIMEOUT_MS` (default `10000`)
+- `MISSING_COURSE_OPTION_TIMEOUT_MS` (default `5000`)
+- `MISSING_COURSE_SELECTION_SETTLE_MS` (default `500`)
+- `MISSING_COURSE_BUCKET_SETTLE_MS` (default `5000`)
+- `COACH_STATUS_PAGE_GOTO_TIMEOUT_MS` (default `60000`)
+- `COACH_STATUS_PAGE_NETWORK_IDLE_TIMEOUT_MS` (default `30000`)
+- `COACH_STATUS_PAGE_COMBO_TIMEOUT_MS` (default `15000`)
+
 It also regenerates docs/current-summary.html, which is a static snapshot page containing both status tables.
 
 ## GitHub Repository Setup (robwinship)

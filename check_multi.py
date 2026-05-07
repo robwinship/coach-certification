@@ -40,6 +40,22 @@ MISSING_COURSE_NEGATIVE_VALUES = {
     "incomplete",
     "required",
 }
+DEFAULT_INT_ENV: Dict[str, int] = {
+    "SCRAPE_GOTO_TIMEOUT_MS": 60000,
+    "SCRAPE_NETWORK_IDLE_TIMEOUT_MS": 30000,
+    "SCRAPE_SELECTOR_TIMEOUT_MS": 15000,
+    "COACH_STATUS_PAGE_GOTO_TIMEOUT_MS": 60000,
+    "COACH_STATUS_PAGE_NETWORK_IDLE_TIMEOUT_MS": 30000,
+    "COACH_STATUS_PAGE_COMBO_TIMEOUT_MS": 15000,
+    "MISSING_COURSE_BUCKET_SETTLE_MS": 5000,
+    "MISSING_COURSE_COMBO_TIMEOUT_MS": 10000,
+    "MISSING_COURSE_OPTION_TIMEOUT_MS": 5000,
+    "MISSING_COURSE_LOOKUP_TIMEOUT_MS": 10000,
+    "MISSING_COURSE_SELECTION_SETTLE_MS": 500,
+    "MISSING_COURSE_LOOKUP_RETRIES": 2,
+    "MISSING_COURSE_RETRY_BACKOFF_MS": 600,
+}
+LAST_MISSING_COURSE_DIAGNOSTICS: Dict[str, object] = {}
 
 
 @dataclass
@@ -52,6 +68,7 @@ class CoachRow:
     source_url: str
     missing_courses: List[str] = field(default_factory=list)
     missing_courses_available: bool = False
+    missing_courses_reason: str = ""
 
     def key(self) -> str:
         return "|".join(
@@ -106,19 +123,39 @@ def parse_level_position(raw_role: str) -> tuple[str, str]:
     return role, "Unknown"
 
 
+def get_int_env_var(name: str, default: int) -> int:
+    raw = os.environ.get(name, "").strip()
+    if not raw:
+        return default
+    try:
+        value = int(raw)
+    except ValueError:
+        print(f"Invalid {name} value '{raw}', defaulting to {default}.")
+        return default
+    return max(0, value)
+
+
+def env_ms(name: str) -> int:
+    return get_int_env_var(name, DEFAULT_INT_ENV[name])
+
+
 def get_rendered_html(url: str) -> str:
+    goto_timeout = env_ms("SCRAPE_GOTO_TIMEOUT_MS")
+    network_idle_timeout = env_ms("SCRAPE_NETWORK_IDLE_TIMEOUT_MS")
+    selector_timeout = env_ms("SCRAPE_SELECTOR_TIMEOUT_MS")
+
     try:
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=True)
             page = browser.new_page()
-            page.goto(url, wait_until="domcontentloaded", timeout=60000)
+            page.goto(url, wait_until="domcontentloaded", timeout=goto_timeout)
 
             # The source site appears to load rows asynchronously after initial paint.
             page.wait_for_timeout(6000)
-            page.wait_for_load_state("networkidle", timeout=30000)
+            page.wait_for_load_state("networkidle", timeout=network_idle_timeout)
 
             try:
-                page.wait_for_selector("tr td", timeout=15000)
+                page.wait_for_selector("tr td", timeout=selector_timeout)
             except PlaywrightTimeoutError:
                 # Keep parsing whatever content is available.
                 pass
@@ -336,13 +373,13 @@ def fetch_certification_status_dates() -> dict:
 
 
 def wait_for_coach_status_page(page, url: str) -> None:
-    page.goto(url, wait_until="domcontentloaded", timeout=60000)
-    page.wait_for_timeout(5000)
+    page.goto(url, wait_until="domcontentloaded", timeout=env_ms("COACH_STATUS_PAGE_GOTO_TIMEOUT_MS"))
+    page.wait_for_timeout(env_ms("MISSING_COURSE_BUCKET_SETTLE_MS"))
     try:
-        page.wait_for_load_state("networkidle", timeout=30000)
+        page.wait_for_load_state("networkidle", timeout=env_ms("COACH_STATUS_PAGE_NETWORK_IDLE_TIMEOUT_MS"))
     except PlaywrightTimeoutError:
         pass
-    page.locator('input[role="combobox"]').first.wait_for(timeout=15000)
+    page.locator('input[role="combobox"]').first.wait_for(timeout=env_ms("COACH_STATUS_PAGE_COMBO_TIMEOUT_MS"))
 
 
 def is_missing_course_value(value: str) -> bool:
@@ -404,7 +441,10 @@ def extract_missing_courses_from_page(page, row: CoachRow) -> tuple[List[str], b
 
 
 def fetch_missing_courses_for_in_progress(rows: Sequence[CoachRow]) -> Dict[str, dict]:
+    global LAST_MISSING_COURSE_DIAGNOSTICS
+
     if not rows:
+        LAST_MISSING_COURSE_DIAGNOSTICS = {}
         return {}
 
     grouped_rows: Dict[str, List[CoachRow]] = {bucket: [] for bucket in COACH_STATUS_BY_BUCKET_URLS}
@@ -416,6 +456,14 @@ def fetch_missing_courses_for_in_progress(rows: Sequence[CoachRow]) -> Dict[str,
     total_available_true = 0
     total_available_false = 0
     reason_counts: Dict[str, int] = {}
+    sample_unavailable_labels: List[str] = []
+
+    combo_timeout = env_ms("MISSING_COURSE_COMBO_TIMEOUT_MS")
+    option_timeout = env_ms("MISSING_COURSE_OPTION_TIMEOUT_MS")
+    lookup_timeout = env_ms("MISSING_COURSE_LOOKUP_TIMEOUT_MS")
+    selection_settle_ms = env_ms("MISSING_COURSE_SELECTION_SETTLE_MS")
+    lookup_retries = env_ms("MISSING_COURSE_LOOKUP_RETRIES")
+    retry_backoff_ms = env_ms("MISSING_COURSE_RETRY_BACKOFF_MS")
 
     try:
         with sync_playwright() as p:
@@ -435,39 +483,69 @@ def fetch_missing_courses_for_in_progress(rows: Sequence[CoachRow]) -> Dict[str,
 
                 for row in bucket_rows:
                     label = coach_dropdown_label(row)
-                    try:
-                        combo = page.locator('input[role="combobox"]').first
-                        combo.click(timeout=10000)
-                        combo.fill(label)
-                        option = page.get_by_role("option", name=label)
-                        option.wait_for(timeout=5000)
-                        option.click(timeout=5000)
+                    last_error = ""
+                    succeeded = False
 
-                        page.wait_for_function(
-                            "({ name, roleLabel }) => document.body.innerText.toLowerCase().includes(name.toLowerCase()) && document.body.innerText.includes(roleLabel)",
-                            arg={"name": row.name, "roleLabel": coach_role_label(row)},
-                            timeout=10000,
-                        )
-                        page.wait_for_timeout(500)
+                    for attempt in range(lookup_retries + 1):
+                        try:
+                            combo = page.locator('input[role="combobox"]').first
+                            combo.click(timeout=combo_timeout)
+                            combo.fill(label)
+                            option = page.get_by_role("option", name=label)
+                            option.wait_for(timeout=option_timeout)
+                            option.click(timeout=option_timeout)
 
-                        missing_courses, available, reason = extract_missing_courses_from_page(page, row)
-                        reason_counts[reason] = reason_counts.get(reason, 0) + 1
+                            page.wait_for_function(
+                                "({ name, roleLabel }) => document.body.innerText.toLowerCase().includes(name.toLowerCase()) && document.body.innerText.includes(roleLabel)",
+                                arg={"name": row.name, "roleLabel": coach_role_label(row)},
+                                timeout=lookup_timeout,
+                            )
+                            page.wait_for_timeout(selection_settle_ms)
 
-                        if available:
-                            bucket_available_true += 1
-                            total_available_true += 1
-                        else:
-                            bucket_available_false += 1
-                            total_available_false += 1
+                            missing_courses, available, reason = extract_missing_courses_from_page(page, row)
+                            reason_counts[reason] = reason_counts.get(reason, 0) + 1
 
-                        captured[row.key()] = {
-                            "missing_courses": missing_courses,
-                            "missing_courses_available": available,
-                        }
-                    except Exception as exc:
-                        bucket_lookup_failures += 1
-                        total_lookup_failures += 1
-                        print(f"Missing-course lookup failed for {label}: {exc}")
+                            if available:
+                                bucket_available_true += 1
+                                total_available_true += 1
+                            else:
+                                bucket_available_false += 1
+                                total_available_false += 1
+                                if len(sample_unavailable_labels) < 10:
+                                    sample_unavailable_labels.append(label)
+
+                            captured[row.key()] = {
+                                "missing_courses": missing_courses,
+                                "missing_courses_available": available,
+                                "missing_courses_reason": reason,
+                            }
+                            succeeded = True
+                            break
+                        except PlaywrightTimeoutError as exc:
+                            last_error = f"timeout:{exc}"
+                        except Exception as exc:
+                            last_error = f"exception:{exc}"
+
+                        if attempt < lookup_retries:
+                            page.wait_for_timeout(retry_backoff_ms * (attempt + 1))
+
+                    if succeeded:
+                        continue
+
+                    failure_reason = "lookup_timeout_or_error"
+                    reason_counts[failure_reason] = reason_counts.get(failure_reason, 0) + 1
+                    bucket_lookup_failures += 1
+                    total_lookup_failures += 1
+                    bucket_available_false += 1
+                    total_available_false += 1
+                    if len(sample_unavailable_labels) < 10:
+                        sample_unavailable_labels.append(label)
+                    captured[row.key()] = {
+                        "missing_courses": [],
+                        "missing_courses_available": False,
+                        "missing_courses_reason": failure_reason,
+                    }
+                    print(f"Missing-course lookup failed for {label}: {last_error}")
 
                 print(
                     "Missing-course extraction bucket "
@@ -484,6 +562,18 @@ def fetch_missing_courses_for_in_progress(rows: Sequence[CoachRow]) -> Dict[str,
         f"total={len(rows)}, captured={len(captured)}, available={total_available_true}, "
         f"unavailable={total_available_false}, failures={total_lookup_failures}, reasons={reason_counts}"
     )
+
+    LAST_MISSING_COURSE_DIAGNOSTICS = {
+        "total": len(rows),
+        "captured": len(captured),
+        "available": total_available_true,
+        "unavailable": total_available_false,
+        "failures": total_lookup_failures,
+        "reasons": dict(sorted(reason_counts.items(), key=lambda item: item[0])),
+        "sample_unavailable_labels": sample_unavailable_labels,
+        "lookup_retries": lookup_retries,
+        "lookup_timeout_ms": lookup_timeout,
+    }
 
     return captured
 
@@ -518,9 +608,19 @@ def enforce_missing_course_coverage_or_fail(in_progress_rows: Sequence[CoachRow]
         print("Low missing-course coverage override enabled; continuing run.")
         return
 
+    unavailable_count = len(in_progress_rows) - available_count
+    diagnostics = LAST_MISSING_COURSE_DIAGNOSTICS if LAST_MISSING_COURSE_DIAGNOSTICS else {}
+    reasons = diagnostics.get("reasons", {})
+    sample_labels = diagnostics.get("sample_unavailable_labels", [])
+    retry_budget = diagnostics.get("lookup_retries", env_ms("MISSING_COURSE_LOOKUP_RETRIES"))
+    lookup_timeout = diagnostics.get("lookup_timeout_ms", env_ms("MISSING_COURSE_LOOKUP_TIMEOUT_MS"))
+
     raise RuntimeError(
         "Missing-course extraction coverage fell below threshold "
         f"({coverage:.1%} < {threshold:.1%}). Failing run to avoid publishing degraded data. "
+        f"Diagnostics: available={available_count}, unavailable={unavailable_count}, "
+        f"reasons={reasons}, sample_unavailable={sample_labels}, "
+        f"lookup_retries={retry_budget}, lookup_timeout_ms={lookup_timeout}. "
         "Set ALLOW_LOW_MISSING_COURSE_COVERAGE=true to bypass intentionally."
     )
 
@@ -540,6 +640,7 @@ def attach_missing_courses(rows: Sequence[CoachRow], missing_courses_map: Dict[s
                 source_url=row.source_url,
                 missing_courses=list(details.get("missing_courses", [])),
                 missing_courses_available=bool(details.get("missing_courses_available", False)),
+                missing_courses_reason=str(details.get("missing_courses_reason", "")),
             )
         )
 

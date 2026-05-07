@@ -41,6 +41,16 @@ jobs:
           FORCE_SLACK_TEST: ${{ github.event.inputs.send_test_notification || 'false' }}
           MIN_MISSING_COURSE_COVERAGE: "0.20"
           ALLOW_LOW_MISSING_COURSE_COVERAGE: "false"
+          MISSING_COURSE_LOOKUP_RETRIES: "2"
+          MISSING_COURSE_RETRY_BACKOFF_MS: "600"
+          MISSING_COURSE_LOOKUP_TIMEOUT_MS: "12000"
+          MISSING_COURSE_COMBO_TIMEOUT_MS: "12000"
+          MISSING_COURSE_OPTION_TIMEOUT_MS: "7000"
+          MISSING_COURSE_SELECTION_SETTLE_MS: "700"
+          MISSING_COURSE_BUCKET_SETTLE_MS: "5000"
+          COACH_STATUS_PAGE_GOTO_TIMEOUT_MS: "70000"
+          COACH_STATUS_PAGE_NETWORK_IDLE_TIMEOUT_MS: "35000"
+          COACH_STATUS_PAGE_COMBO_TIMEOUT_MS: "20000"
         run: python check_multi.py
 
       - name: Commit and push if changed

@@ -15,9 +15,12 @@ This project uses a custom release numbering convention.
 - Enriched generated status data with per-coach `missing_courses` and availability metadata for In Progress rows.
 - Hardened missing-course extraction matching to reduce breakage when coach-status page text varies.
 - Added extraction coverage diagnostics in script output (bucket-level and run summary).
+- Added bounded retry/timeouts for coach-status lookups with workflow-configurable environment controls.
+- Added per-row `missing_courses_reason` metadata to improve strict-gate triage.
 
 ### Fixed
 - Added a safety gate to fail generation when in-progress missing-course coverage drops below threshold, preventing silent degraded publishes.
+- Enriched strict-gate failure exceptions with actionable diagnostics (counts, reasons, sample coach labels, retry/timeout settings).
 
 ## 1.102 - 2026-03-16
 
