@@ -30,6 +30,17 @@ HEADERS = {
     "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 }
 
+MISSING_COURSE_MIN_COVERAGE = 0.20
+MISSING_COURSE_NEGATIVE_VALUES = {
+    "no",
+    "pending",
+    "not started",
+    "not-started",
+    "in progress",
+    "incomplete",
+    "required",
+}
+
 
 @dataclass
 class CoachRow:
@@ -334,22 +345,36 @@ def wait_for_coach_status_page(page, url: str) -> None:
     page.locator('input[role="combobox"]').first.wait_for(timeout=15000)
 
 
-def extract_missing_courses_from_page(page, row: CoachRow) -> tuple[List[str], bool]:
-    body_text = clean_text(page.locator("body").inner_text())
-    label = coach_dropdown_label(row)
-    role_label = coach_role_label(row)
+def is_missing_course_value(value: str) -> bool:
+    return normalize(value) in MISSING_COURSE_NEGATIVE_VALUES
 
-    if label not in body_text:
-        return [], False
-    if row.registration_id and row.registration_id not in body_text:
-        return [], False
-    if role_label not in body_text:
-        return [], False
-    if row.association and clean_text(row.association) not in body_text:
-        return [], False
+
+def is_truthy_env_var(name: str) -> bool:
+    return os.environ.get(name, "").strip().lower() in {"1", "true", "yes", "on"}
+
+
+def extract_missing_courses_from_page(page, row: CoachRow) -> tuple[List[str], bool, str]:
+    body_text = clean_text(page.locator("body").inner_text())
+    body_norm = normalize(body_text)
+    name_norm = normalize(row.name)
+    role_norm = normalize(coach_role_label(row))
+    assoc_norm = normalize(row.association) if row.association else ""
+    reg_id_norm = normalize(row.registration_id) if row.registration_id else ""
+
+    if name_norm and name_norm not in body_norm:
+        return [], False, "name_mismatch"
+    if role_norm and role_norm not in body_norm:
+        return [], False, "role_mismatch"
+
+    notes = []
+    if reg_id_norm and reg_id_norm not in body_norm:
+        notes.append("registration_id_not_visible")
+    if assoc_norm and assoc_norm not in body_norm:
+        notes.append("association_not_visible")
 
     missing_courses: List[str] = []
     tables = page.locator("table")
+    observed_values = set()
 
     for index in range(tables.count()):
         rows = tables.nth(index).locator("tr")
@@ -360,11 +385,22 @@ def extract_missing_courses_from_page(page, row: CoachRow) -> tuple[List[str], b
         values = [clean_text(value) for value in rows.nth(1).locator("td").all_inner_texts()]
 
         for header, value in zip(headers, values):
-            if header and normalize(value) == "no":
+            normalized_value = normalize(value)
+            if normalized_value:
+                observed_values.add(normalized_value)
+            if header and is_missing_course_value(value):
                 missing_courses.append(header)
 
     unique_missing_courses = list(dict.fromkeys(missing_courses))
-    return unique_missing_courses, True
+    if not observed_values:
+        return unique_missing_courses, False, "no_course_status_tokens"
+    if not unique_missing_courses and observed_values and observed_values.isdisjoint(MISSING_COURSE_NEGATIVE_VALUES | {"yes"}):
+        notes.append(f"unknown_status_tokens:{','.join(sorted(observed_values)[:5])}")
+
+    if notes:
+        return unique_missing_courses, True, ";".join(notes)
+
+    return unique_missing_courses, True, "ok"
 
 
 def fetch_missing_courses_for_in_progress(rows: Sequence[CoachRow]) -> Dict[str, dict]:
@@ -376,6 +412,10 @@ def fetch_missing_courses_for_in_progress(rows: Sequence[CoachRow]) -> Dict[str,
         grouped_rows[bucket_for_name(row.name)].append(row)
 
     captured: Dict[str, dict] = {}
+    total_lookup_failures = 0
+    total_available_true = 0
+    total_available_false = 0
+    reason_counts: Dict[str, int] = {}
 
     try:
         with sync_playwright() as p:
@@ -386,6 +426,10 @@ def fetch_missing_courses_for_in_progress(rows: Sequence[CoachRow]) -> Dict[str,
                 bucket_rows = sort_rows(grouped_rows.get(bucket, []))
                 if not bucket_rows:
                     continue
+
+                bucket_available_true = 0
+                bucket_available_false = 0
+                bucket_lookup_failures = 0
 
                 wait_for_coach_status_page(page, COACH_STATUS_BY_BUCKET_URLS[bucket])
 
@@ -400,25 +444,85 @@ def fetch_missing_courses_for_in_progress(rows: Sequence[CoachRow]) -> Dict[str,
                         option.click(timeout=5000)
 
                         page.wait_for_function(
-                            "({ registrationId, roleLabel }) => document.body.innerText.includes(registrationId) && document.body.innerText.includes(roleLabel)",
-                            arg={"registrationId": row.registration_id, "roleLabel": coach_role_label(row)},
+                            "({ name, roleLabel }) => document.body.innerText.toLowerCase().includes(name.toLowerCase()) && document.body.innerText.includes(roleLabel)",
+                            arg={"name": row.name, "roleLabel": coach_role_label(row)},
                             timeout=10000,
                         )
                         page.wait_for_timeout(500)
 
-                        missing_courses, available = extract_missing_courses_from_page(page, row)
+                        missing_courses, available, reason = extract_missing_courses_from_page(page, row)
+                        reason_counts[reason] = reason_counts.get(reason, 0) + 1
+
+                        if available:
+                            bucket_available_true += 1
+                            total_available_true += 1
+                        else:
+                            bucket_available_false += 1
+                            total_available_false += 1
+
                         captured[row.key()] = {
                             "missing_courses": missing_courses,
                             "missing_courses_available": available,
                         }
                     except Exception as exc:
+                        bucket_lookup_failures += 1
+                        total_lookup_failures += 1
                         print(f"Missing-course lookup failed for {label}: {exc}")
+
+                print(
+                    "Missing-course extraction bucket "
+                    f"{bucket}: total={len(bucket_rows)}, available={bucket_available_true}, "
+                    f"unavailable={bucket_available_false}, failures={bucket_lookup_failures}"
+                )
 
             browser.close()
     except Exception as exc:
         print(f"Coach status scraping unavailable: {exc}")
 
+    print(
+        "Missing-course extraction summary: "
+        f"total={len(rows)}, captured={len(captured)}, available={total_available_true}, "
+        f"unavailable={total_available_false}, failures={total_lookup_failures}, reasons={reason_counts}"
+    )
+
     return captured
+
+
+def enforce_missing_course_coverage_or_fail(in_progress_rows: Sequence[CoachRow]) -> None:
+    if not in_progress_rows:
+        return
+
+    available_count = sum(1 for row in in_progress_rows if row.missing_courses_available)
+    coverage = available_count / len(in_progress_rows)
+
+    threshold = MISSING_COURSE_MIN_COVERAGE
+    threshold_raw = os.environ.get("MISSING_COURSE_MIN_COVERAGE", "").strip()
+    if threshold_raw:
+        try:
+            threshold = max(0.0, min(1.0, float(threshold_raw)))
+        except ValueError:
+            print(
+                "Invalid MISSING_COURSE_MIN_COVERAGE value "
+                f"'{threshold_raw}', defaulting to {MISSING_COURSE_MIN_COVERAGE:.0%}."
+            )
+
+    print(
+        "Missing-course coverage check: "
+        f"available={available_count}/{len(in_progress_rows)} ({coverage:.1%}), threshold={threshold:.1%}"
+    )
+
+    if coverage >= threshold:
+        return
+
+    if is_truthy_env_var("ALLOW_LOW_MISSING_COURSE_COVERAGE"):
+        print("Low missing-course coverage override enabled; continuing run.")
+        return
+
+    raise RuntimeError(
+        "Missing-course extraction coverage fell below threshold "
+        f"({coverage:.1%} < {threshold:.1%}). Failing run to avoid publishing degraded data. "
+        "Set ALLOW_LOW_MISSING_COURSE_COVERAGE=true to bypass intentionally."
+    )
 
 
 def attach_missing_courses(rows: Sequence[CoachRow], missing_courses_map: Dict[str, dict]) -> List[CoachRow]:
@@ -773,6 +877,7 @@ def main() -> None:
     in_progress = sort_rows(filter_sarnia(in_progress_all))
     in_progress_missing_courses = fetch_missing_courses_for_in_progress(in_progress)
     in_progress = attach_missing_courses(in_progress, in_progress_missing_courses)
+    enforce_missing_course_coverage_or_fail(in_progress)
 
     previous = load_previous_status()
     prev_in_progress = as_rows(previous.get("inProgress", []))

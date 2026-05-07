@@ -867,9 +867,13 @@
       list.innerHTML = "";
 
       const summary = buildCoursesSummary(coaches);
+      const unavailableCount = coaches.filter((coach) => !coach.missing_courses_available).length;
       countChip.textContent = String(summary.length);
 
       if (summary.length === 0) {
+        empty.textContent = unavailableCount > 0
+          ? `No outstanding course data available. ${unavailableCount} coach${unavailableCount !== 1 ? "es" : ""} have unavailable details.`
+          : "No outstanding course data available.";
         empty.hidden = false;
         return;
       }

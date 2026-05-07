@@ -13,9 +13,11 @@ This project uses a custom release numbering convention.
 
 ### Changed
 - Enriched generated status data with per-coach `missing_courses` and availability metadata for In Progress rows.
+- Hardened missing-course extraction matching to reduce breakage when coach-status page text varies.
+- Added extraction coverage diagnostics in script output (bucket-level and run summary).
 
 ### Fixed
-- Placeholder for upcoming fixes.
+- Added a safety gate to fail generation when in-progress missing-course coverage drops below threshold, preventing silent degraded publishes.
 
 ## 1.102 - 2026-03-16
 
