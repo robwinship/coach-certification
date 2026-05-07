@@ -440,38 +440,72 @@ def extract_missing_courses_from_page(page, row: CoachRow) -> tuple[List[str], b
     return unique_missing_courses, True, "ok"
 
 
-def select_coach_option(page, row: CoachRow, label: str, option_timeout: int) -> str:
-    # Attempt exact role match first; fallback to normalized text matching when labels vary.
-    exact = page.get_by_role("option", name=label)
-    try:
-        exact.first.wait_for(timeout=option_timeout)
-        exact.first.click(timeout=option_timeout)
-        return label
-    except PlaywrightTimeoutError:
-        pass
-
+def _scan_role_options(page, name_norm: str, option_timeout: int) -> str:
+    """Scan role=option elements; return matched text or raise PlaywrightTimeoutError."""
     options = page.get_by_role("option")
-    options.first.wait_for(timeout=option_timeout)
-
-    name_norm = normalize(row.name)
-    level_norm = normalize(row.level)
-    name_only_idx = -1
-
-    for idx in range(options.count()):
-        text = clean_text(options.nth(idx).inner_text())
-        text_norm = normalize(text)
-        if not text_norm:
+    options.first.wait_for(state="visible", timeout=option_timeout)
+    for idx in range(min(options.count(), 30)):
+        try:
+            text = clean_text(options.nth(idx).inner_text())
+        except Exception:
             continue
-        if name_norm and level_norm and name_norm in text_norm and level_norm in text_norm:
+        if name_norm in normalize(text):
             options.nth(idx).click(timeout=option_timeout)
             return text
-        if name_only_idx < 0 and name_norm and name_norm in text_norm:
-            name_only_idx = idx
+    raise PlaywrightTimeoutError(f"No role=option matched '{name_norm}'")
 
-    if name_only_idx >= 0:
-        matched_text = clean_text(options.nth(name_only_idx).inner_text())
-        options.nth(name_only_idx).click(timeout=option_timeout)
-        return matched_text
+
+def select_coach_option(page, row: CoachRow, label: str, option_timeout: int) -> str:
+    """Select a coach from the dropdown combobox using four progressive strategies."""
+    name_norm = normalize(row.name)
+
+    # Strategy 1: options should already be visible after press_sequentially in caller;
+    # wait a brief moment then scan.
+    page.wait_for_timeout(400)
+    try:
+        return _scan_role_options(page, name_norm, option_timeout)
+    except (PlaywrightTimeoutError, Exception):
+        pass
+
+    # Strategy 2: re-trigger with press_sequentially on name prefix (fires keyboard events).
+    try:
+        combo = page.locator('input[role="combobox"]').first
+        combo.triple_click()
+        combo.press_sequentially(row.name[:8], delay=60)
+        page.wait_for_timeout(600)
+        return _scan_role_options(page, name_norm, option_timeout)
+    except (PlaywrightTimeoutError, Exception):
+        pass
+
+    # Strategy 3: clear field entirely so dropdown shows all options, then scan.
+    try:
+        combo = page.locator('input[role="combobox"]').first
+        combo.triple_click()
+        combo.press("Backspace")
+        page.wait_for_timeout(600)
+        return _scan_role_options(page, name_norm, 3000)
+    except (PlaywrightTimeoutError, Exception):
+        pass
+
+    # Strategy 4: text-based locator (handles non-standard ARIA roles).
+    try:
+        by_text = page.get_by_text(row.name, exact=False)
+        by_text.first.wait_for(state="visible", timeout=2000)
+        matched = clean_text(by_text.first.inner_text())
+        by_text.first.click(timeout=option_timeout)
+        return matched
+    except (PlaywrightTimeoutError, Exception):
+        pass
+
+    # Log visible options for diagnostics before giving up.
+    try:
+        visible = [
+            clean_text(page.get_by_role("option").nth(i).inner_text())
+            for i in range(min(page.get_by_role("option").count(), 5))
+        ]
+        print(f"Debug visible options for '{label}': {visible}")
+    except Exception:
+        pass
 
     raise PlaywrightTimeoutError(f"No matching coach option found for '{label}'")
 
@@ -526,7 +560,10 @@ def fetch_missing_courses_for_in_progress(rows: Sequence[CoachRow]) -> Dict[str,
                         try:
                             combo = page.locator('input[role="combobox"]').first
                             combo.click(timeout=combo_timeout)
-                            combo.fill(label)
+                            # Use press_sequentially to fire keyboard events so Wix's
+                            # reactive dropdown renders filtered options.
+                            combo.triple_click()
+                            combo.press_sequentially(label, delay=40)
                             selected_label = select_coach_option(page, row, label, option_timeout)
 
                             page.wait_for_function(
