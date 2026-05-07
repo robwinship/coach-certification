@@ -21,6 +21,7 @@ This project uses a custom release numbering convention.
 ### Fixed
 - Added a safety gate to fail generation when in-progress missing-course coverage drops below threshold, preventing silent degraded publishes.
 - Enriched strict-gate failure exceptions with actionable diagnostics (counts, reasons, sample coach labels, retry/timeout settings).
+- Added fallback dropdown option matching (name/level normalization) when exact coach labels are not present in coach-status UI options.
 
 ## 1.102 - 2026-03-16
 

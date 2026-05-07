@@ -440,6 +440,42 @@ def extract_missing_courses_from_page(page, row: CoachRow) -> tuple[List[str], b
     return unique_missing_courses, True, "ok"
 
 
+def select_coach_option(page, row: CoachRow, label: str, option_timeout: int) -> str:
+    # Attempt exact role match first; fallback to normalized text matching when labels vary.
+    exact = page.get_by_role("option", name=label)
+    try:
+        exact.first.wait_for(timeout=option_timeout)
+        exact.first.click(timeout=option_timeout)
+        return label
+    except PlaywrightTimeoutError:
+        pass
+
+    options = page.get_by_role("option")
+    options.first.wait_for(timeout=option_timeout)
+
+    name_norm = normalize(row.name)
+    level_norm = normalize(row.level)
+    name_only_idx = -1
+
+    for idx in range(options.count()):
+        text = clean_text(options.nth(idx).inner_text())
+        text_norm = normalize(text)
+        if not text_norm:
+            continue
+        if name_norm and level_norm and name_norm in text_norm and level_norm in text_norm:
+            options.nth(idx).click(timeout=option_timeout)
+            return text
+        if name_only_idx < 0 and name_norm and name_norm in text_norm:
+            name_only_idx = idx
+
+    if name_only_idx >= 0:
+        matched_text = clean_text(options.nth(name_only_idx).inner_text())
+        options.nth(name_only_idx).click(timeout=option_timeout)
+        return matched_text
+
+    raise PlaywrightTimeoutError(f"No matching coach option found for '{label}'")
+
+
 def fetch_missing_courses_for_in_progress(rows: Sequence[CoachRow]) -> Dict[str, dict]:
     global LAST_MISSING_COURSE_DIAGNOSTICS
 
@@ -491,9 +527,7 @@ def fetch_missing_courses_for_in_progress(rows: Sequence[CoachRow]) -> Dict[str,
                             combo = page.locator('input[role="combobox"]').first
                             combo.click(timeout=combo_timeout)
                             combo.fill(label)
-                            option = page.get_by_role("option", name=label)
-                            option.wait_for(timeout=option_timeout)
-                            option.click(timeout=option_timeout)
+                            selected_label = select_coach_option(page, row, label, option_timeout)
 
                             page.wait_for_function(
                                 "({ name, roleLabel }) => document.body.innerText.toLowerCase().includes(name.toLowerCase()) && document.body.innerText.includes(roleLabel)",
@@ -519,6 +553,8 @@ def fetch_missing_courses_for_in_progress(rows: Sequence[CoachRow]) -> Dict[str,
                                 "missing_courses_available": available,
                                 "missing_courses_reason": reason,
                             }
+                            if selected_label != label:
+                                print(f"Missing-course lookup used fallback option match: requested='{label}' matched='{selected_label}'")
                             succeeded = True
                             break
                         except PlaywrightTimeoutError as exc:
