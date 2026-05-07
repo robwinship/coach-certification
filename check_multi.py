@@ -440,73 +440,113 @@ def extract_missing_courses_from_page(page, row: CoachRow) -> tuple[List[str], b
     return unique_missing_courses, True, "ok"
 
 
-def _scan_role_options(page, name_norm: str, option_timeout: int) -> str:
-    """Scan role=option elements; return matched text or raise PlaywrightTimeoutError."""
-    options = page.get_by_role("option")
-    options.first.wait_for(state="visible", timeout=option_timeout)
-    for idx in range(min(options.count(), 30)):
+# Ordered list of CSS/ARIA selectors used to locate dropdown items, from most
+# specific to broadest. Wix may render these as role=option, li elements, or custom
+# data-hook elements depending on component version.
+_DROPDOWN_ITEM_SELECTORS = [
+    '[role="option"]',
+    '[role="listitem"]',
+    'li[data-item-id]',
+    'li[data-option-index]',
+    '[data-hook*="option"]',
+    '[data-hook*="item"]',
+    '[data-hook*="dropdown"] li',
+    'ul li',
+    'ol li',
+]
+
+
+def _find_and_click_dropdown_item(page, name_norm: str, max_wait_ms: int) -> str:
+    """Try all known dropdown item selectors; return matched text or raise PlaywrightTimeoutError."""
+    page.wait_for_timeout(min(max_wait_ms, 800))
+    for selector in _DROPDOWN_ITEM_SELECTORS:
         try:
-            text = clean_text(options.nth(idx).inner_text())
+            items = page.locator(selector)
+            count = items.count()
+            if count == 0:
+                continue
+            for idx in range(min(count, 60)):
+                try:
+                    text = clean_text(items.nth(idx).inner_text(timeout=400))
+                except Exception:
+                    continue
+                if name_norm in normalize(text):
+                    items.nth(idx).click(timeout=max_wait_ms)
+                    return text
         except Exception:
             continue
-        if name_norm in normalize(text):
-            options.nth(idx).click(timeout=option_timeout)
-            return text
-    raise PlaywrightTimeoutError(f"No role=option matched '{name_norm}'")
+    raise PlaywrightTimeoutError(f"No dropdown item matched '{name_norm}'")
 
 
-def select_coach_option(page, row: CoachRow, label: str, option_timeout: int) -> str:
-    """Select a coach from the dropdown combobox using four progressive strategies."""
-    name_norm = normalize(row.name)
-
-    # Strategy 1: options should already be visible after press_sequentially in caller;
-    # wait a brief moment then scan.
-    page.wait_for_timeout(400)
+def _dump_page_dropdown_diagnostics(page, label: str) -> None:
+    """Print diagnostic info about what the page actually contains for post-mortem triage."""
     try:
-        return _scan_role_options(page, name_norm, option_timeout)
-    except (PlaywrightTimeoutError, Exception):
-        pass
-
-    # Strategy 2: re-trigger with press_sequentially on name prefix (fires keyboard events).
+        # Count items found by each selector to understand the DOM structure.
+        counts = {sel: page.locator(sel).count() for sel in _DROPDOWN_ITEM_SELECTORS}
+        non_zero = {k: v for k, v in counts.items() if v > 0}
+        print(f"Dropdown diag for '{label}': selector counts={non_zero}")
+    except Exception as exc:
+        print(f"Dropdown diag failed: {exc}")
     try:
-        combo = page.locator('input[role="combobox"]').first
-        combo.triple_click()
-        combo.press_sequentially(row.name[:8], delay=60)
-        page.wait_for_timeout(600)
-        return _scan_role_options(page, name_norm, option_timeout)
-    except (PlaywrightTimeoutError, Exception):
-        pass
-
-    # Strategy 3: clear field entirely so dropdown shows all options, then scan.
-    try:
-        combo = page.locator('input[role="combobox"]').first
-        combo.triple_click()
-        combo.press("Backspace")
-        page.wait_for_timeout(600)
-        return _scan_role_options(page, name_norm, 3000)
-    except (PlaywrightTimeoutError, Exception):
-        pass
-
-    # Strategy 4: text-based locator (handles non-standard ARIA roles).
-    try:
-        by_text = page.get_by_text(row.name, exact=False)
-        by_text.first.wait_for(state="visible", timeout=2000)
-        matched = clean_text(by_text.first.inner_text())
-        by_text.first.click(timeout=option_timeout)
-        return matched
-    except (PlaywrightTimeoutError, Exception):
-        pass
-
-    # Log visible options for diagnostics before giving up.
-    try:
-        visible = [
-            clean_text(page.get_by_role("option").nth(i).inner_text())
-            for i in range(min(page.get_by_role("option").count(), 5))
+        # Sample visible li text for manual inspection.
+        li_texts = [
+            clean_text(page.locator("li").nth(i).inner_text(timeout=300))
+            for i in range(min(page.locator("li").count(), 8))
         ]
-        print(f"Debug visible options for '{label}': {visible}")
+        visible = [t for t in li_texts if t][:6]
+        print(f"Dropdown diag for '{label}': sample li texts={visible}")
+    except Exception:
+        pass
+    try:
+        combo_val = page.locator('input[role="combobox"]').first.input_value(timeout=500)
+        print(f"Dropdown diag for '{label}': combobox value='{combo_val}'")
     except Exception:
         pass
 
+
+def select_coach_option(page, row: CoachRow, label: str, option_timeout: int) -> str:
+    """Select a coach from the dropdown using progressive interaction strategies."""
+    name_norm = normalize(row.name)
+    combo = page.locator('input[role="combobox"]').first
+
+    # Strategy 1: after press_sequentially in caller, scan immediately.
+    try:
+        return _find_and_click_dropdown_item(page, name_norm, option_timeout)
+    except (PlaywrightTimeoutError, Exception):
+        pass
+
+    # Strategy 2: retype first name only — shorter string = wider match set.
+    try:
+        first_name = row.name.split()[0]
+        combo.triple_click()
+        combo.press_sequentially(first_name, delay=60)
+        page.wait_for_timeout(700)
+        return _find_and_click_dropdown_item(page, name_norm, option_timeout)
+    except (PlaywrightTimeoutError, Exception):
+        pass
+
+    # Strategy 3: clear field so dropdown shows unfiltered full list.
+    try:
+        combo.triple_click()
+        combo.press("Delete")
+        page.wait_for_timeout(800)
+        return _find_and_click_dropdown_item(page, name_norm, option_timeout)
+    except (PlaywrightTimeoutError, Exception):
+        pass
+
+    # Strategy 4: close + reopen the dropdown via Escape then click.
+    try:
+        page.keyboard.press("Escape")
+        page.wait_for_timeout(400)
+        combo.click()
+        page.wait_for_timeout(800)
+        combo.press_sequentially(row.name[:6], delay=60)
+        page.wait_for_timeout(700)
+        return _find_and_click_dropdown_item(page, name_norm, option_timeout)
+    except (PlaywrightTimeoutError, Exception):
+        pass
+
+    _dump_page_dropdown_diagnostics(page, label)
     raise PlaywrightTimeoutError(f"No matching coach option found for '{label}'")
 
 
@@ -559,11 +599,10 @@ def fetch_missing_courses_for_in_progress(rows: Sequence[CoachRow]) -> Dict[str,
                     for attempt in range(lookup_retries + 1):
                         try:
                             combo = page.locator('input[role="combobox"]').first
-                            combo.click(timeout=combo_timeout)
-                            # Use press_sequentially to fire keyboard events so Wix's
-                            # reactive dropdown renders filtered options.
-                            combo.triple_click()
-                            combo.press_sequentially(label, delay=40)
+                            # Clear any previous value and type the new label character by
+                            # character so Wix reactive dropdown fires on keyboard events.
+                            combo.triple_click(timeout=combo_timeout)
+                            combo.press_sequentially(label, delay=50)
                             selected_label = select_coach_option(page, row, label, option_timeout)
 
                             page.wait_for_function(
