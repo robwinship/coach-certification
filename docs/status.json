@@ -1,7 +1,7 @@
 {
-  "asOf": "2026-05-07",
-  "queriedAtLocal": "2026-05-07 11:48:39 EDT",
-  "queriedAtUtc": "2026-05-07T15:48:39.872265Z",
+  "asOf": "2026-05-08",
+  "queriedAtLocal": "2026-05-08 14:15:51 EDT",
+  "queriedAtUtc": "2026-05-08T18:15:51.021213Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -22,7 +22,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Andrew Smith",
@@ -32,7 +33,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Andrew Smith",
@@ -42,7 +44,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Andrew Westlake",
@@ -52,7 +55,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Bill Best",
@@ -62,7 +66,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Brad Blain",
@@ -72,7 +77,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Brandon Palmer",
@@ -82,7 +88,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Brandon Palmer",
@@ -92,7 +99,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Brent Campbell",
@@ -102,7 +110,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Brent Steeves",
@@ -112,7 +121,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Brett Brydges",
@@ -122,7 +132,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Brian Walker",
@@ -132,7 +143,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Brooke Campbell",
@@ -142,7 +154,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Bruce Dennis",
@@ -152,7 +165,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Bryan Deschutter",
@@ -162,7 +176,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Cam Gordon",
@@ -172,7 +187,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Cam Gordon",
@@ -182,7 +198,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Carl Best",
@@ -192,7 +209,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Chris Garton",
@@ -202,7 +220,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Chris Hurst",
@@ -212,7 +231,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Chris Prozorowicz",
@@ -222,7 +242,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Cody Webster",
@@ -232,7 +253,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Cole Randall",
@@ -242,7 +264,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Dave Aitken",
@@ -252,7 +275,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "David Kruger",
@@ -262,7 +286,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "David Kruger",
@@ -272,7 +297,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Derek Smith",
@@ -282,7 +308,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Eric Mclaughlin",
@@ -292,7 +319,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Evan Ouzounis",
@@ -302,7 +330,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Greg Moore",
@@ -312,7 +341,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Greg Smith",
@@ -322,7 +352,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Jake Taylor",
@@ -332,7 +363,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "James Grant",
@@ -342,7 +374,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Jamie Downton",
@@ -352,7 +385,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Jason Butler",
@@ -362,7 +396,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Jason Hodgins",
@@ -372,7 +407,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Jason Polera",
@@ -382,7 +418,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Jim Bigras",
@@ -392,7 +429,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Jim Bigras",
@@ -402,7 +440,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Joe Charette",
@@ -412,7 +451,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Joel Ainsworth",
@@ -422,7 +462,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Joel Ainsworth",
@@ -432,7 +473,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Joel Hoadley",
@@ -442,7 +484,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "John Bettridge",
@@ -452,7 +495,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Josh Whittington",
@@ -462,7 +506,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Justin Randall",
@@ -472,7 +517,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Justin Randall",
@@ -482,7 +528,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Ken Chipman",
@@ -492,7 +539,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Kevin Cook",
@@ -502,7 +550,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Kyle Scott",
@@ -512,7 +561,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Marc Huyben",
@@ -522,7 +572,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Matt Berglund",
@@ -532,7 +583,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Matt Douglas",
@@ -542,7 +594,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Mick Jackson",
@@ -552,7 +605,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Mike Damchuk",
@@ -562,7 +616,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Nick Core",
@@ -572,7 +627,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Nick Lajoie",
@@ -582,7 +638,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Noah Best",
@@ -592,7 +649,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Pete Juryn",
@@ -602,7 +660,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Rob Borody",
@@ -612,7 +671,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Ron Perron",
@@ -622,7 +682,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Sean Baxter",
@@ -632,7 +693,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Shane Murphy",
@@ -642,7 +704,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Steve Edwardson",
@@ -652,7 +715,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Steve Helps",
@@ -662,7 +726,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Steve Soetemans",
@@ -672,7 +737,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     },
     {
       "name": "Wade Babula",
@@ -682,7 +748,8 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
     }
   ],
   "inProgress": [
@@ -693,8 +760,13 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses": [
+        "hitting",
+        "infielding",
+        "practiceEvaluation1"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
     },
     {
       "name": "Bruce Gray",
@@ -703,8 +775,11 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses": [
+        "classification1"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
     },
     {
       "name": "Chris Foster",
@@ -713,8 +788,12 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses": [
+        "coachInitiationInBaseballFundamentals",
+        "classification1"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
     },
     {
       "name": "Cory Sommise",
@@ -723,8 +802,11 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses": [
+        "coachInitiationInBaseballFundamentals"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
     },
     {
       "name": "Dan Sparks",
@@ -733,8 +815,11 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses": [
+        "outfielding"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
     },
     {
       "name": "Jason Polera",
@@ -743,8 +828,11 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses": [
+        "outfielding"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
     },
     {
       "name": "Jesse Theriault",
@@ -753,8 +841,15 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses": [
+        "coachInitiationInBaseballFundamentals",
+        "practiceEvaluation111",
+        "hitting",
+        "classification1",
+        "practiceEvaluation1"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
     },
     {
       "name": "Mike Perry",
@@ -763,8 +858,15 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses": [
+        "coachInitiationInBaseballFundamentals",
+        "practiceEvaluation111",
+        "hitting",
+        "classification1",
+        "practiceEvaluation1"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
     },
     {
       "name": "Owen Utley",
@@ -773,8 +875,13 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses": [
+        "coachInitiationInBaseballFundamentals",
+        "hitting",
+        "infielding"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
     },
     {
       "name": "Ryan Nutma",
@@ -783,8 +890,12 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses": [
+        "outfielding",
+        "skills"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
     },
     {
       "name": "Steve Mcewen",
@@ -793,8 +904,11 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses": [
+        "classification1"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
     },
     {
       "name": "Taylor Castrillo",
@@ -803,8 +917,12 @@
       "position": "Head Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses": [
+        "practiceEvaluation111",
+        "classification1"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
     },
     {
       "name": "Tim Symington",
@@ -813,8 +931,11 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses": [
+        "classification1"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
     },
     {
       "name": "Will Greer",
@@ -823,8 +944,20 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [],
-      "missing_courses_available": false
+      "missing_courses": [
+        "absolutes",
+        "outfielding",
+        "hitting",
+        "planning",
+        "infielding",
+        "classification1",
+        "skills",
+        "strategies",
+        "pitchingCatching",
+        "baseRunning"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
     }
   ],
   "transitions": [],
