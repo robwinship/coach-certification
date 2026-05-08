@@ -60,4 +60,5 @@ jobs:
           git add docs/status.json docs/current-summary.html
           git diff --cached --quiet && exit 0
           git commit -m "Update status data"
+          git pull --rebase origin main
           git push
