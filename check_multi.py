@@ -603,10 +603,12 @@ def _match_api_items_to_rows(items: List[dict], rows: Sequence[CoachRow]) -> Dic
         if data is None:
             continue
 
-        # Diagnostic: log every variant of known-ambiguous field families.
+        # Diagnostic: log ambiguous field families AND every field with a "No" value
+        # (before _NON_COURSE_FIELDS filtering) to surface unknown fields like "9U PCCP".
         diag_fields = {
             k: v for k, v in data.items()
             if any(k.lower().startswith(fam.lower()) for fam in _DIAG_FAMILIES)
+            or (isinstance(v, str) and normalize(v) in MISSING_COURSE_NEGATIVE_VALUES)
         }
         if diag_fields:
             print(f"  DIAG {row.name}: {diag_fields}")
