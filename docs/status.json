@@ -1,7 +1,7 @@
 {
   "asOf": "2026-05-08",
-  "queriedAtLocal": "2026-05-08 18:49:48 EDT",
-  "queriedAtUtc": "2026-05-08T22:49:48.153489Z",
+  "queriedAtLocal": "2026-05-08 19:37:27 EDT",
+  "queriedAtUtc": "2026-05-08T23:37:27.174948Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -842,6 +842,7 @@
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
       "missing_courses": [
         "Fundamentals of Coaching Baseball",
+        "9U PCCP",
         "Hitting",
         "Safe Sport"
       ],
@@ -857,6 +858,7 @@
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
       "missing_courses": [
         "Fundamentals of Coaching Baseball",
+        "9U PCCP",
         "Hitting",
         "Safe Sport"
       ],
@@ -913,6 +915,7 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
       "missing_courses": [
+        "9U PCCP",
         "Safe Sport"
       ],
       "missing_courses_available": true,
