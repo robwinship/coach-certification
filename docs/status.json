@@ -1,7 +1,7 @@
 {
   "asOf": "2026-05-08",
-  "queriedAtLocal": "2026-05-08 14:15:51 EDT",
-  "queriedAtUtc": "2026-05-08T18:15:51.021213Z",
+  "queriedAtLocal": "2026-05-08 14:45:30 EDT",
+  "queriedAtUtc": "2026-05-08T18:45:30.905077Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -775,9 +775,7 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "classification1"
-      ],
+      "missing_courses": [],
       "missing_courses_available": true,
       "missing_courses_reason": "api_interception"
     },
@@ -789,8 +787,7 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
       "missing_courses": [
-        "coachInitiationInBaseballFundamentals",
-        "classification1"
+        "coachInitiationInBaseballFundamentals"
       ],
       "missing_courses_available": true,
       "missing_courses_reason": "api_interception"
@@ -845,7 +842,6 @@
         "coachInitiationInBaseballFundamentals",
         "practiceEvaluation111",
         "hitting",
-        "classification1",
         "practiceEvaluation1"
       ],
       "missing_courses_available": true,
@@ -862,7 +858,6 @@
         "coachInitiationInBaseballFundamentals",
         "practiceEvaluation111",
         "hitting",
-        "classification1",
         "practiceEvaluation1"
       ],
       "missing_courses_available": true,
@@ -904,9 +899,7 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "classification1"
-      ],
+      "missing_courses": [],
       "missing_courses_available": true,
       "missing_courses_reason": "api_interception"
     },
@@ -918,8 +911,7 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
       "missing_courses": [
-        "practiceEvaluation111",
-        "classification1"
+        "practiceEvaluation111"
       ],
       "missing_courses_available": true,
       "missing_courses_reason": "api_interception"
@@ -931,9 +923,7 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "classification1"
-      ],
+      "missing_courses": [],
       "missing_courses_available": true,
       "missing_courses_reason": "api_interception"
     },
@@ -950,7 +940,6 @@
         "hitting",
         "planning",
         "infielding",
-        "classification1",
         "skills",
         "strategies",
         "pitchingCatching",
