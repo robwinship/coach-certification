@@ -603,8 +603,8 @@ def _match_api_items_to_rows(items: List[dict], rows: Sequence[CoachRow]) -> Dic
         if data is None:
             continue
 
-        # Diagnostic: log ambiguous field families AND every field with a "No" value
-        # (before _NON_COURSE_FIELDS filtering) to surface unknown fields like "9U PCCP".
+        # Diagnostic: log ambiguous field families AND every field with a "No" value.
+        # For Taylor Castrillo specifically, dump ALL fields to find the 9U PCCP key.
         diag_fields = {
             k: v for k, v in data.items()
             if any(k.lower().startswith(fam.lower()) for fam in _DIAG_FAMILIES)
@@ -612,6 +612,8 @@ def _match_api_items_to_rows(items: List[dict], rows: Sequence[CoachRow]) -> Dic
         }
         if diag_fields:
             print(f"  DIAG {row.name}: {diag_fields}")
+        if normalize(row.name) == "taylor castrillo":
+            print(f"  DIAG_ALL Taylor Castrillo: {dict(sorted(data.items()))}")
 
         missing = [
             _COURSE_FIELD_DISPLAY_NAMES.get(key, key)
