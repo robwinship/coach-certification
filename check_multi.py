@@ -37,10 +37,39 @@ MISSING_COURSE_MIN_COVERAGE = 0.20
 _NONCERTIFIED_APP_ID = "3c6e5891-d24d-4c77-9b02-532114068664"
 _NONCERTIFIED_COLLECTION = "NonCertifiedCoaches"
 # Fields in the collection that are metadata, not course completion status.
+# NOTE: classification1 is Safe Sport (a real course) — do NOT add it here.
 _NON_COURSE_FIELDS = frozenset({
     "_id", "_owner", "_createdDate", "_updatedDate",
-    "title", "nccp", "position", "sort", "club", "classification", "classification1",
+    "title", "nccp", "position", "sort", "club", "classification",
 })
+
+# Maps raw Wix API field names to human-readable display names.
+# Wix auto-suffixes duplicate column labels (e.g. the second "Classification" column
+# becomes "classification1" in the API — which is Safe Sport).
+_COURSE_FIELD_DISPLAY_NAMES: Dict[str, str] = {
+    "hitting":                               "Hitting",
+    "infielding":                            "Infielding",
+    "outfielding":                           "Outfielding",
+    "baseRunning":                           "Base Running",
+    "pitchingCatching":                      "Pitching & Catching",
+    "absolutes":                             "Absolutes",
+    "planning":                              "Planning",
+    "strategies":                            "Strategies",
+    "skills":                                "Skills",
+    "coachInitiationInSport":                "Coach Initiation in Sport",
+    "coachInitiationInBaseballFundamentals": "Fundamentals of Coaching Baseball",
+    "makeEthicalDecisions":                  "Make Ethical Decisions",
+    "teachingLearning":                      "Teaching & Learning",
+    "practiceEvaluation":                    "Practice Evaluation",
+    "corePortfolioEvaluation":               "Core Portfolio Evaluation",
+    "gameEvaluation":                        "Game Evaluation",
+    "portfolioTasks":                        "Portfolio Tasks",
+    "videoPackage":                          "11U Video Package",
+    "13UVideoPackage":                       "13U Video Package",
+    "15UVideoPackage":                       "15U Video Package",
+    "16VideoPackage":                        "16+ Video Package",
+    "classification1":                       "Safe Sport",
+}
 
 MISSING_COURSE_NEGATIVE_VALUES = {
     "no",
@@ -578,7 +607,8 @@ def _match_api_items_to_rows(items: List[dict], rows: Sequence[CoachRow]) -> Dic
             print(f"  DIAG {row.name}: {diag_fields}")
 
         missing = [
-            key for key, val in data.items()
+            _COURSE_FIELD_DISPLAY_NAMES.get(key, key)
+            for key, val in data.items()
             if key not in _NON_COURSE_FIELDS
             and not key.startswith("_")
             and isinstance(val, str)
