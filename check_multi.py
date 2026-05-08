@@ -31,6 +31,16 @@ HEADERS = {
 }
 
 MISSING_COURSE_MIN_COVERAGE = 0.20
+
+# NonCertifiedCoaches Wix collection constants (discovered via network inspection).
+_NONCERTIFIED_APP_ID = "3c6e5891-d24d-4c77-9b02-532114068664"
+_NONCERTIFIED_COLLECTION = "NonCertifiedCoaches"
+# Fields in the collection that are metadata, not course completion status.
+_NON_COURSE_FIELDS = frozenset({
+    "_id", "_owner", "_createdDate", "_updatedDate",
+    "title", "nccp", "position", "sort", "club", "classification",
+})
+
 MISSING_COURSE_NEGATIVE_VALUES = {
     "no",
     "pending",
@@ -440,88 +450,107 @@ def extract_missing_courses_from_page(page, row: CoachRow) -> tuple[List[str], b
     return unique_missing_courses, True, "ok"
 
 
-def _fetch_bucket_api_items(url: str) -> List[dict]:
-    """Intercept all cloud-data API responses from a bucket page (mirrors fetch_cloud_data_items)."""
-    captured: Dict[str, dict] = {}
+def _fetch_bucket_api_items(url: str, bucket: str) -> List[dict]:
+    """Fetch NonCertifiedCoaches items for a bucket via page.evaluate fetch().
+
+    Uses the browser's own auth context so no manual token handling is needed.
+    Queries the Wix cloud-data API directly with a high limit to return all
+    coaches in the bucket in one call, with pagination if needed.
+    """
+    query: dict = {
+        "dataCollectionId": _NONCERTIFIED_COLLECTION,
+        "query": {
+            "filter": {"sort": {"$contains": bucket}},
+            "sort": [{"fieldName": "title", "order": "ASC"}],
+            "paging": {"offset": 0, "limit": 1000},
+            "fields": [],
+        },
+        "referencedItemOptions": [],
+        "returnTotalCount": True,
+        "environment": "LIVE",
+        "appId": _NONCERTIFIED_APP_ID,
+    }
+
+    all_items: List[dict] = []
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page(viewport={"width": 1440, "height": 2400})
-
-        def on_response(resp) -> None:
-            if "/_api/cloud-data/v2/items/query" not in resp.url or resp.status != 200:
-                return
-            try:
-                payload = resp.json()
-            except Exception:
-                return
-            items = payload.get("items") or payload.get("dataItems") or []
-            for item in items:
-                item_id = item.get("id") or item.get("_id")
-                if item_id:
-                    captured[item_id] = item
-
-        page.on("response", on_response)
         page.goto(url, wait_until="domcontentloaded", timeout=env_ms("COACH_STATUS_PAGE_GOTO_TIMEOUT_MS"))
         page.wait_for_timeout(env_ms("MISSING_COURSE_BUCKET_SETTLE_MS"))
-        try:
-            page.wait_for_load_state("networkidle", timeout=env_ms("COACH_STATUS_PAGE_NETWORK_IDLE_TIMEOUT_MS"))
-        except PlaywrightTimeoutError:
-            pass
-        # Extra wait: bucket pages may fire deferred API calls after networkidle.
-        page.wait_for_timeout(5000)
+
+        while True:
+            result = page.evaluate(
+                """
+                async (queryJson) => {
+                    try {
+                        const b64 = btoa(unescape(encodeURIComponent(queryJson)));
+                        const resp = await fetch('/_api/cloud-data/v2/items/query?.r=' + b64);
+                        if (!resp.ok) return {error: resp.status, items: []};
+                        return await resp.json();
+                    } catch(e) {
+                        return {error: String(e), items: []};
+                    }
+                }
+                """,
+                json.dumps(query),
+            )
+            if "error" in result:
+                print(f"  _fetch_bucket_api_items error: {result['error']}")
+                break
+            batch = result.get("items") or result.get("dataItems") or []
+            all_items.extend(batch)
+            total = (
+                result.get("totalCount")
+                or (result.get("pagingMetadata") or {}).get("total")
+                or 0
+            )
+            print(f"  Bucket {bucket}: fetched {len(all_items)}/{total} items (offset={query['query']['paging']['offset']})")
+            if not batch or len(all_items) >= total:
+                break
+            query["query"]["paging"]["offset"] += len(batch)
+
         browser.close()
 
-    return list(captured.values())
+    return all_items
 
 
 def _match_api_items_to_rows(items: List[dict], rows: Sequence[CoachRow]) -> Dict[str, dict]:
-    """Match cloud-data items to in-progress rows by name and extract missing-course data.
+    """Match NonCertifiedCoaches items to in-progress rows; extract missing courses from field values.
 
-    Always logs all data field keys so CI output shows the full API structure.
-    Returns row.key() -> payload dict; empty when no recognisable course fields found.
+    Course fields are any data field not in _NON_COURSE_FIELDS. A field with a
+    normalised value in MISSING_COURSE_NEGATIVE_VALUES (e.g. 'no') is a missing
+    course. Fields with 'Yes' are complete; 'NR' means not required.
+    Always logs field names so CI output shows the full API structure.
     """
     if not items:
         return {}
 
-    sample_keys: set = set()
-    for item in items[:5]:
-        sample_keys.update(item.get("data", {}).keys())
-    print(f"API item data fields (sample): {sorted(sample_keys)}")
+    # Log sample field names for CI diagnostics.
+    sample_data = items[0].get("data", {})
+    print(f"API item data fields (sample): {sorted(sample_data.keys())}")
 
+    # Build name index: strip level suffix from title e.g. 'Aaron Adams  (10U A)' -> 'aaron adams'.
     item_by_name: Dict[str, dict] = {}
     for item in items:
         data = item.get("data", {})
-        raw = str(
-            data.get("title", "") or data.get("name", "") or data.get("coach", "")
-        ).strip()
-        if raw:
-            item_by_name[normalize(raw)] = data
-
-    COURSE_KEYS = {
-        "missingcourses", "missing_courses", "missingcourse",
-        "courses", "course", "certification", "certificationstatus",
-        "completion", "completionstatus",
-    }
-
-    has_course_data = any(k.lower() in COURSE_KEYS for k in sample_keys)
-    if not has_course_data:
-        print("API items contain no recognisable course-data fields; will use UI fallback.")
-        return {}
+        raw_title = str(data.get("title", "")).strip()
+        name_only = re.sub(r"\s*\(.*?\)\s*$", "", raw_title).strip()
+        if name_only:
+            item_by_name[normalize(name_only)] = data
 
     captured: Dict[str, dict] = {}
     for row in rows:
         data = item_by_name.get(normalize(row.name))
         if data is None:
             continue
-        missing: List[str] = []
-        for key, val in data.items():
-            if key.lower() not in COURSE_KEYS:
-                continue
-            if isinstance(val, list):
-                missing.extend(str(v) for v in val if v)
-            elif isinstance(val, str) and val.strip():
-                missing.append(val.strip())
+        missing = [
+            key for key, val in data.items()
+            if key not in _NON_COURSE_FIELDS
+            and not key.startswith("_")
+            and isinstance(val, str)
+            and normalize(val) in MISSING_COURSE_NEGATIVE_VALUES
+        ]
         captured[row.key()] = {
             "missing_courses": missing,
             "missing_courses_available": True,
@@ -685,7 +714,7 @@ def fetch_missing_courses_for_in_progress(rows: Sequence[CoachRow]) -> Dict[str,
                 # ── Primary: API interception (same pattern as certified/in-progress) ──
                 bucket_url = COACH_STATUS_BY_BUCKET_URLS[bucket]
                 print(f"Bucket {bucket}: attempting API interception from {bucket_url}")
-                api_items = _fetch_bucket_api_items(bucket_url)
+                api_items = _fetch_bucket_api_items(bucket_url, bucket)
                 print(f"Bucket {bucket}: captured {len(api_items)} API items")
                 api_captured = _match_api_items_to_rows(api_items, bucket_rows)
 
