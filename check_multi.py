@@ -1,6 +1,7 @@
 import json
 import os
 import re
+from concurrent.futures import ThreadPoolExecutor as _ThreadPoolExecutor
 from dataclasses import dataclass, asdict, field
 from datetime import date, datetime, timezone
 from html import escape
@@ -149,30 +150,44 @@ def env_ms(name: str) -> int:
     return get_int_env_var(name, DEFAULT_INT_ENV[name])
 
 
+def _playwright_in_thread(fn):
+    """Run fn() in a fresh OS thread.
+
+    sync_playwright() cannot be used inside a running asyncio event loop (which
+    GitHub Actions / Python 3.11 may have active).  A plain OS thread starts
+    with no running loop, so sync_playwright works correctly there.
+    """
+    with _ThreadPoolExecutor(max_workers=1) as ex:
+        return ex.submit(fn).result()
+
+
 def get_rendered_html(url: str) -> str:
     goto_timeout = env_ms("SCRAPE_GOTO_TIMEOUT_MS")
     network_idle_timeout = env_ms("SCRAPE_NETWORK_IDLE_TIMEOUT_MS")
     selector_timeout = env_ms("SCRAPE_SELECTOR_TIMEOUT_MS")
 
     try:
-        with sync_playwright() as p:
-            browser = p.chromium.launch(headless=True)
-            page = browser.new_page()
-            page.goto(url, wait_until="domcontentloaded", timeout=goto_timeout)
+        def _pw_run() -> str:
+            with sync_playwright() as p:
+                browser = p.chromium.launch(headless=True)
+                page = browser.new_page()
+                page.goto(url, wait_until="domcontentloaded", timeout=goto_timeout)
 
-            # The source site appears to load rows asynchronously after initial paint.
-            page.wait_for_timeout(6000)
-            page.wait_for_load_state("networkidle", timeout=network_idle_timeout)
+                # The source site appears to load rows asynchronously after initial paint.
+                page.wait_for_timeout(6000)
+                page.wait_for_load_state("networkidle", timeout=network_idle_timeout)
 
-            try:
-                page.wait_for_selector("tr td", timeout=selector_timeout)
-            except PlaywrightTimeoutError:
-                # Keep parsing whatever content is available.
-                pass
+                try:
+                    page.wait_for_selector("tr td", timeout=selector_timeout)
+                except PlaywrightTimeoutError:
+                    # Keep parsing whatever content is available.
+                    pass
 
-            html = page.content()
-            browser.close()
-            return html
+                html = page.content()
+                browser.close()
+                return html
+
+        return _playwright_in_thread(_pw_run)
     except Exception:
         # Fallback for environments where Playwright/browser installation is unavailable.
         response = requests.get(url, headers=HEADERS, timeout=30)
@@ -181,38 +196,41 @@ def get_rendered_html(url: str) -> str:
 
 
 def fetch_cloud_data_items(url: str) -> List[dict]:
-    captured: Dict[str, dict] = {}
+    def _pw_run() -> List[dict]:
+        captured: Dict[str, dict] = {}
 
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        page = browser.new_page()
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True)
+            page = browser.new_page()
 
-        def on_response(resp) -> None:
-            if "/_api/cloud-data/v2/items/query" not in resp.url or resp.status != 200:
-                return
+            def on_response(resp) -> None:
+                if "/_api/cloud-data/v2/items/query" not in resp.url or resp.status != 200:
+                    return
 
+                try:
+                    payload = resp.json()
+                except Exception:
+                    return
+
+                items = payload.get("items") or payload.get("dataItems") or []
+                for item in items:
+                    item_id = item.get("id") or item.get("_id")
+                    if item_id:
+                        captured[item_id] = item
+
+            page.on("response", on_response)
+            page.goto(url, wait_until="domcontentloaded", timeout=60000)
+            page.wait_for_timeout(6000)
             try:
-                payload = resp.json()
-            except Exception:
-                return
+                page.wait_for_load_state("networkidle", timeout=30000)
+            except PlaywrightTimeoutError:
+                pass
+            page.wait_for_timeout(3000)
+            browser.close()
 
-            items = payload.get("items") or payload.get("dataItems") or []
-            for item in items:
-                item_id = item.get("id") or item.get("_id")
-                if item_id:
-                    captured[item_id] = item
+        return list(captured.values())
 
-        page.on("response", on_response)
-        page.goto(url, wait_until="domcontentloaded", timeout=60000)
-        page.wait_for_timeout(6000)
-        try:
-            page.wait_for_load_state("networkidle", timeout=30000)
-        except PlaywrightTimeoutError:
-            pass
-        page.wait_for_timeout(3000)
-        browser.close()
-
-    return list(captured.values())
+    return _playwright_in_thread(_pw_run)
 
 
 def rows_from_cloud_items(items: Sequence[dict], source_url: str) -> List[CoachRow]:
@@ -471,48 +489,51 @@ def _fetch_bucket_api_items(url: str, bucket: str) -> List[dict]:
         "appId": _NONCERTIFIED_APP_ID,
     }
 
-    all_items: List[dict] = []
+    def _pw_run() -> List[dict]:
+        all_items: List[dict] = []
 
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        page = browser.new_page(viewport={"width": 1440, "height": 2400})
-        page.goto(url, wait_until="domcontentloaded", timeout=env_ms("COACH_STATUS_PAGE_GOTO_TIMEOUT_MS"))
-        page.wait_for_timeout(env_ms("MISSING_COURSE_BUCKET_SETTLE_MS"))
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True)
+            page = browser.new_page(viewport={"width": 1440, "height": 2400})
+            page.goto(url, wait_until="domcontentloaded", timeout=env_ms("COACH_STATUS_PAGE_GOTO_TIMEOUT_MS"))
+            page.wait_for_timeout(env_ms("MISSING_COURSE_BUCKET_SETTLE_MS"))
 
-        while True:
-            result = page.evaluate(
-                """
-                async (queryJson) => {
-                    try {
-                        const b64 = btoa(unescape(encodeURIComponent(queryJson)));
-                        const resp = await fetch('/_api/cloud-data/v2/items/query?.r=' + b64);
-                        if (!resp.ok) return {error: resp.status, items: []};
-                        return await resp.json();
-                    } catch(e) {
-                        return {error: String(e), items: []};
+            while True:
+                result = page.evaluate(
+                    """
+                    async (queryJson) => {
+                        try {
+                            const b64 = btoa(unescape(encodeURIComponent(queryJson)));
+                            const resp = await fetch('/_api/cloud-data/v2/items/query?.r=' + b64);
+                            if (!resp.ok) return {error: resp.status, items: []};
+                            return await resp.json();
+                        } catch(e) {
+                            return {error: String(e), items: []};
+                        }
                     }
-                }
-                """,
-                json.dumps(query),
-            )
-            if "error" in result:
-                print(f"  _fetch_bucket_api_items error: {result['error']}")
-                break
-            batch = result.get("items") or result.get("dataItems") or []
-            all_items.extend(batch)
-            total = (
-                result.get("totalCount")
-                or (result.get("pagingMetadata") or {}).get("total")
-                or 0
-            )
-            print(f"  Bucket {bucket}: fetched {len(all_items)}/{total} items (offset={query['query']['paging']['offset']})")
-            if not batch or len(all_items) >= total:
-                break
-            query["query"]["paging"]["offset"] += len(batch)
+                    """,
+                    json.dumps(query),
+                )
+                if "error" in result:
+                    print(f"  _fetch_bucket_api_items error: {result['error']}")
+                    break
+                batch = result.get("items") or result.get("dataItems") or []
+                all_items.extend(batch)
+                total = (
+                    result.get("totalCount")
+                    or (result.get("pagingMetadata") or {}).get("total")
+                    or 0
+                )
+                print(f"  Bucket {bucket}: fetched {len(all_items)}/{total} items (offset={query['query']['paging']['offset']})")
+                if not batch or len(all_items) >= total:
+                    break
+                query["query"]["paging"]["offset"] += len(batch)
 
-        browser.close()
+            browser.close()
 
-    return all_items
+        return all_items
+
+    return _playwright_in_thread(_pw_run)
 
 
 def _match_api_items_to_rows(items: List[dict], rows: Sequence[CoachRow]) -> Dict[str, dict]:
@@ -1240,7 +1261,9 @@ def main() -> None:
 
     certified = sort_rows(filter_sarnia(certified_all))
     in_progress = sort_rows(filter_sarnia(in_progress_all))
-    in_progress_missing_courses = fetch_missing_courses_for_in_progress(in_progress)
+    in_progress_missing_courses = _playwright_in_thread(
+        lambda: fetch_missing_courses_for_in_progress(in_progress)
+    )
     in_progress = attach_missing_courses(in_progress, in_progress_missing_courses)
     enforce_missing_course_coverage_or_fail(in_progress)
 
