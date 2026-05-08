@@ -440,114 +440,207 @@ def extract_missing_courses_from_page(page, row: CoachRow) -> tuple[List[str], b
     return unique_missing_courses, True, "ok"
 
 
-# Ordered list of CSS/ARIA selectors used to locate dropdown items, from most
-# specific to broadest. Wix may render these as role=option, li elements, or custom
-# data-hook elements depending on component version.
-_DROPDOWN_ITEM_SELECTORS = [
-    '[role="option"]',
-    '[role="listitem"]',
-    'li[data-item-id]',
-    'li[data-option-index]',
-    '[data-hook*="option"]',
-    '[data-hook*="item"]',
-    '[data-hook*="dropdown"] li',
-    'ul li',
-    'ol li',
-]
+def _fetch_bucket_api_items(url: str) -> List[dict]:
+    """Intercept all cloud-data API responses from a bucket page (mirrors fetch_cloud_data_items)."""
+    captured: Dict[str, dict] = {}
 
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page(viewport={"width": 1440, "height": 2400})
 
-def _find_and_click_dropdown_item(page, name_norm: str, max_wait_ms: int) -> str:
-    """Try all known dropdown item selectors; return matched text or raise PlaywrightTimeoutError."""
-    page.wait_for_timeout(min(max_wait_ms, 800))
-    for selector in _DROPDOWN_ITEM_SELECTORS:
+        def on_response(resp) -> None:
+            if "/_api/cloud-data/v2/items/query" not in resp.url or resp.status != 200:
+                return
+            try:
+                payload = resp.json()
+            except Exception:
+                return
+            items = payload.get("items") or payload.get("dataItems") or []
+            for item in items:
+                item_id = item.get("id") or item.get("_id")
+                if item_id:
+                    captured[item_id] = item
+
+        page.on("response", on_response)
+        page.goto(url, wait_until="domcontentloaded", timeout=env_ms("COACH_STATUS_PAGE_GOTO_TIMEOUT_MS"))
+        page.wait_for_timeout(env_ms("MISSING_COURSE_BUCKET_SETTLE_MS"))
         try:
-            items = page.locator(selector)
-            count = items.count()
-            if count == 0:
-                continue
-            for idx in range(min(count, 60)):
-                try:
-                    text = clean_text(items.nth(idx).inner_text(timeout=400))
-                except Exception:
-                    continue
-                if name_norm in normalize(text):
-                    items.nth(idx).click(timeout=max_wait_ms)
-                    return text
-        except Exception:
+            page.wait_for_load_state("networkidle", timeout=env_ms("COACH_STATUS_PAGE_NETWORK_IDLE_TIMEOUT_MS"))
+        except PlaywrightTimeoutError:
+            pass
+        # Extra wait: bucket pages may fire deferred API calls after networkidle.
+        page.wait_for_timeout(5000)
+        browser.close()
+
+    return list(captured.values())
+
+
+def _match_api_items_to_rows(items: List[dict], rows: Sequence[CoachRow]) -> Dict[str, dict]:
+    """Match cloud-data items to in-progress rows by name and extract missing-course data.
+
+    Always logs all data field keys so CI output shows the full API structure.
+    Returns row.key() -> payload dict; empty when no recognisable course fields found.
+    """
+    if not items:
+        return {}
+
+    sample_keys: set = set()
+    for item in items[:5]:
+        sample_keys.update(item.get("data", {}).keys())
+    print(f"API item data fields (sample): {sorted(sample_keys)}")
+
+    item_by_name: Dict[str, dict] = {}
+    for item in items:
+        data = item.get("data", {})
+        raw = str(
+            data.get("title", "") or data.get("name", "") or data.get("coach", "")
+        ).strip()
+        if raw:
+            item_by_name[normalize(raw)] = data
+
+    COURSE_KEYS = {
+        "missingcourses", "missing_courses", "missingcourse",
+        "courses", "course", "certification", "certificationstatus",
+        "completion", "completionstatus",
+    }
+
+    has_course_data = any(k.lower() in COURSE_KEYS for k in sample_keys)
+    if not has_course_data:
+        print("API items contain no recognisable course-data fields; will use UI fallback.")
+        return {}
+
+    captured: Dict[str, dict] = {}
+    for row in rows:
+        data = item_by_name.get(normalize(row.name))
+        if data is None:
             continue
-    raise PlaywrightTimeoutError(f"No dropdown item matched '{name_norm}'")
+        missing: List[str] = []
+        for key, val in data.items():
+            if key.lower() not in COURSE_KEYS:
+                continue
+            if isinstance(val, list):
+                missing.extend(str(v) for v in val if v)
+            elif isinstance(val, str) and val.strip():
+                missing.append(val.strip())
+        captured[row.key()] = {
+            "missing_courses": missing,
+            "missing_courses_available": True,
+            "missing_courses_reason": "api_interception",
+        }
+
+    return captured
 
 
-def _dump_page_dropdown_diagnostics(page, label: str) -> None:
-    """Print diagnostic info about what the page actually contains for post-mortem triage."""
+def _log_page_state(page, label: str) -> None:
+    """Print a compact DOM snapshot to stdout for CI log triage."""
     try:
-        # Count items found by each selector to understand the DOM structure.
-        counts = {sel: page.locator(sel).count() for sel in _DROPDOWN_ITEM_SELECTORS}
-        non_zero = {k: v for k, v in counts.items() if v > 0}
-        print(f"Dropdown diag for '{label}': selector counts={non_zero}")
+        info = page.evaluate("""
+            () => {
+                const c = document.querySelector('input[role="combobox"]') ||
+                          document.querySelector('[role="combobox"]');
+                return {
+                    combobox:      document.querySelectorAll('[role="combobox"]').length,
+                    option:        document.querySelectorAll('[role="option"]').length,
+                    listbox:       document.querySelectorAll('[role="listbox"]').length,
+                    li:            document.querySelectorAll('li').length,
+                    aria_expanded: document.querySelectorAll('[aria-expanded]').length,
+                    comboValue:    c ? c.value : 'NOT_FOUND',
+                    comboTag:      c ? c.tagName : '',
+                    comboRO:       c ? c.readOnly : null,
+                    parentTag:     c && c.parentElement ? c.parentElement.tagName : '',
+                    parentRole:    c && c.parentElement ? (c.parentElement.getAttribute('role') || '') : '',
+                    parentClass:   c && c.parentElement ? c.parentElement.className.toString().slice(0, 120) : '',
+                    sampleLi:      Array.from(document.querySelectorAll('li')).slice(0, 4).map(l => l.textContent.trim().slice(0, 50)),
+                };
+            }
+        """)
+        print(f"[PAGE_STATE for '{label}'] {info}")
     except Exception as exc:
-        print(f"Dropdown diag failed: {exc}")
-    try:
-        # Sample visible li text for manual inspection.
-        li_texts = [
-            clean_text(page.locator("li").nth(i).inner_text(timeout=300))
-            for i in range(min(page.locator("li").count(), 8))
-        ]
-        visible = [t for t in li_texts if t][:6]
-        print(f"Dropdown diag for '{label}': sample li texts={visible}")
-    except Exception:
-        pass
-    try:
-        combo_val = page.locator('input[role="combobox"]').first.input_value(timeout=500)
-        print(f"Dropdown diag for '{label}': combobox value='{combo_val}'")
-    except Exception:
-        pass
+        print(f"[PAGE_STATE] eval failed: {exc}")
 
 
-def select_coach_option(page, row: CoachRow, label: str, option_timeout: int) -> str:
-    """Select a coach from the dropdown using progressive interaction strategies."""
+def _ui_select_coach(page, row: CoachRow, label: str, combo_timeout: int, option_timeout: int) -> str:
+    """Attempt to select a coach via UI dropdown. Raises PlaywrightTimeoutError on failure."""
     name_norm = normalize(row.name)
-    combo = page.locator('input[role="combobox"]').first
 
-    # Strategy 1: after press_sequentially in caller, scan immediately.
-    try:
-        return _find_and_click_dropdown_item(page, name_norm, option_timeout)
-    except (PlaywrightTimeoutError, Exception):
-        pass
+    def _js_click_match() -> str | None:
+        return page.evaluate("""
+            (nameNorm) => {
+                function norm(s) { return s.toLowerCase().replace(/\\s+/g, ' ').trim(); }
+                function visible(el) {
+                    const r = el.getBoundingClientRect();
+                    if (!r.width || !r.height) return false;
+                    const s = window.getComputedStyle(el);
+                    return s.display !== 'none' && s.visibility !== 'hidden';
+                }
+                for (const el of document.querySelectorAll('[role="option"],[role="listitem"],[data-hook],li,[tabindex]')) {
+                    if (visible(el) && norm(el.textContent).includes(nameNorm)) {
+                        el.dispatchEvent(new MouseEvent('mousedown', {bubbles:true}));
+                        el.dispatchEvent(new MouseEvent('click', {bubbles:true}));
+                        return el.textContent.trim();
+                    }
+                }
+                return null;
+            }
+        """, name_norm)
 
-    # Strategy 2: retype first name only — shorter string = wider match set.
+    def _open_via_js() -> None:
+        page.evaluate("""
+            () => {
+                const input = document.querySelector('input[role="combobox"]');
+                const container = document.querySelector('[role="combobox"]') || input;
+                if (!container) return;
+                for (const el of [container, input].filter(Boolean)) {
+                    el.dispatchEvent(new MouseEvent('mousedown', {bubbles:true, cancelable:true}));
+                    el.dispatchEvent(new MouseEvent('click',     {bubbles:true, cancelable:true}));
+                }
+                if (input) input.focus();
+            }
+        """)
+
+    # Strategy 1: click the [role="combobox"] CONTAINER first, then type.
     try:
-        first_name = row.name.split()[0]
-        combo.triple_click()
-        combo.press_sequentially(first_name, delay=60)
+        page.locator('[role="combobox"]').first.click(timeout=combo_timeout)
+        page.wait_for_timeout(400)
+        inp = page.locator('input[role="combobox"]').first
+        inp.triple_click(timeout=combo_timeout)
+        inp.press_sequentially(label, delay=50)
         page.wait_for_timeout(700)
-        return _find_and_click_dropdown_item(page, name_norm, option_timeout)
-    except (PlaywrightTimeoutError, Exception):
+        result = _js_click_match()
+        if result:
+            return result
+    except Exception:
         pass
 
-    # Strategy 3: clear field so dropdown shows unfiltered full list.
+    # Strategy 2: JS open + type first-name prefix.
     try:
-        combo.triple_click()
-        combo.press("Delete")
+        _open_via_js()
+        page.wait_for_timeout(400)
+        inp = page.locator('input[role="combobox"]').first
+        inp.triple_click(timeout=combo_timeout)
+        inp.press_sequentially(row.name.split()[0], delay=60)
         page.wait_for_timeout(800)
-        return _find_and_click_dropdown_item(page, name_norm, option_timeout)
-    except (PlaywrightTimeoutError, Exception):
+        result = _js_click_match()
+        if result:
+            return result
+    except Exception:
         pass
 
-    # Strategy 4: close + reopen the dropdown via Escape then click.
+    # Strategy 3: Escape reset, then ArrowDown to force-open.
     try:
         page.keyboard.press("Escape")
-        page.wait_for_timeout(400)
-        combo.click()
-        page.wait_for_timeout(800)
-        combo.press_sequentially(row.name[:6], delay=60)
-        page.wait_for_timeout(700)
-        return _find_and_click_dropdown_item(page, name_norm, option_timeout)
-    except (PlaywrightTimeoutError, Exception):
+        page.wait_for_timeout(300)
+        _open_via_js()
+        page.keyboard.press("ArrowDown")
+        page.wait_for_timeout(600)
+        result = _js_click_match()
+        if result:
+            return result
+    except Exception:
         pass
 
-    _dump_page_dropdown_diagnostics(page, label)
-    raise PlaywrightTimeoutError(f"No matching coach option found for '{label}'")
+    _log_page_state(page, label)
+    raise PlaywrightTimeoutError(f"UI selection failed for '{label}'")
 
 
 def fetch_missing_courses_for_in_progress(rows: Sequence[CoachRow]) -> Dict[str, dict]:
@@ -589,7 +682,40 @@ def fetch_missing_courses_for_in_progress(rows: Sequence[CoachRow]) -> Dict[str,
                 bucket_available_false = 0
                 bucket_lookup_failures = 0
 
-                wait_for_coach_status_page(page, COACH_STATUS_BY_BUCKET_URLS[bucket])
+                # ── Primary: API interception (same pattern as certified/in-progress) ──
+                bucket_url = COACH_STATUS_BY_BUCKET_URLS[bucket]
+                print(f"Bucket {bucket}: attempting API interception from {bucket_url}")
+                api_items = _fetch_bucket_api_items(bucket_url)
+                print(f"Bucket {bucket}: captured {len(api_items)} API items")
+                api_captured = _match_api_items_to_rows(api_items, bucket_rows)
+
+                if api_captured:
+                    print(f"Bucket {bucket}: API interception succeeded for {len(api_captured)} rows")
+                    for row in bucket_rows:
+                        details = api_captured.get(row.key(), {})
+                        available = bool(details)
+                        if available:
+                            bucket_available_true += 1
+                            total_available_true += 1
+                        else:
+                            bucket_available_false += 1
+                            total_available_false += 1
+                        reason = details.get("missing_courses_reason", "api_no_match")
+                        reason_counts[reason] = reason_counts.get(reason, 0) + 1
+                        captured[row.key()] = {
+                            "missing_courses": details.get("missing_courses", []),
+                            "missing_courses_available": available,
+                            "missing_courses_reason": reason,
+                        }
+                    print(
+                        f"Bucket {bucket}: total={len(bucket_rows)}, "
+                        f"available={bucket_available_true}, unavailable={bucket_available_false}"
+                    )
+                    continue  # skip UI fallback for this bucket
+
+                # ── Fallback: UI dropdown interaction ──
+                print(f"Bucket {bucket}: API interception returned no course data; trying UI fallback")
+                wait_for_coach_status_page(page, bucket_url)
 
                 for row in bucket_rows:
                     label = coach_dropdown_label(row)
@@ -598,12 +724,9 @@ def fetch_missing_courses_for_in_progress(rows: Sequence[CoachRow]) -> Dict[str,
 
                     for attempt in range(lookup_retries + 1):
                         try:
-                            combo = page.locator('input[role="combobox"]').first
-                            # Clear any previous value and type the new label character by
-                            # character so Wix reactive dropdown fires on keyboard events.
-                            combo.triple_click(timeout=combo_timeout)
-                            combo.press_sequentially(label, delay=50)
-                            selected_label = select_coach_option(page, row, label, option_timeout)
+                            selected_label = _ui_select_coach(
+                                page, row, label, combo_timeout, option_timeout
+                            )
 
                             page.wait_for_function(
                                 "({ name, roleLabel }) => document.body.innerText.toLowerCase().includes(name.toLowerCase()) && document.body.innerText.includes(roleLabel)",
