@@ -38,9 +38,14 @@ _NONCERTIFIED_APP_ID = "3c6e5891-d24d-4c77-9b02-532114068664"
 _NONCERTIFIED_COLLECTION = "NonCertifiedCoaches"
 # Fields in the collection that are metadata, not course completion status.
 # NOTE: classification1 is Safe Sport (a real course) — do NOT add it here.
+# practiceEvaluation1/11/111 are Wix-generated duplicate column keys — the website
+# shows only one Practice Evaluation column (the base practiceEvaluation field).
+# The duplicates store "No" for coaches where they are inapplicable instead of "NR",
+# causing false positives, so they are excluded here.
 _NON_COURSE_FIELDS = frozenset({
     "_id", "_owner", "_createdDate", "_updatedDate",
     "title", "nccp", "position", "sort", "club", "classification",
+    "practiceEvaluation1", "practiceEvaluation11", "practiceEvaluation111",
 })
 
 # Maps raw Wix API field names to human-readable display names.
