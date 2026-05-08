@@ -39,7 +39,7 @@ _NONCERTIFIED_COLLECTION = "NonCertifiedCoaches"
 # Fields in the collection that are metadata, not course completion status.
 _NON_COURSE_FIELDS = frozenset({
     "_id", "_owner", "_createdDate", "_updatedDate",
-    "title", "nccp", "position", "sort", "club", "classification",
+    "title", "nccp", "position", "sort", "club", "classification", "classification1",
 })
 
 MISSING_COURSE_NEGATIVE_VALUES = {
@@ -560,11 +560,23 @@ def _match_api_items_to_rows(items: List[dict], rows: Sequence[CoachRow]) -> Dic
         if name_only:
             item_by_name[normalize(name_only)] = data
 
+    # Field families to log in full for CI diagnostics (all numbered variants).
+    _DIAG_FAMILIES = ("practiceEvaluation", "videoPackage", "classification")
+
     captured: Dict[str, dict] = {}
     for row in rows:
         data = item_by_name.get(normalize(row.name))
         if data is None:
             continue
+
+        # Diagnostic: log every variant of known-ambiguous field families.
+        diag_fields = {
+            k: v for k, v in data.items()
+            if any(k.lower().startswith(fam.lower()) for fam in _DIAG_FAMILIES)
+        }
+        if diag_fields:
+            print(f"  DIAG {row.name}: {diag_fields}")
+
         missing = [
             key for key, val in data.items()
             if key not in _NON_COURSE_FIELDS
