@@ -1,0 +1,17 @@
+# Backup copy - nested git repo, not part of this project
+Coach_Certification-Backup/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv*/
+*.egg-info/
+
+# Temp/diagnostic scripts
+_diag_*.py
+_test_*.py
+
+# OS
+.DS_Store
+Thumbs.db
