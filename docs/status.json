@@ -1,7 +1,7 @@
 {
   "asOf": "2026-05-12",
-  "queriedAtLocal": "2026-05-12 12:50:13 EDT",
-  "queriedAtUtc": "2026-05-12T16:50:13.052227Z",
+  "queriedAtLocal": "2026-05-12 18:29:40 EDT",
+  "queriedAtUtc": "2026-05-12T22:29:40.992630Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -9,8 +9,8 @@
   },
   "certificationStatus": {
     "source": "https://www.registeroba.ca/coach-certification-status",
-    "dateUpdated": "May 5, 2026",
-    "nextScheduledUpdate": "May 13, 2026",
+    "dateUpdated": "May 12, 2026",
+    "nextScheduledUpdate": "May 19, 2026",
     "note": "Courses after this date will be on the next update."
   },
   "certified": [
@@ -422,6 +422,17 @@
       "missing_courses_reason": ""
     },
     {
+      "name": "Jason Polera",
+      "registration_id": "5868639",
+      "level": "16U AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
+    },
+    {
       "name": "Jim Bigras",
       "registration_id": "708817",
       "level": "22U AAA",
@@ -653,6 +664,17 @@
       "missing_courses_reason": ""
     },
     {
+      "name": "Owen Utley",
+      "registration_id": "6934379",
+      "level": "13U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
+    },
+    {
       "name": "Pete Juryn",
       "registration_id": "6657677",
       "level": "10U AA",
@@ -730,6 +752,17 @@
       "missing_courses_reason": ""
     },
     {
+      "name": "Steve Mcewen",
+      "registration_id": "5992217",
+      "level": "13U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
+    },
+    {
       "name": "Steve Soetemans",
       "registration_id": "6661491",
       "level": "12U AA",
@@ -760,10 +793,7 @@
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Hitting",
-        "Infielding"
-      ],
+      "missing_courses": [],
       "missing_courses_available": true,
       "missing_courses_reason": "api_interception"
     },
@@ -821,19 +851,6 @@
       "missing_courses_reason": "api_interception"
     },
     {
-      "name": "Jason Polera",
-      "registration_id": "5868639",
-      "level": "16U AAA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Outfielding"
-      ],
-      "missing_courses_available": true,
-      "missing_courses_reason": "api_interception"
-    },
-    {
       "name": "Jesse Theriault",
       "registration_id": "7119228",
       "level": "9U DS",
@@ -866,21 +883,6 @@
       "missing_courses_reason": "api_interception"
     },
     {
-      "name": "Owen Utley",
-      "registration_id": "6934379",
-      "level": "13U DS",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Fundamentals of Coaching Baseball",
-        "Hitting",
-        "Infielding"
-      ],
-      "missing_courses_available": true,
-      "missing_courses_reason": "api_interception"
-    },
-    {
       "name": "Ryan Nutma",
       "registration_id": "6342953",
       "level": "16U AAA",
@@ -890,19 +892,6 @@
       "missing_courses": [
         "Outfielding",
         "Skills"
-      ],
-      "missing_courses_available": true,
-      "missing_courses_reason": "api_interception"
-    },
-    {
-      "name": "Steve Mcewen",
-      "registration_id": "5992217",
-      "level": "13U DS",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Safe Sport"
       ],
       "missing_courses_available": true,
       "missing_courses_reason": "api_interception"
@@ -957,7 +946,32 @@
       "missing_courses_reason": "api_interception"
     }
   ],
-  "transitions": [],
+  "transitions": [
+    {
+      "name": "Jason Polera",
+      "registration_id": "5868639",
+      "level": "16U AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "moved_on": "2026-05-12"
+    },
+    {
+      "name": "Owen Utley",
+      "registration_id": "6934379",
+      "level": "13U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "moved_on": "2026-05-12"
+    },
+    {
+      "name": "Steve Mcewen",
+      "registration_id": "5992217",
+      "level": "13U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "moved_on": "2026-05-12"
+    }
+  ],
   "notes": [
     "Rows are filtered to associations containing 'Sarnia'.",
     "A transition is detected when a previously in-progress coach row appears in certified.",
