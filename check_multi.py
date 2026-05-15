@@ -987,6 +987,11 @@ HIDDEN_IN_PROGRESS_NAMES = {"Bruce Gray"}
 IN_PROGRESS_MISSING_OVERRIDES = {
     ("adam crowe", "7115890"): ["Fundamentals of Coaching Baseball"],
 }
+IN_PROGRESS_MISSING_REPLACEMENTS = {
+    ("cory sommise", "6851243"): {
+        "Fundamentals of Coaching Baseball": "Coach Initiation in Baseball",
+    },
+}
 
 
 def in_progress_override_key(row: CoachRow) -> tuple[str, str]:
@@ -1002,7 +1007,24 @@ def display_in_progress_rows(rows: Sequence[CoachRow]) -> List[CoachRow]:
             continue
 
         override_courses = IN_PROGRESS_MISSING_OVERRIDES.get(in_progress_override_key(row))
-        if override_courses is None:
+        if override_courses is not None:
+            output.append(
+                CoachRow(
+                    name=row.name,
+                    registration_id=row.registration_id,
+                    level=row.level,
+                    position=row.position,
+                    association=row.association,
+                    source_url=row.source_url,
+                    missing_courses=list(override_courses),
+                    missing_courses_available=True,
+                    missing_courses_reason="display_override",
+                )
+            )
+            continue
+
+        replacements = IN_PROGRESS_MISSING_REPLACEMENTS.get(in_progress_override_key(row))
+        if replacements is None:
             output.append(row)
             continue
 
@@ -1014,8 +1036,8 @@ def display_in_progress_rows(rows: Sequence[CoachRow]) -> List[CoachRow]:
                 position=row.position,
                 association=row.association,
                 source_url=row.source_url,
-                missing_courses=list(override_courses),
-                missing_courses_available=True,
+                missing_courses=[replacements.get(course, course) for course in row.missing_courses],
+                missing_courses_available=row.missing_courses_available,
                 missing_courses_reason="display_override",
             )
         )

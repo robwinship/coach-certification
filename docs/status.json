@@ -982,10 +982,10 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
       "missing_courses": [
-        "Fundamentals of Coaching Baseball"
+        "Coach Initiation in Baseball"
       ],
       "missing_courses_available": true,
-      "missing_courses_reason": "api_interception"
+      "missing_courses_reason": "display_override"
     },
     {
       "name": "Dan Sparks",
