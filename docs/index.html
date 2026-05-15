@@ -639,6 +639,41 @@
     let expandedInProgressKey = "";
     let expandedCourseKey = "";
 
+    const HIDDEN_IN_PROGRESS_NAMES = new Set(["bruce gray"]);
+    const IN_PROGRESS_MISSING_OVERRIDES = new Map([
+      ["adam crowe|7115890", ["Fundamentals of Coaching Baseball"]]
+    ]);
+
+    function normalizeValue(value) {
+      return String(value || "").toLowerCase().replace(/\s+/g, " ").trim();
+    }
+
+    function inProgressOverrideKey(item) {
+      return [
+        normalizeValue(item && item.name),
+        String((item && item.registration_id) || "").trim()
+      ].join("|");
+    }
+
+    function applyInProgressDisplayRules(items) {
+      if (!Array.isArray(items)) {
+        return [];
+      }
+
+      return items
+        .filter((item) => !HIDDEN_IN_PROGRESS_NAMES.has(normalizeValue(item && item.name)))
+        .map((item) => {
+          const next = { ...item };
+          const override = IN_PROGRESS_MISSING_OVERRIDES.get(inProgressOverrideKey(next));
+          if (override) {
+            next.missing_courses = [...override];
+            next.missing_courses_available = true;
+            next.missing_courses_reason = "display_override";
+          }
+          return next;
+        });
+    }
+
     function rowKey(item) {
       return [
         item.name || "",
@@ -948,7 +983,9 @@
 
         const data = await response.json();
         allCertified = Array.isArray(data.certified) ? data.certified : [];
-        allInProgress = Array.isArray(data.inProgress) ? data.inProgress : [];
+        allInProgress = Array.isArray(data.inProgressDisplay)
+          ? data.inProgressDisplay
+          : applyInProgressDisplayRules(data.inProgress);
         const transitions = Array.isArray(data.transitions) ? data.transitions : [];
         const certificationStatus = data.certificationStatus || {};
 

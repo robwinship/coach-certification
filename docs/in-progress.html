@@ -81,6 +81,12 @@
   </main>
 
   <script>
+    const HIDDEN_IN_PROGRESS_NAMES = new Set(["bruce gray"]);
+
+    function normalizeValue(value) {
+      return String(value || "").toLowerCase().replace(/\s+/g, " ").trim();
+    }
+
     function cell(text) {
       const td = document.createElement("td");
       td.textContent = text || "";
@@ -94,7 +100,11 @@
         const response = await fetch("./status.json", { cache: "no-store" });
         if (!response.ok) throw new Error("Missing status data");
         const data = await response.json();
-        const items = Array.isArray(data.inProgress) ? data.inProgress : [];
+        const items = Array.isArray(data.inProgressDisplay)
+          ? data.inProgressDisplay
+          : (Array.isArray(data.inProgress)
+            ? data.inProgress.filter((row) => !HIDDEN_IN_PROGRESS_NAMES.has(normalizeValue(row && row.name)))
+            : []);
 
         const timestamp = data.queriedAtLocal || data.asOf || "unknown";
         meta.textContent = `Last query: ${timestamp} | Rows: ${items.length}`;

@@ -984,10 +984,43 @@ def attach_missing_courses(rows: Sequence[CoachRow], missing_courses_map: Dict[s
 
 
 HIDDEN_IN_PROGRESS_NAMES = {"Bruce Gray"}
+IN_PROGRESS_MISSING_OVERRIDES = {
+    ("adam crowe", "7115890"): ["Fundamentals of Coaching Baseball"],
+}
+
+
+def in_progress_override_key(row: CoachRow) -> tuple[str, str]:
+    return normalize(row.name), row.registration_id.strip()
 
 
 def display_in_progress_rows(rows: Sequence[CoachRow]) -> List[CoachRow]:
-    return [row for row in rows if row.name not in HIDDEN_IN_PROGRESS_NAMES]
+    output: List[CoachRow] = []
+    hidden_names = {normalize(name) for name in HIDDEN_IN_PROGRESS_NAMES}
+
+    for row in rows:
+        if normalize(row.name) in hidden_names:
+            continue
+
+        override_courses = IN_PROGRESS_MISSING_OVERRIDES.get(in_progress_override_key(row))
+        if override_courses is None:
+            output.append(row)
+            continue
+
+        output.append(
+            CoachRow(
+                name=row.name,
+                registration_id=row.registration_id,
+                level=row.level,
+                position=row.position,
+                association=row.association,
+                source_url=row.source_url,
+                missing_courses=list(override_courses),
+                missing_courses_available=True,
+                missing_courses_reason="display_override",
+            )
+        )
+
+    return output
 
 
 def render_rows_table(rows: Sequence[CoachRow]) -> str:
@@ -1325,6 +1358,7 @@ def main() -> None:
     )
     in_progress = attach_missing_courses(in_progress, in_progress_missing_courses)
     enforce_missing_course_coverage_or_fail(in_progress)
+    in_progress_display = display_in_progress_rows(in_progress)
 
     previous = load_previous_status()
     prev_in_progress = as_rows(previous.get("inProgress", []))
@@ -1342,17 +1376,19 @@ def main() -> None:
         "certificationStatus": certification_status,
         "certified": [asdict(r) for r in certified],
         "inProgress": [asdict(r) for r in in_progress],
+        "inProgressDisplay": [asdict(r) for r in in_progress_display],
         "transitions": transitions,
         "notes": [
             "Rows are filtered to associations containing 'Sarnia'.",
             "A transition is detected when a previously in-progress coach row appears in certified.",
             "In Progress rows may include missing_courses when coach-status extraction succeeds.",
+            "inProgressDisplay applies page-level display rules (hidden coaches and manual missing-course overrides).",
         ],
     }
 
     STATUS_PATH.parent.mkdir(parents=True, exist_ok=True)
     STATUS_PATH.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-    write_summary_page(certified, in_progress, transitions, queried_at_local, certification_status)
+    write_summary_page(certified, in_progress_display, transitions, queried_at_local, certification_status)
     maybe_notify_slack(previous, queried_at_local, certification_status, certified, in_progress, transitions)
     print(
         f"Updated {STATUS_PATH} with {len(certified)} certified and {len(in_progress)} in-progress rows. "

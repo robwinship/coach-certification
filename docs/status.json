@@ -950,6 +950,157 @@
   "notes": [
     "Rows are filtered to associations containing 'Sarnia'.",
     "A transition is detected when a previously in-progress coach row appears in certified.",
-    "In Progress rows may include missing_courses when coach-status extraction succeeds."
+    "In Progress rows may include missing_courses when coach-status extraction succeeds.",
+    "inProgressDisplay applies page-level display rules (hidden coaches and manual missing-course overrides)."
+  ],
+  "inProgressDisplay": [
+    {
+      "name": "Adam Crowe",
+      "registration_id": "7115890",
+      "level": "11U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Fundamentals of Coaching Baseball"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "display_override"
+    },
+    {
+      "name": "Chris Foster",
+      "registration_id": "6511342",
+      "level": "13U HS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Fundamentals of Coaching Baseball",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
+    },
+    {
+      "name": "Cory Sommise",
+      "registration_id": "6851243",
+      "level": "13U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Fundamentals of Coaching Baseball"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
+    },
+    {
+      "name": "Dan Sparks",
+      "registration_id": "6169286",
+      "level": "16U AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Outfielding"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
+    },
+    {
+      "name": "Jesse Theriault",
+      "registration_id": "7119228",
+      "level": "9U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Fundamentals of Coaching Baseball",
+        "9U PCCP",
+        "Hitting",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
+    },
+    {
+      "name": "Mike Perry",
+      "registration_id": "6762688",
+      "level": "9U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Fundamentals of Coaching Baseball",
+        "9U PCCP",
+        "Hitting",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
+    },
+    {
+      "name": "Ryan Nutma",
+      "registration_id": "6342953",
+      "level": "16U AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Outfielding",
+        "Skills"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
+    },
+    {
+      "name": "Taylor Castrillo",
+      "registration_id": "6318706",
+      "level": "9U DS",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "9U PCCP",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
+    },
+    {
+      "name": "Tim Symington",
+      "registration_id": "1191089",
+      "level": "15U AA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Safe Sport"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
+    },
+    {
+      "name": "Will Greer",
+      "registration_id": "7011383",
+      "level": "16U AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "Absolutes",
+        "Outfielding",
+        "Hitting",
+        "Planning",
+        "Infielding",
+        "Safe Sport",
+        "Skills",
+        "Strategies",
+        "Pitching & Catching",
+        "Base Running"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
+    }
   ]
 }
