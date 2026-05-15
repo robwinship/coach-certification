@@ -983,6 +983,13 @@ def attach_missing_courses(rows: Sequence[CoachRow], missing_courses_map: Dict[s
     return updated_rows
 
 
+HIDDEN_IN_PROGRESS_NAMES = {"Bruce Gray"}
+
+
+def display_in_progress_rows(rows: Sequence[CoachRow]) -> List[CoachRow]:
+    return [row for row in rows if row.name not in HIDDEN_IN_PROGRESS_NAMES]
+
+
 def render_rows_table(rows: Sequence[CoachRow]) -> str:
     if not rows:
         return "<p class=\"empty\">No rows found.</p>"
@@ -1184,6 +1191,7 @@ def write_summary_page(
     queried_at_local: str,
     certification_status: dict,
 ) -> None:
+    visible_in_progress = display_in_progress_rows(in_progress)
     transition_items = "".join(
         "<li>"
         f"{escape(item.get('name', 'Unknown'))} moved to Certified "
@@ -1270,7 +1278,7 @@ def write_summary_page(
             <h1>Current Summary</h1>
             <a href=\"./index.html\">Back to dashboard</a>
         </div>
-        <p class=\"meta\">Last query: {queried_at_local} | Certified: {len(certified)} | In Progress: {len(in_progress)}</p>
+        <p class=\"meta\">Last query: {queried_at_local} | Certified: {len(certified)} | In Progress: {len(visible_in_progress)}</p>
 
 
         <section class=\"card\">
@@ -1293,7 +1301,7 @@ def write_summary_page(
 
         <section class=\"card\">
             <h2>In Progress Coaches</h2>
-            {render_rows_table(in_progress)}
+            {render_rows_table(visible_in_progress)}
         </section>
     </main>
 </body>

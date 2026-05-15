@@ -22,6 +22,12 @@ This project uses a custom release numbering convention.
 - Added a safety gate to fail generation when in-progress missing-course coverage drops below threshold, preventing silent degraded publishes.
 - Enriched strict-gate failure exceptions with actionable diagnostics (counts, reasons, sample coach labels, retry/timeout settings).
 - Added fallback dropdown option matching (name/level normalization) when exact coach labels are not present in coach-status UI options.
+- Fixed Playwright sync API crash in CI (GitHub Actions asyncio loop conflict) by running all Playwright calls in a dedicated OS thread.
+- Fixed workflow "Commit and push if changed" step failing with non-fast-forward rejection when local commits preceded the CI run.
+- Fixed raw Wix API field names (e.g. `classification1`, `practiceEvaluation111`) being displayed instead of human-readable course names; added full display-name mapping.
+- Fixed `classification1` (Safe Sport) incorrectly excluded as metadata — it is a real course requirement.
+- Fixed Wix duplicate-column artifacts `practiceEvaluation1` and `practiceEvaluation11` incorrectly reported as missing courses; they store `"No"` for inapplicable coaches instead of `"NR"`.
+- Fixed `practiceEvaluation111` (9U PCCP) incorrectly excluded — it is a real course requirement for 8U/9U coaches.
 
 ## 1.102 - 2026-03-16
 
@@ -61,3 +67,7 @@ This project uses a custom release numbering convention.
 ## [Backup 2026-04-14_20-53-26]
 ### Backup Note
 - Created a visualization to show what courses a coach is missing
+
+## [Backup 2026-05-08_19-41-19]
+### Backup Note
+- corrected the courses not showing up correctly
