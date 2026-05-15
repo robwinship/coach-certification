@@ -9,6 +9,20 @@ echo   Coach Certification -- Git Commit and Push
 echo ============================================================
 echo.
 
+git rev-parse -q --verify REBASE_HEAD >nul 2>nul
+if not errorlevel 1 (
+    echo  ERROR: A git rebase is already in progress.
+    echo  Resolve it before running this script again.
+    echo.
+    echo  Suggested commands:
+    echo    1. git status
+    echo    2. git rebase --continue
+    echo    3. Or: git rebase --abort
+    echo.
+    pause
+    exit /b 1
+)
+
 :: Prompt for commit message
 set /p "COMMIT_MSG=Enter commit message: "
 if "!COMMIT_MSG!"=="" set "COMMIT_MSG=Update project files"

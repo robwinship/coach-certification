@@ -13,6 +13,10 @@ on:
         default: false
         type: boolean
 
+concurrency:
+  group: update-status
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
@@ -60,5 +64,6 @@ jobs:
           git add docs/status.json docs/current-summary.html
           git diff --cached --quiet && exit 0
           git commit -m "Update status data"
-          git pull --rebase origin main
-          git push
+          git fetch origin main
+          git rebase -X ours origin/main
+          git push origin HEAD:main
