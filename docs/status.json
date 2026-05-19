@@ -1,7 +1,7 @@
 {
   "asOf": "2026-05-19",
-  "queriedAtLocal": "2026-05-19 13:08:43 EDT",
-  "queriedAtUtc": "2026-05-19T17:08:43.168436Z",
+  "queriedAtLocal": "2026-05-19 17:20:22 EDT",
+  "queriedAtUtc": "2026-05-19T21:20:22.473054Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -19,6 +19,17 @@
       "registration_id": "6761639",
       "level": "9U AA",
       "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
+    },
+    {
+      "name": "Adam Crowe",
+      "registration_id": "7115890",
+      "level": "11U DS",
+      "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
       "missing_courses": [],
@@ -169,7 +180,7 @@
       "missing_courses_reason": ""
     },
     {
-      "name": "Bryan Deschutter",
+      "name": "Bryan DeSchutter",
       "registration_id": "7073516",
       "level": "8U AA",
       "position": "Assistant Coach",
@@ -312,7 +323,7 @@
       "missing_courses_reason": ""
     },
     {
-      "name": "Eric Mclaughlin",
+      "name": "Eric McLaughlin",
       "registration_id": "6774977",
       "level": "11U AA",
       "position": "Assistant Coach",
@@ -752,7 +763,7 @@
       "missing_courses_reason": ""
     },
     {
-      "name": "Steve Mcewen",
+      "name": "Steve McEwen",
       "registration_id": "5992217",
       "level": "13U DS",
       "position": "Assistant Coach",
@@ -786,17 +797,6 @@
     }
   ],
   "inProgress": [
-    {
-      "name": "Adam Crowe",
-      "registration_id": "7115890",
-      "level": "11U DS",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [],
-      "missing_courses_available": true,
-      "missing_courses_reason": "api_interception"
-    },
     {
       "name": "Bruce Gray",
       "registration_id": "616329",
@@ -948,19 +948,6 @@
   ],
   "inProgressDisplay": [
     {
-      "name": "Adam Crowe",
-      "registration_id": "7115890",
-      "level": "11U DS",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Fundamentals of Coaching Baseball"
-      ],
-      "missing_courses_available": true,
-      "missing_courses_reason": "display_override"
-    },
-    {
       "name": "Chris Foster",
       "registration_id": "6511342",
       "level": "13U HS",
@@ -1096,7 +1083,16 @@
       "missing_courses_reason": "api_interception"
     }
   ],
-  "transitions": [],
+  "transitions": [
+    {
+      "name": "Adam Crowe",
+      "registration_id": "7115890",
+      "level": "11U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "moved_on": "2026-05-19"
+    }
+  ],
   "notes": [
     "Rows are filtered to associations containing 'Sarnia'.",
     "A transition is detected when a previously in-progress coach row appears in certified.",
