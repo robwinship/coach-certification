@@ -1,7 +1,7 @@
 {
   "asOf": "2026-05-26",
-  "queriedAtLocal": "2026-05-26 13:12:15 EDT",
-  "queriedAtUtc": "2026-05-26T17:12:15.244756Z",
+  "queriedAtLocal": "2026-05-26 18:32:11 EDT",
+  "queriedAtUtc": "2026-05-26T22:32:11.997208Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -180,7 +180,7 @@
       "missing_courses_reason": ""
     },
     {
-      "name": "Bryan DeSchutter",
+      "name": "Bryan Deschutter",
       "registration_id": "7073516",
       "level": "8U AA",
       "position": "Assistant Coach",
@@ -323,7 +323,7 @@
       "missing_courses_reason": ""
     },
     {
-      "name": "Eric McLaughlin",
+      "name": "Eric Mclaughlin",
       "registration_id": "6774977",
       "level": "11U AA",
       "position": "Assistant Coach",
@@ -763,7 +763,7 @@
       "missing_courses_reason": ""
     },
     {
-      "name": "Steve McEwen",
+      "name": "Steve Mcewen",
       "registration_id": "5992217",
       "level": "13U DS",
       "position": "Assistant Coach",
@@ -818,7 +818,6 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
       "missing_courses": [
-        "Fundamentals of Coaching Baseball",
         "Safe Sport"
       ],
       "missing_courses_available": true,
@@ -955,7 +954,6 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
       "missing_courses": [
-        "Fundamentals of Coaching Baseball",
         "Safe Sport"
       ],
       "missing_courses_available": true,
