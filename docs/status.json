@@ -1,7 +1,7 @@
 {
   "asOf": "2026-06-03",
-  "queriedAtLocal": "2026-06-03 13:46:42 EDT",
-  "queriedAtUtc": "2026-06-03T17:46:42.320158Z",
+  "queriedAtLocal": "2026-06-03 18:45:51 EDT",
+  "queriedAtUtc": "2026-06-03T22:45:51.970369Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -10,7 +10,7 @@
   "certificationStatus": {
     "source": "https://www.registeroba.ca/coach-certification-status",
     "dateUpdated": "May 26, 2026",
-    "nextScheduledUpdate": "June 2, 2026",
+    "nextScheduledUpdate": "June 3, 2026",
     "note": "Courses after this date will be on the next update."
   },
   "certified": [
@@ -1052,16 +1052,7 @@
       "missing_courses_reason": "api_interception"
     }
   ],
-  "transitions": [
-    {
-      "name": "Dan Sparks",
-      "registration_id": "6169286",
-      "level": "16U AAA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-06-03"
-    }
-  ],
+  "transitions": [],
   "notes": [
     "Rows are filtered to associations containing 'Sarnia'.",
     "A transition is detected when a previously in-progress coach row appears in certified.",
