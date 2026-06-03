@@ -1,7 +1,7 @@
 {
-  "asOf": "2026-06-02",
-  "queriedAtLocal": "2026-06-02 18:44:27 EDT",
-  "queriedAtUtc": "2026-06-02T22:44:27.603876Z",
+  "asOf": "2026-06-03",
+  "queriedAtLocal": "2026-06-03 13:46:42 EDT",
+  "queriedAtUtc": "2026-06-03T17:46:42.320158Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -10,7 +10,7 @@
   "certificationStatus": {
     "source": "https://www.registeroba.ca/coach-certification-status",
     "dateUpdated": "May 26, 2026",
-    "nextScheduledUpdate": "June 3, 2026",
+    "nextScheduledUpdate": "June 2, 2026",
     "note": "Courses after this date will be on the next update."
   },
   "certified": [
@@ -271,6 +271,17 @@
       "name": "Cole Randall",
       "registration_id": "7054588",
       "level": "10U A",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
+    },
+    {
+      "name": "Dan Sparks",
+      "registration_id": "6169286",
+      "level": "16U AAA",
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
@@ -837,19 +848,6 @@
       "missing_courses_reason": "api_interception"
     },
     {
-      "name": "Dan Sparks",
-      "registration_id": "6169286",
-      "level": "16U AAA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Outfielding"
-      ],
-      "missing_courses_available": true,
-      "missing_courses_reason": "api_interception"
-    },
-    {
       "name": "Jesse Theriault",
       "registration_id": "7119228",
       "level": "9U DS",
@@ -930,16 +928,9 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
       "missing_courses": [
-        "Absolutes",
-        "Outfielding",
-        "Hitting",
         "Planning",
         "Infielding",
-        "Safe Sport",
-        "Skills",
-        "Strategies",
-        "Pitching & Catching",
-        "Base Running"
+        "Strategies"
       ],
       "missing_courses_available": true,
       "missing_courses_reason": "api_interception"
@@ -973,19 +964,6 @@
       "missing_courses_reason": "display_override"
     },
     {
-      "name": "Dan Sparks",
-      "registration_id": "6169286",
-      "level": "16U AAA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Outfielding"
-      ],
-      "missing_courses_available": true,
-      "missing_courses_reason": "api_interception"
-    },
-    {
       "name": "Jesse Theriault",
       "registration_id": "7119228",
       "level": "9U DS",
@@ -1066,22 +1044,24 @@
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
       "missing_courses": [
-        "Absolutes",
-        "Outfielding",
-        "Hitting",
         "Planning",
         "Infielding",
-        "Safe Sport",
-        "Skills",
-        "Strategies",
-        "Pitching & Catching",
-        "Base Running"
+        "Strategies"
       ],
       "missing_courses_available": true,
       "missing_courses_reason": "api_interception"
     }
   ],
-  "transitions": [],
+  "transitions": [
+    {
+      "name": "Dan Sparks",
+      "registration_id": "6169286",
+      "level": "16U AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "moved_on": "2026-06-03"
+    }
+  ],
   "notes": [
     "Rows are filtered to associations containing 'Sarnia'.",
     "A transition is detected when a previously in-progress coach row appears in certified.",
