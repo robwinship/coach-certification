@@ -1,7 +1,7 @@
 {
   "asOf": "2026-06-16",
-  "queriedAtLocal": "2026-06-16 13:47:31 EDT",
-  "queriedAtUtc": "2026-06-16T17:47:31.516934Z",
+  "queriedAtLocal": "2026-06-16 18:40:26 EDT",
+  "queriedAtUtc": "2026-06-16T22:40:26.755315Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -9,8 +9,8 @@
   },
   "certificationStatus": {
     "source": "https://www.registeroba.ca/coach-certification-status",
-    "dateUpdated": "June 9, 2026",
-    "nextScheduledUpdate": "June 16, 2026",
+    "dateUpdated": "June 16, 2026",
+    "nextScheduledUpdate": "June 24, 2026",
     "note": "Courses after this date will be on the next update."
   },
   "certified": [
@@ -282,6 +282,17 @@
       "name": "Cole Randall",
       "registration_id": "7054588",
       "level": "10U A",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
+    },
+    {
+      "name": "Cory Sommise",
+      "registration_id": "6851243",
+      "level": "13U DS",
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certified-coaches",
@@ -844,19 +855,6 @@
       "missing_courses_reason": "api_interception"
     },
     {
-      "name": "Cory Sommise",
-      "registration_id": "6851243",
-      "level": "13U DS",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Fundamentals of Coaching Baseball"
-      ],
-      "missing_courses_available": true,
-      "missing_courses_reason": "api_interception"
-    },
-    {
       "name": "Jesse Theriault",
       "registration_id": "7119228",
       "level": "9U DS",
@@ -931,19 +929,6 @@
   ],
   "inProgressDisplay": [
     {
-      "name": "Cory Sommise",
-      "registration_id": "6851243",
-      "level": "13U DS",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Coach Initiation in Baseball"
-      ],
-      "missing_courses_available": true,
-      "missing_courses_reason": "display_override"
-    },
-    {
       "name": "Jesse Theriault",
       "registration_id": "7119228",
       "level": "9U DS",
@@ -1016,7 +1001,16 @@
       "missing_courses_reason": "api_interception"
     }
   ],
-  "transitions": [],
+  "transitions": [
+    {
+      "name": "Cory Sommise",
+      "registration_id": "6851243",
+      "level": "13U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "moved_on": "2026-06-16"
+    }
+  ],
   "notes": [
     "Rows are filtered to associations containing 'Sarnia'.",
     "A transition is detected when a previously in-progress coach row appears in certified.",
