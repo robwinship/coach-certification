@@ -1,7 +1,7 @@
 {
-  "asOf": "2026-06-16",
-  "queriedAtLocal": "2026-06-16 18:40:26 EDT",
-  "queriedAtUtc": "2026-06-16T22:40:26.755315Z",
+  "asOf": "2026-06-17",
+  "queriedAtLocal": "2026-06-17 13:08:42 EDT",
+  "queriedAtUtc": "2026-06-17T17:08:42.648411Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -1001,16 +1001,7 @@
       "missing_courses_reason": "api_interception"
     }
   ],
-  "transitions": [
-    {
-      "name": "Cory Sommise",
-      "registration_id": "6851243",
-      "level": "13U DS",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-06-16"
-    }
-  ],
+  "transitions": [],
   "notes": [
     "Rows are filtered to associations containing 'Sarnia'.",
     "A transition is detected when a previously in-progress coach row appears in certified.",
