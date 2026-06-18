@@ -1,7 +1,7 @@
 {
   "asOf": "2026-06-18",
-  "queriedAtLocal": "2026-06-18 13:10:31 EDT",
-  "queriedAtUtc": "2026-06-18T17:10:31.868695Z",
+  "queriedAtLocal": "2026-06-18 18:42:07 EDT",
+  "queriedAtUtc": "2026-06-18T22:42:07.305007Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -9,7 +9,7 @@
   },
   "certificationStatus": {
     "source": "https://www.registeroba.ca/coach-certification-status",
-    "dateUpdated": "June 16, 2026",
+    "dateUpdated": "June 18, 2026",
     "nextScheduledUpdate": "June 24, 2026",
     "note": "Courses after this date will be on the next update."
   },
@@ -818,6 +818,17 @@
       "missing_courses_reason": ""
     },
     {
+      "name": "Taylor Castrillo",
+      "registration_id": "6318706",
+      "level": "9U DS",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
+    },
+    {
       "name": "Wade Babula",
       "registration_id": "5678639",
       "level": "10U AA",
@@ -901,19 +912,6 @@
       "missing_courses_reason": "api_interception"
     },
     {
-      "name": "Taylor Castrillo",
-      "registration_id": "6318706",
-      "level": "9U DS",
-      "position": "Head Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "9U PCCP"
-      ],
-      "missing_courses_available": true,
-      "missing_courses_reason": "api_interception"
-    },
-    {
       "name": "Tim Symington",
       "registration_id": "1191089",
       "level": "15U AA",
@@ -975,19 +973,6 @@
       "missing_courses_reason": "api_interception"
     },
     {
-      "name": "Taylor Castrillo",
-      "registration_id": "6318706",
-      "level": "9U DS",
-      "position": "Head Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "9U PCCP"
-      ],
-      "missing_courses_available": true,
-      "missing_courses_reason": "api_interception"
-    },
-    {
       "name": "Tim Symington",
       "registration_id": "1191089",
       "level": "15U AA",
@@ -1001,7 +986,16 @@
       "missing_courses_reason": "api_interception"
     }
   ],
-  "transitions": [],
+  "transitions": [
+    {
+      "name": "Taylor Castrillo",
+      "registration_id": "6318706",
+      "level": "9U DS",
+      "position": "Head Coach",
+      "association": "Sarnia",
+      "moved_on": "2026-06-18"
+    }
+  ],
   "notes": [
     "Rows are filtered to associations containing 'Sarnia'.",
     "A transition is detected when a previously in-progress coach row appears in certified.",
