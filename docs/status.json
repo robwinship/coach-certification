@@ -1,7 +1,7 @@
 {
-  "asOf": "2026-06-18",
-  "queriedAtLocal": "2026-06-18 18:42:07 EDT",
-  "queriedAtUtc": "2026-06-18T22:42:07.305007Z",
+  "asOf": "2026-06-19",
+  "queriedAtLocal": "2026-06-19 12:54:32 EDT",
+  "queriedAtUtc": "2026-06-19T16:54:32.419226Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -986,16 +986,7 @@
       "missing_courses_reason": "api_interception"
     }
   ],
-  "transitions": [
-    {
-      "name": "Taylor Castrillo",
-      "registration_id": "6318706",
-      "level": "9U DS",
-      "position": "Head Coach",
-      "association": "Sarnia",
-      "moved_on": "2026-06-18"
-    }
-  ],
+  "transitions": [],
   "notes": [
     "Rows are filtered to associations containing 'Sarnia'.",
     "A transition is detected when a previously in-progress coach row appears in certified.",
