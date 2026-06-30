@@ -1,7 +1,7 @@
 {
   "asOf": "2026-06-30",
-  "queriedAtLocal": "2026-06-30 12:49:11 EDT",
-  "queriedAtUtc": "2026-06-30T16:49:11.972865Z",
+  "queriedAtLocal": "2026-06-30 18:29:42 EDT",
+  "queriedAtUtc": "2026-06-30T22:29:42.141777Z",
   "sources": {
     "certified": "https://www.registeroba.ca/certified-coaches",
     "inProgress": "https://www.registeroba.ca/certification-inprogress-by-local",
@@ -477,6 +477,17 @@
       "missing_courses_reason": ""
     },
     {
+      "name": "Jesse Theriault",
+      "registration_id": "7119228",
+      "level": "9U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
+    },
+    {
       "name": "Jim Bigras",
       "registration_id": "708817",
       "level": "22U AAA",
@@ -752,6 +763,17 @@
       "missing_courses_reason": ""
     },
     {
+      "name": "Ryan Nutma",
+      "registration_id": "6342953",
+      "level": "16U AAA",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certified-coaches",
+      "missing_courses": [],
+      "missing_courses_available": false,
+      "missing_courses_reason": ""
+    },
+    {
       "name": "Sean Baxter",
       "registration_id": "6529076",
       "level": "8U AA",
@@ -864,6 +886,20 @@
   ],
   "inProgress": [
     {
+      "name": "Ben Murray",
+      "registration_id": "7092900",
+      "level": "9U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
+      "missing_courses": [
+        "9U PCCP",
+        "Safe Sport"
+      ],
+      "missing_courses_available": true,
+      "missing_courses_reason": "api_interception"
+    },
+    {
       "name": "Bruce Gray",
       "registration_id": "616329",
       "level": "22U AAA",
@@ -877,22 +913,6 @@
       "missing_courses_reason": "api_interception"
     },
     {
-      "name": "Jesse Theriault",
-      "registration_id": "7119228",
-      "level": "9U DS",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Fundamentals of Coaching Baseball",
-        "9U PCCP",
-        "Hitting",
-        "Safe Sport"
-      ],
-      "missing_courses_available": true,
-      "missing_courses_reason": "api_interception"
-    },
-    {
       "name": "Mike Perry",
       "registration_id": "6762688",
       "level": "9U DS",
@@ -901,22 +921,7 @@
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
       "missing_courses": [
         "Fundamentals of Coaching Baseball",
-        "9U PCCP",
         "Hitting"
-      ],
-      "missing_courses_available": true,
-      "missing_courses_reason": "api_interception"
-    },
-    {
-      "name": "Ryan Nutma",
-      "registration_id": "6342953",
-      "level": "16U AAA",
-      "position": "Assistant Coach",
-      "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Outfielding",
-        "Skills"
       ],
       "missing_courses_available": true,
       "missing_courses_reason": "api_interception"
@@ -924,16 +929,14 @@
   ],
   "inProgressDisplay": [
     {
-      "name": "Jesse Theriault",
-      "registration_id": "7119228",
+      "name": "Ben Murray",
+      "registration_id": "7092900",
       "level": "9U DS",
       "position": "Assistant Coach",
       "association": "Sarnia",
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
       "missing_courses": [
-        "Fundamentals of Coaching Baseball",
         "9U PCCP",
-        "Hitting",
         "Safe Sport"
       ],
       "missing_courses_available": true,
@@ -948,11 +951,20 @@
       "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
       "missing_courses": [
         "Fundamentals of Coaching Baseball",
-        "9U PCCP",
         "Hitting"
       ],
       "missing_courses_available": true,
       "missing_courses_reason": "api_interception"
+    }
+  ],
+  "transitions": [
+    {
+      "name": "Jesse Theriault",
+      "registration_id": "7119228",
+      "level": "9U DS",
+      "position": "Assistant Coach",
+      "association": "Sarnia",
+      "moved_on": "2026-06-30"
     },
     {
       "name": "Ryan Nutma",
@@ -960,16 +972,9 @@
       "level": "16U AAA",
       "position": "Assistant Coach",
       "association": "Sarnia",
-      "source_url": "https://www.registeroba.ca/certification-inprogress-by-local",
-      "missing_courses": [
-        "Outfielding",
-        "Skills"
-      ],
-      "missing_courses_available": true,
-      "missing_courses_reason": "api_interception"
+      "moved_on": "2026-06-30"
     }
   ],
-  "transitions": [],
   "notes": [
     "Rows are filtered to associations containing 'Sarnia'.",
     "A transition is detected when a previously in-progress coach row appears in certified.",
